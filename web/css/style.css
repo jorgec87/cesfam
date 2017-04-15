@@ -3672,6 +3672,10 @@ table.table-mail tr td {
   right: 0;
 }
 /* BACKGROUNDS */
+.gris_textura-bg {
+  background-image:url(../img/img_custom/whitey.jpg) ;
+}
+
 .gray-bg {
   background-color: #f3f3f4;
 }
