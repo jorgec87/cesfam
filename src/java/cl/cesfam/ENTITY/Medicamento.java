@@ -1,7 +1,8 @@
 package cl.cesfam.ENTITY;
-// Generated 14-04-2017 22:03:42 by Hibernate Tools 4.3.1
+// Generated 16-04-2017 15:22:40 by Hibernate Tools 4.3.1
 
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,12 +12,13 @@ import java.util.Set;
 public class Medicamento  implements java.io.Serializable {
 
 
-     private long idMedicamento;
+     private BigDecimal idMedicamento;
      private Stock stock;
      private String nombreMedicamento;
-     private long presentacion;
-     private long contenidoEnvase;
+     private BigDecimal presentacion;
+     private BigDecimal contenidoEnvase;
      private String fabricante;
+     private Set composicions = new HashSet(0);
      private Set detallePartidas = new HashSet(0);
      private Set eventoStocks = new HashSet(0);
 
@@ -24,29 +26,30 @@ public class Medicamento  implements java.io.Serializable {
     }
 
 	
-    public Medicamento(long idMedicamento, String nombreMedicamento, long presentacion, long contenidoEnvase, String fabricante) {
+    public Medicamento(BigDecimal idMedicamento, String nombreMedicamento, BigDecimal presentacion, BigDecimal contenidoEnvase, String fabricante) {
         this.idMedicamento = idMedicamento;
         this.nombreMedicamento = nombreMedicamento;
         this.presentacion = presentacion;
         this.contenidoEnvase = contenidoEnvase;
         this.fabricante = fabricante;
     }
-    public Medicamento(long idMedicamento, Stock stock, String nombreMedicamento, long presentacion, long contenidoEnvase, String fabricante, Set detallePartidas, Set eventoStocks) {
+    public Medicamento(BigDecimal idMedicamento, Stock stock, String nombreMedicamento, BigDecimal presentacion, BigDecimal contenidoEnvase, String fabricante, Set composicions, Set detallePartidas, Set eventoStocks) {
        this.idMedicamento = idMedicamento;
        this.stock = stock;
        this.nombreMedicamento = nombreMedicamento;
        this.presentacion = presentacion;
        this.contenidoEnvase = contenidoEnvase;
        this.fabricante = fabricante;
+       this.composicions = composicions;
        this.detallePartidas = detallePartidas;
        this.eventoStocks = eventoStocks;
     }
    
-    public long getIdMedicamento() {
+    public BigDecimal getIdMedicamento() {
         return this.idMedicamento;
     }
     
-    public void setIdMedicamento(long idMedicamento) {
+    public void setIdMedicamento(BigDecimal idMedicamento) {
         this.idMedicamento = idMedicamento;
     }
     public Stock getStock() {
@@ -63,18 +66,18 @@ public class Medicamento  implements java.io.Serializable {
     public void setNombreMedicamento(String nombreMedicamento) {
         this.nombreMedicamento = nombreMedicamento;
     }
-    public long getPresentacion() {
+    public BigDecimal getPresentacion() {
         return this.presentacion;
     }
     
-    public void setPresentacion(long presentacion) {
+    public void setPresentacion(BigDecimal presentacion) {
         this.presentacion = presentacion;
     }
-    public long getContenidoEnvase() {
+    public BigDecimal getContenidoEnvase() {
         return this.contenidoEnvase;
     }
     
-    public void setContenidoEnvase(long contenidoEnvase) {
+    public void setContenidoEnvase(BigDecimal contenidoEnvase) {
         this.contenidoEnvase = contenidoEnvase;
     }
     public String getFabricante() {
@@ -83,6 +86,13 @@ public class Medicamento  implements java.io.Serializable {
     
     public void setFabricante(String fabricante) {
         this.fabricante = fabricante;
+    }
+    public Set getComposicions() {
+        return this.composicions;
+    }
+    
+    public void setComposicions(Set composicions) {
+        this.composicions = composicions;
     }
     public Set getDetallePartidas() {
         return this.detallePartidas;

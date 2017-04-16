@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 14-04-2017 22:03:42 by Hibernate Tools 4.3.1 -->
+<!-- Generated 16-04-2017 15:22:41 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cl.cesfam.ENTITY.Stock" table="STOCK" schema="CESFAM_DBA" optimistic-lock="version">
-        <id name="idStock" type="long">
-            <column name="ID_STOCK" precision="11" scale="0" />
+        <id name="idStock" type="big_decimal">
+            <column name="ID_STOCK" precision="22" scale="0" />
             <generator class="assigned" />
         </id>
-        <property name="stock" type="long">
-            <column name="STOCK" precision="11" scale="0" not-null="true" />
+        <property name="stock" type="big_decimal">
+            <column name="STOCK" precision="22" scale="0" not-null="true" />
         </property>
-        <property name="stockCritico" type="long">
-            <column name="STOCK_CRITICO" precision="11" scale="0" not-null="true" />
+        <property name="stockCritico" type="big_decimal">
+            <column name="STOCK_CRITICO" precision="22" scale="0" not-null="true" />
         </property>
         <set name="medicamentos" table="MEDICAMENTO" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="STOCK_ID_STOCK" precision="11" scale="0" />
+                <column name="STOCK_ID_STOCK" precision="22" scale="0" />
             </key>
             <one-to-many class="cl.cesfam.ENTITY.Medicamento" />
         </set>

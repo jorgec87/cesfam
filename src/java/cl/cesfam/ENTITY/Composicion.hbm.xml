@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-04-2017 15:22:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cl.cesfam.ENTITY.Composicion" table="COMPOSICION" schema="CESFAM_DBA" optimistic-lock="version">
+        <id name="idComposicion" type="big_decimal">
+            <column name="ID_COMPOSICION" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="componente" class="cl.cesfam.ENTITY.Componente" fetch="select">
+            <column name="COMPONENTE_ID_COMPONENTE" precision="22" scale="0" />
+        </many-to-one>
+        <many-to-one name="medicamento" class="cl.cesfam.ENTITY.Medicamento" fetch="select">
+            <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="22" scale="0" />
+        </many-to-one>
+        <property name="cantidad" type="big_decimal">
+            <column name="CANTIDAD" precision="22" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,18 +1,21 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 14-04-2017 22:03:42 by Hibernate Tools 4.3.1 -->
+<!-- Generated 16-04-2017 15:22:41 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cl.cesfam.ENTITY.Componente" table="COMPONENTE" schema="CESFAM_DBA" optimistic-lock="version">
-        <id name="idComponente" type="long">
-            <column name="ID_COMPONENTE" precision="11" scale="0" />
+        <id name="idComponente" type="big_decimal">
+            <column name="ID_COMPONENTE" precision="22" scale="0" />
             <generator class="assigned" />
         </id>
         <property name="nombreComponente" type="string">
             <column name="NOMBRE_COMPONENTE" length="45" not-null="true" />
         </property>
-        <property name="cantidadComponente" type="long">
-            <column name="CANTIDAD_COMPONENTE" precision="11" scale="0" not-null="true" />
-        </property>
+        <set name="composicions" table="COMPOSICION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="COMPONENTE_ID_COMPONENTE" precision="22" scale="0" />
+            </key>
+            <one-to-many class="cl.cesfam.ENTITY.Composicion" />
+        </set>
     </class>
 </hibernate-mapping>

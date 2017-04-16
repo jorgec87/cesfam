@@ -1,7 +1,8 @@
 package cl.cesfam.ENTITY;
-// Generated 14-04-2017 22:03:42 by Hibernate Tools 4.3.1
+// Generated 16-04-2017 15:22:40 by Hibernate Tools 4.3.1
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -10,25 +11,25 @@ import java.util.Date;
 public class EventoStock  implements java.io.Serializable {
 
 
-     private long idEventoStock;
+     private BigDecimal idEventoStock;
      private Medicamento medicamento;
      private Paciente paciente;
      private Date fechaEventoStock;
      private char reserva;
      private String observacion;
-     private long estado;
+     private BigDecimal estado;
 
     public EventoStock() {
     }
 
 	
-    public EventoStock(long idEventoStock, Date fechaEventoStock, char reserva, long estado) {
+    public EventoStock(BigDecimal idEventoStock, Date fechaEventoStock, char reserva, BigDecimal estado) {
         this.idEventoStock = idEventoStock;
         this.fechaEventoStock = fechaEventoStock;
         this.reserva = reserva;
         this.estado = estado;
     }
-    public EventoStock(long idEventoStock, Medicamento medicamento, Paciente paciente, Date fechaEventoStock, char reserva, String observacion, long estado) {
+    public EventoStock(BigDecimal idEventoStock, Medicamento medicamento, Paciente paciente, Date fechaEventoStock, char reserva, String observacion, BigDecimal estado) {
        this.idEventoStock = idEventoStock;
        this.medicamento = medicamento;
        this.paciente = paciente;
@@ -38,11 +39,11 @@ public class EventoStock  implements java.io.Serializable {
        this.estado = estado;
     }
    
-    public long getIdEventoStock() {
+    public BigDecimal getIdEventoStock() {
         return this.idEventoStock;
     }
     
-    public void setIdEventoStock(long idEventoStock) {
+    public void setIdEventoStock(BigDecimal idEventoStock) {
         this.idEventoStock = idEventoStock;
     }
     public Medicamento getMedicamento() {
@@ -80,11 +81,11 @@ public class EventoStock  implements java.io.Serializable {
     public void setObservacion(String observacion) {
         this.observacion = observacion;
     }
-    public long getEstado() {
+    public BigDecimal getEstado() {
         return this.estado;
     }
     
-    public void setEstado(long estado) {
+    public void setEstado(BigDecimal estado) {
         this.estado = estado;
     }
 

@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 14-04-2017 22:03:42 by Hibernate Tools 4.3.1 -->
+<!-- Generated 16-04-2017 15:22:41 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cl.cesfam.ENTITY.DetalleEntrega" table="DETALLE_ENTREGA" schema="CESFAM_DBA" optimistic-lock="version">
-        <id name="idEntrega" type="long">
-            <column name="ID_ENTREGA" precision="11" scale="0" />
+        <id name="idEntrega" type="big_decimal">
+            <column name="ID_ENTREGA" precision="22" scale="0" />
             <generator class="assigned" />
         </id>
         <many-to-one name="partida" class="cl.cesfam.ENTITY.Partida" fetch="select">
-            <column name="PARTIDA_ID_PARTIDA" precision="11" scale="0" />
+            <column name="PARTIDA_ID_PARTIDA" precision="22" scale="0" />
         </many-to-one>
-        <property name="entregaIdEntrega" type="java.lang.Long">
-            <column name="ENTREGA_ID_ENTREGA" precision="11" scale="0" />
+        <property name="entregaIdEntrega" type="big_decimal">
+            <column name="ENTREGA_ID_ENTREGA" precision="22" scale="0" />
         </property>
-        <property name="prescripcionIdPrescripcion" type="java.lang.Long">
-            <column name="PRESCRIPCION_ID_PRESCRIPCION" precision="11" scale="0" />
+        <property name="prescripcionIdPrescripcion" type="big_decimal">
+            <column name="PRESCRIPCION_ID_PRESCRIPCION" precision="22" scale="0" />
         </property>
     </class>
 </hibernate-mapping>

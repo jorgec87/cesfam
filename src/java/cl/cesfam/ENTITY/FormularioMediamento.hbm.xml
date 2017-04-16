@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 14-04-2017 22:03:42 by Hibernate Tools 4.3.1 -->
+<!-- Generated 16-04-2017 15:22:41 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cl.cesfam.ENTITY.FormularioMediamento" table="FORMULARIO_MEDIAMENTO" schema="CESFAM_DBA" optimistic-lock="version">
-        <id name="idFormularioMedicamento" type="long">
-            <column name="ID_FORMULARIO_MEDICAMENTO" precision="11" scale="0" />
+        <id name="idFormularioMedicamento" type="big_decimal">
+            <column name="ID_FORMULARIO_MEDICAMENTO" precision="22" scale="0" />
             <generator class="assigned" />
         </id>
-        <property name="cantidadEntregada" type="long">
-            <column name="CANTIDAD_ENTREGADA" precision="11" scale="0" not-null="true" />
+        <property name="cantidadEntregada" type="big_decimal">
+            <column name="CANTIDAD_ENTREGADA" precision="22" scale="0" not-null="true" />
         </property>
         <property name="requiereProximaEvaluacion" type="char">
             <column name="REQUIERE_PROXIMA_EVALUACION" length="1" not-null="true" />
@@ -17,11 +17,11 @@
         <property name="fechaProximaEvaluacion" type="date">
             <column name="FECHA_PROXIMA_EVALUACION" length="7" />
         </property>
-        <property name="medicoIdMedico" type="java.lang.Long">
-            <column name="MEDICO_ID_MEDICO" precision="11" scale="0" />
+        <property name="medicoIdMedico" type="big_decimal">
+            <column name="MEDICO_ID_MEDICO" precision="22" scale="0" />
         </property>
-        <property name="pacienteIdPaciente" type="java.lang.Long">
-            <column name="PACIENTE_ID_PACIENTE" precision="11" scale="0" />
+        <property name="pacienteIdPaciente" type="big_decimal">
+            <column name="PACIENTE_ID_PACIENTE" precision="22" scale="0" />
         </property>
     </class>
 </hibernate-mapping>
