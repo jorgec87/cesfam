@@ -1,8 +1,7 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 15:22:40 by Hibernate Tools 4.3.1
+// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +11,7 @@ import java.util.Set;
 public class Componente  implements java.io.Serializable {
 
 
-     private BigDecimal idComponente;
+     private int idComponente;
      private String nombreComponente;
      private Set composicions = new HashSet(0);
 
@@ -20,21 +19,21 @@ public class Componente  implements java.io.Serializable {
     }
 
 	
-    public Componente(BigDecimal idComponente, String nombreComponente) {
+    public Componente(int idComponente, String nombreComponente) {
         this.idComponente = idComponente;
         this.nombreComponente = nombreComponente;
     }
-    public Componente(BigDecimal idComponente, String nombreComponente, Set composicions) {
+    public Componente(int idComponente, String nombreComponente, Set composicions) {
        this.idComponente = idComponente;
        this.nombreComponente = nombreComponente;
        this.composicions = composicions;
     }
    
-    public BigDecimal getIdComponente() {
+    public int getIdComponente() {
         return this.idComponente;
     }
     
-    public void setIdComponente(BigDecimal idComponente) {
+    public void setIdComponente(int idComponente) {
         this.idComponente = idComponente;
     }
     public String getNombreComponente() {

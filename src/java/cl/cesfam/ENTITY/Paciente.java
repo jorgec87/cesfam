@@ -1,8 +1,7 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 15:22:40 by Hibernate Tools 4.3.1
+// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +11,7 @@ import java.util.Set;
 public class Paciente  implements java.io.Serializable {
 
 
-     private BigDecimal idPaciente;
+     private int idPaciente;
      private String rutPaciente;
      private String primerNombrePaciente;
      private String segundoNombrePaciente;
@@ -26,14 +25,14 @@ public class Paciente  implements java.io.Serializable {
     }
 
 	
-    public Paciente(BigDecimal idPaciente, String rutPaciente, String primerNombrePaciente, String apellidoPaternoPaciente, String apellidoMaternoPaciente) {
+    public Paciente(int idPaciente, String rutPaciente, String primerNombrePaciente, String apellidoPaternoPaciente, String apellidoMaternoPaciente) {
         this.idPaciente = idPaciente;
         this.rutPaciente = rutPaciente;
         this.primerNombrePaciente = primerNombrePaciente;
         this.apellidoPaternoPaciente = apellidoPaternoPaciente;
         this.apellidoMaternoPaciente = apellidoMaternoPaciente;
     }
-    public Paciente(BigDecimal idPaciente, String rutPaciente, String primerNombrePaciente, String segundoNombrePaciente, String apellidoPaternoPaciente, String apellidoMaternoPaciente, String emailPaciente, String telefonoPaciente, Set eventoStocks) {
+    public Paciente(int idPaciente, String rutPaciente, String primerNombrePaciente, String segundoNombrePaciente, String apellidoPaternoPaciente, String apellidoMaternoPaciente, String emailPaciente, String telefonoPaciente, Set eventoStocks) {
        this.idPaciente = idPaciente;
        this.rutPaciente = rutPaciente;
        this.primerNombrePaciente = primerNombrePaciente;
@@ -45,11 +44,11 @@ public class Paciente  implements java.io.Serializable {
        this.eventoStocks = eventoStocks;
     }
    
-    public BigDecimal getIdPaciente() {
+    public int getIdPaciente() {
         return this.idPaciente;
     }
     
-    public void setIdPaciente(BigDecimal idPaciente) {
+    public void setIdPaciente(int idPaciente) {
         this.idPaciente = idPaciente;
     }
     public String getRutPaciente() {

@@ -1,8 +1,7 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 15:22:40 by Hibernate Tools 4.3.1
+// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -11,23 +10,23 @@ import java.util.Date;
 public class FormularioMediamento  implements java.io.Serializable {
 
 
-     private BigDecimal idFormularioMedicamento;
-     private BigDecimal cantidadEntregada;
+     private int idFormularioMedicamento;
+     private int cantidadEntregada;
      private char requiereProximaEvaluacion;
      private Date fechaProximaEvaluacion;
-     private BigDecimal medicoIdMedico;
-     private BigDecimal pacienteIdPaciente;
+     private Integer medicoIdMedico;
+     private Integer pacienteIdPaciente;
 
     public FormularioMediamento() {
     }
 
 	
-    public FormularioMediamento(BigDecimal idFormularioMedicamento, BigDecimal cantidadEntregada, char requiereProximaEvaluacion) {
+    public FormularioMediamento(int idFormularioMedicamento, int cantidadEntregada, char requiereProximaEvaluacion) {
         this.idFormularioMedicamento = idFormularioMedicamento;
         this.cantidadEntregada = cantidadEntregada;
         this.requiereProximaEvaluacion = requiereProximaEvaluacion;
     }
-    public FormularioMediamento(BigDecimal idFormularioMedicamento, BigDecimal cantidadEntregada, char requiereProximaEvaluacion, Date fechaProximaEvaluacion, BigDecimal medicoIdMedico, BigDecimal pacienteIdPaciente) {
+    public FormularioMediamento(int idFormularioMedicamento, int cantidadEntregada, char requiereProximaEvaluacion, Date fechaProximaEvaluacion, Integer medicoIdMedico, Integer pacienteIdPaciente) {
        this.idFormularioMedicamento = idFormularioMedicamento;
        this.cantidadEntregada = cantidadEntregada;
        this.requiereProximaEvaluacion = requiereProximaEvaluacion;
@@ -36,18 +35,18 @@ public class FormularioMediamento  implements java.io.Serializable {
        this.pacienteIdPaciente = pacienteIdPaciente;
     }
    
-    public BigDecimal getIdFormularioMedicamento() {
+    public int getIdFormularioMedicamento() {
         return this.idFormularioMedicamento;
     }
     
-    public void setIdFormularioMedicamento(BigDecimal idFormularioMedicamento) {
+    public void setIdFormularioMedicamento(int idFormularioMedicamento) {
         this.idFormularioMedicamento = idFormularioMedicamento;
     }
-    public BigDecimal getCantidadEntregada() {
+    public int getCantidadEntregada() {
         return this.cantidadEntregada;
     }
     
-    public void setCantidadEntregada(BigDecimal cantidadEntregada) {
+    public void setCantidadEntregada(int cantidadEntregada) {
         this.cantidadEntregada = cantidadEntregada;
     }
     public char getRequiereProximaEvaluacion() {
@@ -64,18 +63,18 @@ public class FormularioMediamento  implements java.io.Serializable {
     public void setFechaProximaEvaluacion(Date fechaProximaEvaluacion) {
         this.fechaProximaEvaluacion = fechaProximaEvaluacion;
     }
-    public BigDecimal getMedicoIdMedico() {
+    public Integer getMedicoIdMedico() {
         return this.medicoIdMedico;
     }
     
-    public void setMedicoIdMedico(BigDecimal medicoIdMedico) {
+    public void setMedicoIdMedico(Integer medicoIdMedico) {
         this.medicoIdMedico = medicoIdMedico;
     }
-    public BigDecimal getPacienteIdPaciente() {
+    public Integer getPacienteIdPaciente() {
         return this.pacienteIdPaciente;
     }
     
-    public void setPacienteIdPaciente(BigDecimal pacienteIdPaciente) {
+    public void setPacienteIdPaciente(Integer pacienteIdPaciente) {
         this.pacienteIdPaciente = pacienteIdPaciente;
     }
 

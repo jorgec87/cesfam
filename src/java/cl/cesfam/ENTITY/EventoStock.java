@@ -1,8 +1,7 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 15:22:40 by Hibernate Tools 4.3.1
+// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -11,25 +10,25 @@ import java.util.Date;
 public class EventoStock  implements java.io.Serializable {
 
 
-     private BigDecimal idEventoStock;
+     private int idEventoStock;
      private Medicamento medicamento;
      private Paciente paciente;
      private Date fechaEventoStock;
      private char reserva;
      private String observacion;
-     private BigDecimal estado;
+     private int estado;
 
     public EventoStock() {
     }
 
 	
-    public EventoStock(BigDecimal idEventoStock, Date fechaEventoStock, char reserva, BigDecimal estado) {
+    public EventoStock(int idEventoStock, Date fechaEventoStock, char reserva, int estado) {
         this.idEventoStock = idEventoStock;
         this.fechaEventoStock = fechaEventoStock;
         this.reserva = reserva;
         this.estado = estado;
     }
-    public EventoStock(BigDecimal idEventoStock, Medicamento medicamento, Paciente paciente, Date fechaEventoStock, char reserva, String observacion, BigDecimal estado) {
+    public EventoStock(int idEventoStock, Medicamento medicamento, Paciente paciente, Date fechaEventoStock, char reserva, String observacion, int estado) {
        this.idEventoStock = idEventoStock;
        this.medicamento = medicamento;
        this.paciente = paciente;
@@ -39,11 +38,11 @@ public class EventoStock  implements java.io.Serializable {
        this.estado = estado;
     }
    
-    public BigDecimal getIdEventoStock() {
+    public int getIdEventoStock() {
         return this.idEventoStock;
     }
     
-    public void setIdEventoStock(BigDecimal idEventoStock) {
+    public void setIdEventoStock(int idEventoStock) {
         this.idEventoStock = idEventoStock;
     }
     public Medicamento getMedicamento() {
@@ -81,11 +80,11 @@ public class EventoStock  implements java.io.Serializable {
     public void setObservacion(String observacion) {
         this.observacion = observacion;
     }
-    public BigDecimal getEstado() {
+    public int getEstado() {
         return this.estado;
     }
     
-    public void setEstado(BigDecimal estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 

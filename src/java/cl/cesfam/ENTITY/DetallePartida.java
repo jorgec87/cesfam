@@ -1,8 +1,7 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 15:22:40 by Hibernate Tools 4.3.1
+// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -11,22 +10,22 @@ import java.util.Date;
 public class DetallePartida  implements java.io.Serializable {
 
 
-     private BigDecimal idDetallePartida;
+     private int idDetallePartida;
      private Medicamento medicamento;
      private Partida partida;
-     private BigDecimal cantidad;
+     private int cantidad;
      private Date fechaIngreso;
 
     public DetallePartida() {
     }
 
 	
-    public DetallePartida(BigDecimal idDetallePartida, BigDecimal cantidad, Date fechaIngreso) {
+    public DetallePartida(int idDetallePartida, int cantidad, Date fechaIngreso) {
         this.idDetallePartida = idDetallePartida;
         this.cantidad = cantidad;
         this.fechaIngreso = fechaIngreso;
     }
-    public DetallePartida(BigDecimal idDetallePartida, Medicamento medicamento, Partida partida, BigDecimal cantidad, Date fechaIngreso) {
+    public DetallePartida(int idDetallePartida, Medicamento medicamento, Partida partida, int cantidad, Date fechaIngreso) {
        this.idDetallePartida = idDetallePartida;
        this.medicamento = medicamento;
        this.partida = partida;
@@ -34,11 +33,11 @@ public class DetallePartida  implements java.io.Serializable {
        this.fechaIngreso = fechaIngreso;
     }
    
-    public BigDecimal getIdDetallePartida() {
+    public int getIdDetallePartida() {
         return this.idDetallePartida;
     }
     
-    public void setIdDetallePartida(BigDecimal idDetallePartida) {
+    public void setIdDetallePartida(int idDetallePartida) {
         this.idDetallePartida = idDetallePartida;
     }
     public Medicamento getMedicamento() {
@@ -55,11 +54,11 @@ public class DetallePartida  implements java.io.Serializable {
     public void setPartida(Partida partida) {
         this.partida = partida;
     }
-    public BigDecimal getCantidad() {
+    public int getCantidad() {
         return this.cantidad;
     }
     
-    public void setCantidad(BigDecimal cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
     public Date getFechaIngreso() {

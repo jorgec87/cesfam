@@ -1,8 +1,7 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 15:22:40 by Hibernate Tools 4.3.1
+// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +12,7 @@ import java.util.Set;
 public class Partida  implements java.io.Serializable {
 
 
-     private BigDecimal idPartida;
+     private int idPartida;
      private Date fechaVencimineto;
      private String nombrePartida;
      private Set detallePartidas = new HashSet(0);
@@ -23,12 +22,12 @@ public class Partida  implements java.io.Serializable {
     }
 
 	
-    public Partida(BigDecimal idPartida, Date fechaVencimineto, String nombrePartida) {
+    public Partida(int idPartida, Date fechaVencimineto, String nombrePartida) {
         this.idPartida = idPartida;
         this.fechaVencimineto = fechaVencimineto;
         this.nombrePartida = nombrePartida;
     }
-    public Partida(BigDecimal idPartida, Date fechaVencimineto, String nombrePartida, Set detallePartidas, Set detalleEntregas) {
+    public Partida(int idPartida, Date fechaVencimineto, String nombrePartida, Set detallePartidas, Set detalleEntregas) {
        this.idPartida = idPartida;
        this.fechaVencimineto = fechaVencimineto;
        this.nombrePartida = nombrePartida;
@@ -36,11 +35,11 @@ public class Partida  implements java.io.Serializable {
        this.detalleEntregas = detalleEntregas;
     }
    
-    public BigDecimal getIdPartida() {
+    public int getIdPartida() {
         return this.idPartida;
     }
     
-    public void setIdPartida(BigDecimal idPartida) {
+    public void setIdPartida(int idPartida) {
         this.idPartida = idPartida;
     }
     public Date getFechaVencimineto() {

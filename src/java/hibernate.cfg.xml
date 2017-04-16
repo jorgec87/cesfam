@@ -7,17 +7,17 @@
     <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
     <property name="hibernate.connection.username">cesfam_dba</property>
     <property name="hibernate.connection.password">cesfam</property>
-    <mapping resource="cl/cesfam/ENTITY/Medicamento.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/Componente.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/DetalleEntrega.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/Paciente.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/EventoStock.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/DetallePartida.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/Composicion.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/FormularioMediamento.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Medico.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/FormularioMediamento.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/EventoStock.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/FuncionarioFarmacia.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/Stock.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/Composicion.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Partida.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/Stock.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/Paciente.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/Componente.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/Medicamento.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/DetalleEntrega.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/DetallePartida.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -1,8 +1,7 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 15:22:40 by Hibernate Tools 4.3.1
+// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,46 +11,46 @@ import java.util.Set;
 public class Stock  implements java.io.Serializable {
 
 
-     private BigDecimal idStock;
-     private BigDecimal stock;
-     private BigDecimal stockCritico;
+     private int idStock;
+     private int stock;
+     private int stockCritico;
      private Set medicamentos = new HashSet(0);
 
     public Stock() {
     }
 
 	
-    public Stock(BigDecimal idStock, BigDecimal stock, BigDecimal stockCritico) {
+    public Stock(int idStock, int stock, int stockCritico) {
         this.idStock = idStock;
         this.stock = stock;
         this.stockCritico = stockCritico;
     }
-    public Stock(BigDecimal idStock, BigDecimal stock, BigDecimal stockCritico, Set medicamentos) {
+    public Stock(int idStock, int stock, int stockCritico, Set medicamentos) {
        this.idStock = idStock;
        this.stock = stock;
        this.stockCritico = stockCritico;
        this.medicamentos = medicamentos;
     }
    
-    public BigDecimal getIdStock() {
+    public int getIdStock() {
         return this.idStock;
     }
     
-    public void setIdStock(BigDecimal idStock) {
+    public void setIdStock(int idStock) {
         this.idStock = idStock;
     }
-    public BigDecimal getStock() {
+    public int getStock() {
         return this.stock;
     }
     
-    public void setStock(BigDecimal stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
-    public BigDecimal getStockCritico() {
+    public int getStockCritico() {
         return this.stockCritico;
     }
     
-    public void setStockCritico(BigDecimal stockCritico) {
+    public void setStockCritico(int stockCritico) {
         this.stockCritico = stockCritico;
     }
     public Set getMedicamentos() {
