@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 14-04-2017 22:03:42 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cl.cesfam.ENTITY.Paciente" table="PACIENTE" schema="CESFAM_DBA" optimistic-lock="version">
+        <id name="idPaciente" type="long">
+            <column name="ID_PACIENTE" precision="11" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="rutPaciente" type="string">
+            <column name="RUT_PACIENTE" length="12" not-null="true" />
+        </property>
+        <property name="primerNombrePaciente" type="string">
+            <column name="PRIMER_NOMBRE_PACIENTE" length="45" not-null="true" />
+        </property>
+        <property name="segundoNombrePaciente" type="string">
+            <column name="SEGUNDO_NOMBRE_PACIENTE" length="45" />
+        </property>
+        <property name="apellidoPaternoPaciente" type="string">
+            <column name="APELLIDO_PATERNO_PACIENTE" length="45" not-null="true" />
+        </property>
+        <property name="apellidoMaternoPaciente" type="string">
+            <column name="APELLIDO_MATERNO_PACIENTE" length="45" not-null="true" />
+        </property>
+        <property name="emailPaciente" type="string">
+            <column name="EMAIL_PACIENTE" length="45" />
+        </property>
+        <property name="telefonoPaciente" type="string">
+            <column name="TELEFONO_PACIENTE" length="10" />
+        </property>
+        <set name="eventoStocks" table="EVENTO_STOCK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PACIENTE_ID_PACIENTE" precision="11" scale="0" />
+            </key>
+            <one-to-many class="cl.cesfam.ENTITY.EventoStock" />
+        </set>
+    </class>
+</hibernate-mapping>
