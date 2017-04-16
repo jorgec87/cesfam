@@ -23,7 +23,7 @@
 
     <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 
-</head>S
+</head>
 
 <body class="skin-1">
 
