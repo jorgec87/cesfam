@@ -6,7 +6,7 @@
     <class name="cl.cesfam.ENTITY.Stock" table="STOCK" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idStock" type="int">
             <column name="ID_STOCK" precision="8" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="stock" type="int">
             <column name="STOCK" precision="8" scale="0" not-null="true" />

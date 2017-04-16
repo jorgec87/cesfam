@@ -20,13 +20,13 @@ public class DetallePartida  implements java.io.Serializable {
     }
 
 	
-    public DetallePartida(int idDetallePartida, int cantidad, Date fechaIngreso) {
-        this.idDetallePartida = idDetallePartida;
+    public DetallePartida( int cantidad, Date fechaIngreso) {
+        
         this.cantidad = cantidad;
         this.fechaIngreso = fechaIngreso;
     }
-    public DetallePartida(int idDetallePartida, Medicamento medicamento, Partida partida, int cantidad, Date fechaIngreso) {
-       this.idDetallePartida = idDetallePartida;
+    public DetallePartida(Medicamento medicamento, Partida partida, int cantidad, Date fechaIngreso) {
+       
        this.medicamento = medicamento;
        this.partida = partida;
        this.cantidad = cantidad;

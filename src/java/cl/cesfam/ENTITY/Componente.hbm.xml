@@ -6,7 +6,7 @@
     <class name="cl.cesfam.ENTITY.Componente" table="COMPONENTE" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idComponente" type="int">
             <column name="ID_COMPONENTE" precision="8" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="nombreComponente" type="string">
             <column name="NOMBRE_COMPONENTE" length="45" not-null="true" />

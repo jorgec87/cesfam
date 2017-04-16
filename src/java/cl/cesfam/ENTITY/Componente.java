@@ -19,12 +19,12 @@ public class Componente  implements java.io.Serializable {
     }
 
 	
-    public Componente(int idComponente, String nombreComponente) {
-        this.idComponente = idComponente;
+    public Componente(String nombreComponente) {
+        
         this.nombreComponente = nombreComponente;
     }
-    public Componente(int idComponente, String nombreComponente, Set composicions) {
-       this.idComponente = idComponente;
+    public Componente( String nombreComponente, Set composicions) {
+       
        this.nombreComponente = nombreComponente;
        this.composicions = composicions;
     }

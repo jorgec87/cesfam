@@ -18,12 +18,9 @@ public class Composicion  implements java.io.Serializable {
     }
 
 	
-    public Composicion(int idComposicion) {
-        this.idComposicion = idComposicion;
-    }
-    public Composicion(int idComposicion, Componente componente, Medicamento medicamento, Integer cantidad) {
-       this.idComposicion = idComposicion;
-       this.componente = componente;
+
+    public Composicion(Componente componente, Medicamento medicamento, Integer cantidad) {
+      this.componente = componente;
        this.medicamento = medicamento;
        this.cantidad = cantidad;
     }

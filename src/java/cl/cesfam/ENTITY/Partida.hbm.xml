@@ -6,7 +6,7 @@
     <class name="cl.cesfam.ENTITY.Partida" table="PARTIDA" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idPartida" type="int">
             <column name="ID_PARTIDA" precision="8" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="fechaVencimineto" type="date">
             <column name="FECHA_VENCIMINETO" length="7" not-null="true" />

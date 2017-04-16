@@ -18,11 +18,9 @@ public class DetalleEntrega  implements java.io.Serializable {
     }
 
 	
-    public DetalleEntrega(int idEntrega) {
-        this.idEntrega = idEntrega;
-    }
-    public DetalleEntrega(int idEntrega, Partida partida, Integer entregaIdEntrega, Integer prescripcionIdPrescripcion) {
-       this.idEntrega = idEntrega;
+   
+    public DetalleEntrega( Partida partida, Integer entregaIdEntrega, Integer prescripcionIdPrescripcion) {
+       
        this.partida = partida;
        this.entregaIdEntrega = entregaIdEntrega;
        this.prescripcionIdPrescripcion = prescripcionIdPrescripcion;

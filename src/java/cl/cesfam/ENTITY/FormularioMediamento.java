@@ -21,13 +21,13 @@ public class FormularioMediamento  implements java.io.Serializable {
     }
 
 	
-    public FormularioMediamento(int idFormularioMedicamento, int cantidadEntregada, char requiereProximaEvaluacion) {
-        this.idFormularioMedicamento = idFormularioMedicamento;
+    public FormularioMediamento( int cantidadEntregada, char requiereProximaEvaluacion) {
+       
         this.cantidadEntregada = cantidadEntregada;
         this.requiereProximaEvaluacion = requiereProximaEvaluacion;
     }
-    public FormularioMediamento(int idFormularioMedicamento, int cantidadEntregada, char requiereProximaEvaluacion, Date fechaProximaEvaluacion, Integer medicoIdMedico, Integer pacienteIdPaciente) {
-       this.idFormularioMedicamento = idFormularioMedicamento;
+    public FormularioMediamento( int cantidadEntregada, char requiereProximaEvaluacion, Date fechaProximaEvaluacion, Integer medicoIdMedico, Integer pacienteIdPaciente) {
+      
        this.cantidadEntregada = cantidadEntregada;
        this.requiereProximaEvaluacion = requiereProximaEvaluacion;
        this.fechaProximaEvaluacion = fechaProximaEvaluacion;

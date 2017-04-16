@@ -22,14 +22,14 @@ public class EventoStock  implements java.io.Serializable {
     }
 
 	
-    public EventoStock(int idEventoStock, Date fechaEventoStock, char reserva, int estado) {
-        this.idEventoStock = idEventoStock;
+    public EventoStock( Date fechaEventoStock, char reserva, int estado) {
+       
         this.fechaEventoStock = fechaEventoStock;
         this.reserva = reserva;
         this.estado = estado;
     }
-    public EventoStock(int idEventoStock, Medicamento medicamento, Paciente paciente, Date fechaEventoStock, char reserva, String observacion, int estado) {
-       this.idEventoStock = idEventoStock;
+    public EventoStock( Medicamento medicamento, Paciente paciente, Date fechaEventoStock, char reserva, String observacion, int estado) {
+      
        this.medicamento = medicamento;
        this.paciente = paciente;
        this.fechaEventoStock = fechaEventoStock;

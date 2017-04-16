@@ -20,13 +20,13 @@ public class Stock  implements java.io.Serializable {
     }
 
 	
-    public Stock(int idStock, int stock, int stockCritico) {
-        this.idStock = idStock;
+    public Stock( int stock, int stockCritico) {
+        
         this.stock = stock;
         this.stockCritico = stockCritico;
     }
-    public Stock(int idStock, int stock, int stockCritico, Set medicamentos) {
-       this.idStock = idStock;
+    public Stock( int stock, int stockCritico, Set medicamentos) {
+      
        this.stock = stock;
        this.stockCritico = stockCritico;
        this.medicamentos = medicamentos;

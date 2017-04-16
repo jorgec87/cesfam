@@ -21,16 +21,16 @@ public class FuncionarioFarmacia  implements java.io.Serializable {
     }
 
 	
-    public FuncionarioFarmacia(int idFuncionario, String rutFuncionario, String password, String primerNombreFuncionario, String apellidoPaternoFuncionario, String apellidoMaternoFuncionario) {
-        this.idFuncionario = idFuncionario;
+    public FuncionarioFarmacia( String rutFuncionario, String password, String primerNombreFuncionario, String apellidoPaternoFuncionario, String apellidoMaternoFuncionario) {
+      
         this.rutFuncionario = rutFuncionario;
         this.password = password;
         this.primerNombreFuncionario = primerNombreFuncionario;
         this.apellidoPaternoFuncionario = apellidoPaternoFuncionario;
         this.apellidoMaternoFuncionario = apellidoMaternoFuncionario;
     }
-    public FuncionarioFarmacia(int idFuncionario, String rutFuncionario, String password, String primerNombreFuncionario, String sengundoNombreFuncionario, String apellidoPaternoFuncionario, String apellidoMaternoFuncionario) {
-       this.idFuncionario = idFuncionario;
+    public FuncionarioFarmacia( String rutFuncionario, String password, String primerNombreFuncionario, String sengundoNombreFuncionario, String apellidoPaternoFuncionario, String apellidoMaternoFuncionario) {
+      
        this.rutFuncionario = rutFuncionario;
        this.password = password;
        this.primerNombreFuncionario = primerNombreFuncionario;

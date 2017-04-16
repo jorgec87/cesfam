@@ -21,16 +21,16 @@ public class Medico  implements java.io.Serializable {
     }
 
 	
-    public Medico(int idMedico, String rutMedico, String password, String primerNombreMedico, String apellidoPaternoMedico, String apellidoMaternoMedico) {
-        this.idMedico = idMedico;
+    public Medico(String rutMedico, String password, String primerNombreMedico, String apellidoPaternoMedico, String apellidoMaternoMedico) {
+      
         this.rutMedico = rutMedico;
         this.password = password;
         this.primerNombreMedico = primerNombreMedico;
         this.apellidoPaternoMedico = apellidoPaternoMedico;
         this.apellidoMaternoMedico = apellidoMaternoMedico;
     }
-    public Medico(int idMedico, String rutMedico, String password, String primerNombreMedico, String segundoNombreMedico, String apellidoPaternoMedico, String apellidoMaternoMedico) {
-       this.idMedico = idMedico;
+    public Medico( String rutMedico, String password, String primerNombreMedico, String segundoNombreMedico, String apellidoPaternoMedico, String apellidoMaternoMedico) {
+       
        this.rutMedico = rutMedico;
        this.password = password;
        this.primerNombreMedico = primerNombreMedico;

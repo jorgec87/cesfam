@@ -6,7 +6,7 @@
     <class name="cl.cesfam.ENTITY.Medicamento" table="MEDICAMENTO" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idMedicamento" type="int">
             <column name="ID_MEDICAMENTO" precision="8" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="stock" class="cl.cesfam.ENTITY.Stock" fetch="select">
             <column name="STOCK_ID_STOCK" precision="8" scale="0" />

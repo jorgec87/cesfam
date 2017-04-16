@@ -6,7 +6,7 @@
     <class name="cl.cesfam.ENTITY.Paciente" table="PACIENTE" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idPaciente" type="int">
             <column name="ID_PACIENTE" precision="8" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="rutPaciente" type="string">
             <column name="RUT_PACIENTE" length="12" not-null="true" />

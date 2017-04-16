@@ -25,15 +25,15 @@ public class Paciente  implements java.io.Serializable {
     }
 
 	
-    public Paciente(int idPaciente, String rutPaciente, String primerNombrePaciente, String apellidoPaternoPaciente, String apellidoMaternoPaciente) {
-        this.idPaciente = idPaciente;
+    public Paciente(String rutPaciente, String primerNombrePaciente, String apellidoPaternoPaciente, String apellidoMaternoPaciente) {
+        
         this.rutPaciente = rutPaciente;
         this.primerNombrePaciente = primerNombrePaciente;
         this.apellidoPaternoPaciente = apellidoPaternoPaciente;
         this.apellidoMaternoPaciente = apellidoMaternoPaciente;
     }
-    public Paciente(int idPaciente, String rutPaciente, String primerNombrePaciente, String segundoNombrePaciente, String apellidoPaternoPaciente, String apellidoMaternoPaciente, String emailPaciente, String telefonoPaciente, Set eventoStocks) {
-       this.idPaciente = idPaciente;
+    public Paciente(String rutPaciente, String primerNombrePaciente, String segundoNombrePaciente, String apellidoPaternoPaciente, String apellidoMaternoPaciente, String emailPaciente, String telefonoPaciente, Set eventoStocks) {
+       
        this.rutPaciente = rutPaciente;
        this.primerNombrePaciente = primerNombrePaciente;
        this.segundoNombrePaciente = segundoNombrePaciente;

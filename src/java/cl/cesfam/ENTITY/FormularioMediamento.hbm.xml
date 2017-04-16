@@ -6,7 +6,7 @@
     <class name="cl.cesfam.ENTITY.FormularioMediamento" table="FORMULARIO_MEDIAMENTO" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idFormularioMedicamento" type="int">
             <column name="ID_FORMULARIO_MEDICAMENTO" precision="8" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="cantidadEntregada" type="int">
             <column name="CANTIDAD_ENTREGADA" precision="8" scale="0" not-null="true" />

@@ -22,13 +22,12 @@ public class Partida  implements java.io.Serializable {
     }
 
 	
-    public Partida(int idPartida, Date fechaVencimineto, String nombrePartida) {
-        this.idPartida = idPartida;
+    public Partida( Date fechaVencimineto, String nombrePartida) {
+       
         this.fechaVencimineto = fechaVencimineto;
         this.nombrePartida = nombrePartida;
     }
-    public Partida(int idPartida, Date fechaVencimineto, String nombrePartida, Set detallePartidas, Set detalleEntregas) {
-       this.idPartida = idPartida;
+    public Partida(Date fechaVencimineto, String nombrePartida, Set detallePartidas, Set detalleEntregas) {
        this.fechaVencimineto = fechaVencimineto;
        this.nombrePartida = nombrePartida;
        this.detallePartidas = detallePartidas;

@@ -25,15 +25,15 @@ public class Medicamento  implements java.io.Serializable {
     }
 
 	
-    public Medicamento(int idMedicamento, String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante) {
-        this.idMedicamento = idMedicamento;
+    public Medicamento( String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante) {
+        
         this.nombreMedicamento = nombreMedicamento;
         this.presentacion = presentacion;
         this.contenidoEnvase = contenidoEnvase;
         this.fabricante = fabricante;
     }
-    public Medicamento(int idMedicamento, Stock stock, String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante, Set composicions, Set detallePartidas, Set eventoStocks) {
-       this.idMedicamento = idMedicamento;
+    public Medicamento(Stock stock, String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante, Set composicions, Set detallePartidas, Set eventoStocks) {
+      
        this.stock = stock;
        this.nombreMedicamento = nombreMedicamento;
        this.presentacion = presentacion;
