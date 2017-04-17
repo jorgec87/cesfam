@@ -14,7 +14,7 @@ import org.hibernate.criterion.Restrictions;
  * 
  * @author **Jorge Carrenca**
  */
-public class FucionarioFarmaciaDAO {
+public class FuncionarioFarmaciaDAO {
 
        public static boolean add(cl.cesfam.ENTITY.FuncionarioFarmacia a) throws Exception 
         {

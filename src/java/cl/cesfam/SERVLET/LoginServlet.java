@@ -49,9 +49,9 @@ public class LoginServlet extends HttpServlet {
             System.out.println("Autenticando usuario ["+rut+","+contraseña+"]...");
             
             
-              if (cl.cesfam.DAO.FucionarioFarmaciaDAO.getFuncionarioByRut(rut) != null)
+              if (cl.cesfam.DAO.FuncionarioFarmaciaDAO.getFuncionarioByRut(rut) != null)
             {               
-                funcionario = cl.cesfam.DAO.FucionarioFarmaciaDAO.getFuncionarioByRut(rut);
+                funcionario = cl.cesfam.DAO.FuncionarioFarmaciaDAO.getFuncionarioByRut(rut);
                 
                 if (funcionario.getPassword().equals(contraseña))
                 {
