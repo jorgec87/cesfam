@@ -3,6 +3,11 @@
     Created on : 16-04-2017, 15:34:23
     Author     : Francisco
 --%>
+<%@page import="cl.cesfam.DTO.SessionUsuario"%>
+<%
+    
+	cl.cesfam.DTO.SessionUsuario userSession = (cl.cesfam.DTO.SessionUsuario)request.getSession(false).getAttribute("usuario");
+%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -37,14 +42,14 @@
                             <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%=userSession.getNombreUsuario() %></strong>
                              </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="profile.html">Profile</a></li>
                             <li><a href="contacts.html">Contacts</a></li>
                             <li><a href="mailbox.html">Mailbox</a></li>
                             <li class="divider"></li>
-                            <li><a href="login.html">Logout</a></li>
+                            <li><a href="LogoutServlet">Logout</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">
@@ -52,7 +57,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="index.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
+                    <a href="dashboard.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
                         <span></span></a>              
                 </li>
                 <li class="active">
@@ -180,7 +185,7 @@
 
 
                 <li>
-                    <a href="login.html">
+                    <a href="LogoutServlet">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>

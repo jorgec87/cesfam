@@ -38,13 +38,13 @@
             </div>
             <div class="col-md-6">
                 <div class="ibox-content">
-                    <form class="m-t" role="form" id="form" action="index.html">
+                    <form class="m-t" role="form" method="post"  id="form" action="LoginServlet">
                         <div class="form-group">
-                            <input id="rut" type="text" placeholder="Rut"  class="form-control valid" name="number" aria-required="true" aria-invalid="false">
+                            <input id="rut" type="text" placeholder="Rut"  class="form-control valid" name="txtRut" aria-required="true" aria-invalid="false">
                             <label id="number-error" class="error" for="number" style="display: none;"></label>
                         </div>
                        <div class="form-group">
-                           <input type="password" placeholder="Contraseña" class="form-control valid" name="password" aria-required="true" aria-invalid="false">
+                           <input type="password" placeholder="Contraseña" class="form-control valid" name="txtPass" aria-required="true" aria-invalid="false">
                            <label id="password-error" class="error" for="password" style="display: none;"></label>
                        </div>
                         <button type="submit" class="btn btn-outline btn-success block full-width m-b">Ingresar</button>
