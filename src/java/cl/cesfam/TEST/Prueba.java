@@ -7,7 +7,9 @@ package cl.cesfam.TEST;
 
 import cl.cesfam.ENTITY.Componente;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,25 +36,26 @@ public class Prueba {
 //             System.out.println("Error al ingresar");
 //            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-       String link = "C:\\Users\\Eduardo\\Desktop\\PORTAFOLIO\\componentes.txt";
-		
-	String texto = "";
+       
         
         cl.cesfam.ENTITY.Componente c1 = new Componente();
 	
 	try {
-		BufferedReader bf = new BufferedReader(new FileReader(link));
+             
+	    FileInputStream fis = new FileInputStream("C:\\Users\\Eduardo\\Desktop\\PORTAFOLIO\\componentes.txt");
+            InputStreamReader is = new InputStreamReader(fis, "ISO-8859-1");
+              BufferedReader bf = new BufferedReader(is);
+		         
 		String temp = "";
 		String bfRead;
 		while((bfRead = bf.readLine()) != null){
-			temp = temp + bfRead+"\n";
-                        c1.setNombreComponente(bfRead);
+			 c1.setNombreComponente(bfRead);
                         cl.cesfam.DAO.ComponenteDAO.add(c1);
                         System.out.println("componente :"+bfRead+" guardado con exito");
                         
 		}
 		
-		texto = temp;
+		
 		
 	} catch (Exception e) {
 		// TODO: handle exception
