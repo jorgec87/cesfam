@@ -30,6 +30,7 @@
 
             <div class="col-md-6">
                 <h2 class="font-bold">Bienvenido a CESFAM</h2>
+                <img class="hidden-xs hidden-sm" src="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg" width="200" height="200" alt="LOGO-CESFAM-ORIGINAL-2"/>
 
                 <p>
                     Establecimientos de atención primaria
