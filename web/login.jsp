@@ -95,11 +95,11 @@
              //funcion que valida campos
              $("#form").validate({
                  rules: {
-                     password: {
+                     txtPass: {
                          required: true,
                          minlength: 4
                      },
-                     number: {
+                     txtRut: {
                          required: true,
                          number: false,
                          minlength: 8 
