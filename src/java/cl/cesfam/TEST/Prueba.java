@@ -42,7 +42,7 @@ public class Prueba {
 	
 	try {
              
-	    FileInputStream fis = new FileInputStream("C:\\Users\\Eduardo\\Desktop\\PORTAFOLIO\\componentes.txt");
+	    FileInputStream fis = new FileInputStream("C:\\Users\\Francisco\\Desktop\\Analista Programador\\Portafolio De Titulo\\componentes.txt");
             InputStreamReader is = new InputStreamReader(fis, "ISO-8859-1");
               BufferedReader bf = new BufferedReader(is);
 		         

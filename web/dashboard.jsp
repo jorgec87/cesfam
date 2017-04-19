@@ -60,7 +60,7 @@
                 <li class="active">
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class="active"><a href="agregarstock.jsp">Agregar Partida</a></li>
+                        <li class="active"><a href="agregarmedicamento.jsp">Agregar Medicamento</a></li>
                         <li><a href="revisarstock.jsp">Revisar Stock Disponible</a></li>
                     </ul>
                 </li>
