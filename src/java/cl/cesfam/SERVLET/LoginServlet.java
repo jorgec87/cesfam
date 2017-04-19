@@ -55,25 +55,26 @@ public class LoginServlet extends HttpServlet {
                 
                 if (funcionario.getPassword().equals(contraseña))
                 {
-                 System.out.println("Autenticando usuario ["+rut+":OK]");
-		 SessionUsuario userSession = new SessionUsuario();
-                 userSession.setIdUsuario(funcionario.getIdFuncionario());
-                 userSession.setRutUsuario(funcionario.getRutFuncionario());
-                 userSession.setNombreUsuario(funcionario.getPrimerNombreFuncionario()+" "+funcionario.getApellidoPaternoFuncionario());
-                 request.getSession().setAttribute("usuario", userSession); 
-                 System.out.println("armo la sessión");
-                 request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+                    System.out.println("Autenticando usuario ["+rut+":OK]");
+                    SessionUsuario userSession = new SessionUsuario();
+                    userSession.setIdUsuario(funcionario.getIdFuncionario());
+                    userSession.setRutUsuario(funcionario.getRutFuncionario());
+                    userSession.setNombreUsuario(funcionario.getPrimerNombreFuncionario()+" "+funcionario.getApellidoPaternoFuncionario());
+                    request.getSession().setAttribute("usuario", userSession); 
+                    System.out.println("armo la sessión");
+                    request.getRequestDispatcher("dashboard.jsp").forward(request, response);
                 }
                 else
                 {     
-                System.out.println("Autenticando usuario ["+rut+":PASSWORD NO OK]");
-                res.sendRedirect("login.jsp?error=1");
+                    System.out.println("Autenticando usuario ["+rut+":PASSWORD NO OK]");
+                    res.sendRedirect("login.jsp?error=1");
                 }
              }
-             else
-                System.out.println("Autenticando usuario ["+rut+":NOMBRE DE USUARIO NO OK]");
-                res.sendRedirect("login.jsp?error=2");
-           
+              else
+              {
+                     System.out.println("Autenticando usuario ["+rut+":NOMBRE DE USUARIO NO OK]");
+                     res.sendRedirect("login.jsp?error=1");
+               }
             }
             catch (Exception e) 
             {

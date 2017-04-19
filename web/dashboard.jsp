@@ -19,12 +19,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>HOME | Dashboard</title>
-
+     <link rel="shortcut icon" href="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+     <!-- Toastr style -->
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+   
+
+
 
 </head>
 
@@ -815,6 +820,12 @@
     <script src="js/plugins/flot/jquery.flot.pie.js"></script>
     <script src="js/plugins/flot/jquery.flot.symbol.js"></script>
     <script src="js/plugins/flot/jquery.flot.time.js"></script>
+    
+   <!-- Toastr -->
+    <script src="js/plugins/toastr/toastr.min.js"></script>
+
+
+
 
     <!-- Custom and plugin javascript -->
     <script src="js/inspinia.js"></script>
@@ -907,7 +918,20 @@
                         tooltip: false
                     }
             );
+    
+         
+             setTimeout(function() {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+                toastr.success('Centros de Salud Familiar', 'Bienvenido a CESFAM');
 
+            }, 1300);
+
+        
         });
     </script>
 </body>

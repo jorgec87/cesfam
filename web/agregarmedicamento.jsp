@@ -17,8 +17,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Agregar Stock</title>
-
+    <title>CESFAM | Agregar Stock</title>
+    <link rel="shortcut icon" href="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
@@ -61,7 +61,7 @@
                 <li class="active">
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class="active"><a href="sgregarmedicamento.jsp">Agregar Medicamento</a></li>
+                        <li class="active"><a href="agregarmedicamento.jsp">Agregar Medicamento</a></li>
                         <li><a href="revisarstock.jsp">Revisar Stock Disponible</a></li>
                     </ul>
                 </li>
@@ -196,7 +196,7 @@
 </body>
 
 </html>
-        <script>
+  <script>
             $(document).ready(function () {
                 $('.i-checks').iCheck({
                     checkboxClass: 'icheckbox_square-green',
