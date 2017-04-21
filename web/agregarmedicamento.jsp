@@ -3,7 +3,9 @@
     Created on : 16-04-2017, 15:34:23
     Author     : Francisco
 --%>
+<%@page import="java.util.List"%>
 <%@page import="cl.cesfam.DTO.SessionUsuario"%>
+<%@page import="cl.cesfam.ENTITY.Medicamento"%>
 <%    
 	cl.cesfam.DTO.SessionUsuario userSession = (cl.cesfam.DTO.SessionUsuario)request.getSession(false).getAttribute("usuario");
 %>
@@ -103,11 +105,20 @@
                             <div class="form-group">                               
                                 <label class="col-sm-4 col-md-4 control-label" style="margin-top: 23px;">Nombre De Medicamento</label>
                                 <div class="col-sm-6  col-md-5" style="margin-top: 23px;">
-                                    <select data-placeholder="Seleccione el medicamento" class="chosen-select" tabindex="2" style=" min-width: 270px;">
-                                        <option value="">Seleccione el medicamento</option>
-                                        <option value="United States">Penedol</option>
-                                        <option value="United Kingdom">Cachiaspirina</option>
-                                        <option value="Afghanistan">ASDF</option>
+                                    <select data-placeholder="Seleccione el medicamento" class="chosen-select" tabindex="2" style=" min-width: 270px;" id="ddlMedicamentos"  name="ddlMedicamentos">
+                   <option value="0">Seleccione Medicamento</option>
+                         <%
+                 try{
+                    //LISTA DE MEDICAMENTOS    
+                   List<cl.cesfam.ENTITY.Medicamento> medicamentos = new cl.cesfam.DAO.MedicamentoDAO().getList();
+                  
+                if(medicamentos != null){
+                for (Medicamento item: medicamentos)
+                { %> <option value="<%=item.getIdMedicamento()%>"><%=item.getNombreMedicamento()%></option>               
+                <%}}}catch(Exception e){
+
+                     out.println(e.getMessage());
+                } %>
                                     </select>
                                 </div>
                                 <div class="col-sm-1  col-md-1" style="margin-top: 20px; margin-left: -25px;">
@@ -134,6 +145,7 @@
     <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content animated bounceInRight">
+                <form id="medForm" name="medForm">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <i class="fa fa-medkit modal-icon"></i>
@@ -143,33 +155,36 @@
                 <div class="modal-body"> 
                     
                     <div class="form-group">
-                        <label>Nombre</label> <input type="text" placeholder="Ingrese nombre de medicamento" class="form-control">
+                        <label>Nombre</label> 
+                        <input type="text" name="txtNombreMed" placeholder="Ingrese nombre de medicamento" class="form-control" id="txtNombreMed">
                     </div>
                     <div class="form-group">
                         <p><b>Tipo de presentacion</b></p>
                                         <div class="radio radio-info radio-inline">
-                                            <input type="radio" id="SelectSolid" value="option1" name="radioInline" checked="">
+                                            <input type="radio" id="SelectSolid" value="1" name="radioInline" checked="">
                                             <label for="SelectSolid">Solida</label>
                                         </div>
                                         <div class="radio radio-inline">
-                                            <input type="radio" id="SelectLiq" value="option2" name="radioInline">
+                                            <input type="radio" id="SelectLiq" value="2" name="radioInline">
                                             <label for="SelectLiq">Liquida</label>
                                         </div>
                     </div>
                     <div class="form-group">
                         <label>Contenido Total</label>
                     <div class="input-group m-b">
-                         <input type="number" placeholder="Ingrese el contenido total del envase" class="form-control">
+                        <input type="number" placeholder="Ingrese el contenido total del envase" class="form-control" name="txtContenido" id="txtContenido">
                          <span class="input-group-addon" id="txtMedida">UN.</span>
                     </div>
                     </div>
-                    <div class="form-group"><label>Fabricante</label> <input type="text" placeholder="Ingrese fabricante del medicamento" class="form-control">
+                    <div class="form-group"><label>Fabricante</label> <input type="text" placeholder="Ingrese fabricante del medicamento" class="form-control" name="txtFabricante" id="txtFabricante">
                     </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Ingresar Medicamento</button>
+                    <button type="submit" class="btn btn-primary" id="btnIngresarMed">Ingresar Medicamento</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -183,6 +198,9 @@
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
+    <!-- Jquery Validate -->
+    <script src="js/plugins/validate/jquery.validate.min.js"></script>
+    
     <!-- Custom and plugin javascript -->
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
@@ -225,7 +243,55 @@
               $("#txtMedida").text("ML");    
             });  
             
-            
+//          INICIO DE VALIDACION
+             //funcion que valida campos
+            $("#medForm").validate
+            ({
+                rules: 
+                {
+                    txtNombreMed: {
+                        required: true
+                    },
+                    txtContenido: {
+                        required: true
+                    },
+                    txtFabricante: {
+                        required: true
+                    }
+                },           
+            submitHandler: function(form) {      
+//          INICIO RESPUESTA DE CREACION DE MEDICAMENTO		
+             var nombre = $("#txtNombreMed").val();
+             var presentacion = $("input[name='radioInline']:checked").val();
+             var contenido = $("#txtContenido").val();
+             var fabricante = $("#txtFabricante").val();
+             var accion = "registrarRemedio";
+             
+             var parametros = {"txtNombreMed" : nombre,"radioInline" : presentacion,"txtContenido" : contenido,"txtFabricante" : fabricante, "accion" : accion}
+
+            $.ajax({
+                data:  parametros,
+                url:   'RequestHelper',
+                type:  'post',
+                 success: function(responseText) 
+                 {
+                    var res = responseText;
+                        if(res != "false")
+                        {
+                            alert("La respuesta es: \n"+res);
+                            $("#myModal").modal('hide'); 
+                        }
+                        else
+                        {    
+                            alert("Medicamento no creado"); 
+                        }
+                 }
+                });
+//            FIN RESPUESTA AJAX
+            }
+//          FIN VALIDACION
+            });
+
             });
            
         

@@ -80,11 +80,41 @@ public class RequestHelper extends HttpServlet {
     }// </editor-fold>
 
     public static void RegistrarMedicamento(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet.");
         
-      
+      try {
+                cl.cesfam.ENTITY.Medicamento medicamento = new cl.cesfam.ENTITY.Medicamento();
 
-
+                //Nombre De medicamento
+                if (request.getParameter("txtNombreMed") != null) {
+                     medicamento.setNombreMedicamento(request.getParameter("txtNombreMed"));
+                }
+                //Nombre De medicamento
+                if (request.getParameter("radioInline") != null) {
+                     medicamento.setPresentacion(Integer.parseInt(request.getParameter("radioInline")));
+                }
+                //Contenido De Envase
+                if (request.getParameter("txtContenido") != null) {
+                     medicamento.setContenidoEnvase(Integer.parseInt(request.getParameter("txtContenido")));
+                }
+                //Nombre De medicamento
+                if (request.getParameter("txtFabricante") != null) {
+                     medicamento.setFabricante(request.getParameter("txtFabricante"));
+                }
+                if (cl.cesfam.DAO.MedicamentoDAO.add(medicamento)) 
+                {
+                       response.setContentType("text/plain");
+                       String res = medicamento.getNombreMedicamento();
+                       response.getWriter().write(res);
+                }
+                else
+                {
+                       response.setContentType("text/plain");
+                       String res = "false";
+                       response.getWriter().write(res);
+                }
+            } catch (Exception e) {
+                e.getMessage();            
+            }
     }
 
 }

@@ -58,14 +58,14 @@
                         MENU
                     </div>
                 </li>
-                <li>
+                <li class="active">
                     <a href="dashboard.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
                         <span></span></a>              
                 </li>
-                <li class="active">
+                <li class="">
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class="active"><a href="agregarmedicamento.jsp">Agregar Medicamento</a></li>
+                        <li class=""><a href="agregarmedicamento.jsp">Agregar Medicamento</a></li>
                         <li><a href="revisarstock.jsp">Revisar Stock Disponible</a></li>
                     </ul>
                 </li>
