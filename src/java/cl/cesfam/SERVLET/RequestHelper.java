@@ -102,8 +102,9 @@ public class RequestHelper extends HttpServlet {
                 }
                 if (cl.cesfam.DAO.MedicamentoDAO.add(medicamento)) 
                 {
+                    medicamento = cl.cesfam.DAO.MedicamentoDAO.getMedicamentoByName(medicamento.getNombreMedicamento());
                        response.setContentType("text/plain");
-                       String res = medicamento.getNombreMedicamento();
+                       String res = Integer.toString(medicamento.getIdMedicamento());
                        response.getWriter().write(res);
                 }
                 else

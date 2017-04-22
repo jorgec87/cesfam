@@ -340,7 +340,14 @@
                         if(res != "false")
                         {
                             alert("La respuesta es: \n"+res);
-                            $("#myModal").modal('hide'); 
+                            
+                            $("#ddlMedicamentos").append("<option value="+res+">"+nombre+"</option>");
+                            $("#ddlMedicamentos").val(res);
+                            $("#ddlMedicamentos").trigger("chosen:updated");
+                            $("#myModal").modal('hide');
+                            $("#txtNombreMed").val("");
+                            $("#txtContenido").val("");
+                            $("#txtFabricante").val("");                        
                         }
                         else
                         {    
