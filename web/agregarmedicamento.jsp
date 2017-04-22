@@ -3,6 +3,7 @@
     Created on : 16-04-2017, 15:34:23
     Author     : Francisco
 --%>
+<%@page import="cl.cesfam.ENTITY.Componente"%>
 <%@page import="java.util.List"%>
 <%@page import="cl.cesfam.DTO.SessionUsuario"%>
 <%@page import="cl.cesfam.ENTITY.Medicamento"%>
@@ -102,29 +103,89 @@
                     </div>
                     <div class="panel-body">
                         <form class="form-horizontal">
+                            <!--                            INICIO CB MEDICAMENTO-->
                             <div class="form-group">                               
                                 <label class="col-sm-4 col-md-4 control-label" style="margin-top: 23px;">Nombre De Medicamento</label>
                                 <div class="col-sm-6  col-md-5" style="margin-top: 23px;">
                                     <select data-placeholder="Seleccione el medicamento" class="chosen-select" tabindex="2" style=" min-width: 270px;" id="ddlMedicamentos"  name="ddlMedicamentos">
-                   <option value="0">Seleccione Medicamento</option>
-                         <%
-                 try{
-                    //LISTA DE MEDICAMENTOS    
-                   List<cl.cesfam.ENTITY.Medicamento> medicamentos = new cl.cesfam.DAO.MedicamentoDAO().getList();
-                  
-                if(medicamentos != null){
-                for (Medicamento item: medicamentos)
-                { %> <option value="<%=item.getIdMedicamento()%>"><%=item.getNombreMedicamento()%></option>               
-                <%}}}catch(Exception e){
+                                        <option value="0">Seleccione Medicamento</option>
+                                        <%
+                                            try {
+                                                //LISTA DE MEDICAMENTOS    
+                                                List<cl.cesfam.ENTITY.Medicamento> medicamentos = new cl.cesfam.DAO.MedicamentoDAO().getList();
 
-                     out.println(e.getMessage());
-                } %>
+                                                if (medicamentos != null) {
+                                                    for (Medicamento item : medicamentos) {%> <option value="<%=item.getIdMedicamento()%>"><%=item.getNombreMedicamento()%></option>               
+                                        <%}
+                                                }
+                                            } catch (Exception e) {
+
+                                                out.println(e.getMessage());
+                    } %>
                                     </select>
                                 </div>
                                 <div class="col-sm-1  col-md-1" style="margin-top: 20px; margin-left: -25px;">
                                     <button class="btn btn-outline col-xs-offset-1 btn-primary dim" id="btnMedicina" type="button"><i class="fa fa-plus"></i></button>
                                 </div>
                             </div>
+                            <!--                                    FIN CB MEDICAMENTO-->
+<!--                            INICIO CB COMPONENTES-->
+<div class="form-group">                               
+    <label class="col-sm-4 col-md-4 control-label" style="margin-top: 23px;">Seleccion de componentes</label>
+    <div class="col-sm-6  col-md-5" style="margin-top: 23px;">
+        <select data-placeholder="Seleccione los componentes" class="chosen-select" tabindex="2" style=" min-width: 270px;" id="ddlComponentes"  name="ddlComponentes">
+            <option value="0">Seleccione Los componentes</option>
+            <%
+                try {
+                    //LISTA DE COMPONENTES   
+                    List<cl.cesfam.ENTITY.Componente> componentes = new cl.cesfam.DAO.ComponenteDAO().getList();
+
+                    if (componentes != null) {
+                        for (Componente item : componentes) {%> <option value="<%=item.getIdComponente()%>"><%=item.getNombreComponente()%></option>               
+            <%}
+                    }
+                } catch (Exception e) {
+
+                    out.println(e.getMessage());
+                    } %>
+        </select>
+    </div>
+    <div class="col-sm-1  col-md-1" style="margin-top: 20px; margin-left: -25px;">
+        <button class="btn btn-outline col-xs-offset-1 btn-primary dim" id="btnComponentes" type="button"><i class="fa fa-plus"></i></button>
+    </div>
+</div>
+<!--                                    FIN CB COMPONENTES-->
+<div class="form-group">
+                        <label>Composicion</label>
+                    <div class="input-group m-b">
+                        <input type="number" placeholder="Ingrese el contenido total del envase" class="form-control" name="txtCantComp" id="txtCsntComp">
+                         <span class="input-group-addon" id="txtCantComp">ML</span>
+                    </div>
+                    </div>
+
+<!--                                    INICIO LISTADO DE COMPONENTES-->
+<div class="form-group">
+    <label class="col-sm-4 col-md-4 control-label" style="margin-top: 23px;">Listado de Componentes</label>
+    <div class="col-sm-6  col-md-5" style="margin-top: 23px;">
+        <select data-placeholder="Seleccione los componentes" class="chosen-select" multiple style="min-width:270px;" tabindex="4" id="listaComponentes"  name="listaComponentes">
+            <option value="0">Seleccione los componentes</option>
+            <%
+                try {
+                    //LISTA DE COMPONENTES   
+                    List<cl.cesfam.ENTITY.Componente> componentes = new cl.cesfam.DAO.ComponenteDAO().getList();
+
+                    if (componentes != null) {
+                        for (Componente item : componentes) {%> <option value="<%=item.getIdComponente()%>"><%=item.getNombreComponente()%></option>               
+            <%}
+                    }
+                } catch (Exception e) {
+
+                    out.println(e.getMessage());
+                    }%>
+        </select>
+    </div>
+</div>
+<!--                                    FIN LISTADO COMPONENTES-->
                         </form>                            
                     </div>
                 </div>
