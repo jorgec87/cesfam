@@ -29,10 +29,50 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/plugins/chosen/chosen.css" rel="stylesheet">
     <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
+    <style>
+.added_item {
+    font-family: "open sans";
+    font-size: 13px;
+    background-color: #1ab394;
+    color: #fff;
+    border-radius: 3px;
+    padding: 3px 10px;
+    display: inline;
+    float: left;
+    margin: 0 5px 5px 0;
+   
+}
+.item {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    
+}
+.content_view{
+    padding: 20px;
+}
+.added_item a {
+    color: #fff;
+}
+
+.inherit_color {
+    color: inherit;
+}
+.add{
+  color: #1ab394;
+  font-family: "open sans";
+}
+#b2{
+   font-family: "open sans";  
+}        
+        
+        
+    </style>
 </head>
 
-<body class="skin-1">
+<body class="skin-1 " >
 
     <div id="wrapper">
 
@@ -97,17 +137,17 @@
             <!--INICIO PANEL-->
             <div class="col-lg-8 col-md-offset-2" style="margin-top: 30px;">
                 
-                <div class="panel panel-primary">
+                <div class="panel panel-primary animated fadeIn">
                     <div class="panel-heading">
                         INFORMACION DE MEDICAMENTO
                     </div>
-                    <div class="panel-body">
-                        <form class="form-horizontal">
+                    <div class="panel-body" style="height: auto;">
+                        
                             <!--                            INICIO CB MEDICAMENTO-->
                             <div class="form-group">                               
                                 <label class="col-sm-4 col-md-4 control-label" style="margin-top: 23px;">Nombre De Medicamento</label>
-                                <div class="col-sm-6  col-md-5" style="margin-top: 23px;">
-                                    <select data-placeholder="Seleccione el medicamento" class="chosen-select" tabindex="2" style=" min-width: 270px;" id="ddlMedicamentos"  name="ddlMedicamentos">
+                                <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
+                                    <select data-placeholder="Seleccione el medicamento" class="chosen-select" tabindex="2"  id="ddlMedicamentos"  name="ddlMedicamentos">
                                         <option value="0">Seleccione Medicamento</option>
                                         <%
                                             try {
@@ -129,68 +169,28 @@
                                 </div>
                             </div>
                             <!--                                    FIN CB MEDICAMENTO-->
-<!--                            INICIO CB COMPONENTES-->
-<div class="form-group">                               
-    <label class="col-sm-4 col-md-4 control-label" style="margin-top: 23px;">Seleccion de componentes</label>
-    <div class="col-sm-6  col-md-5" style="margin-top: 23px;">
-        <select data-placeholder="Seleccione los componentes" class="chosen-select" tabindex="2" style=" min-width: 270px;" id="ddlComponentes"  name="ddlComponentes">
-            <option value="0">Seleccione Los componentes</option>
-            <%
-                try {
-                    //LISTA DE COMPONENTES   
-                    List<cl.cesfam.ENTITY.Componente> componentes = new cl.cesfam.DAO.ComponenteDAO().getList();
-
-                    if (componentes != null) {
-                        for (Componente item : componentes) {%> <option value="<%=item.getIdComponente()%>"><%=item.getNombreComponente()%></option>               
-            <%}
-                    }
-                } catch (Exception e) {
-
-                    out.println(e.getMessage());
-                    } %>
-        </select>
-    </div>
-    <div class="col-sm-1  col-md-1" style="margin-top: 20px; margin-left: -25px;">
-        <button class="btn btn-outline col-xs-offset-1 btn-primary dim" id="btnComponentes" type="button"><i class="fa fa-plus"></i></button>
-    </div>
-</div>
-<!--                                    FIN CB COMPONENTES-->
-<div class="form-group">
-                        <label>Composicion</label>
-                    <div class="input-group m-b">
-                        <input type="number" placeholder="Ingrese el contenido total del envase" class="form-control" name="txtCantComp" id="txtCsntComp">
-                         <span class="input-group-addon" id="txtCantComp">ML</span>
-                    </div>
-                    </div>
-
-<!--                                    INICIO LISTADO DE COMPONENTES-->
-<div class="form-group">
-    <label class="col-sm-4 col-md-4 control-label" style="margin-top: 23px;">Listado de Componentes</label>
-    <div class="col-sm-6  col-md-5" style="margin-top: 23px;">
-        <select data-placeholder="Seleccione los componentes" class="chosen-select" multiple style="min-width:270px;" tabindex="4" id="listaComponentes"  name="listaComponentes">
-            <option value="0">Seleccione los componentes</option>
-            <%
-                try {
-                    //LISTA DE COMPONENTES   
-                    List<cl.cesfam.ENTITY.Componente> componentes = new cl.cesfam.DAO.ComponenteDAO().getList();
-
-                    if (componentes != null) {
-                        for (Componente item : componentes) {%> <option value="<%=item.getIdComponente()%>"><%=item.getNombreComponente()%></option>               
-            <%}
-                    }
-                } catch (Exception e) {
-
-                    out.println(e.getMessage());
-                    }%>
-        </select>
-    </div>
-</div>
-<!--                                    FIN LISTADO COMPONENTES-->
-                        </form>                            
+                    <div class="ibox col-md-10 col-lg-offset-1" style="margin-top: 15px; height: auto;">
+                    <div class="ibox-title">
+                        <h5>Componentes</h5>
+                        <div class="pull-right add" >
+                            <a class="fa fa-plus-square" id="agregar" style="color: #1ab394; ">
+                                <b id="b2">Agregar</b>
+                            </a>
+                        </div>
+                    </div> 
+                    <div class="ibox-content" style="background-color: #fff; height: auto; ">
+                        <div class="item">
+                                              
+ 
+                         </div>
                     </div>
                 </div>
-            </div>
-            <!--FINAL PANEL-->           
+                                               
+                    </div>
+                </div>
+            </div><!--FINAL PANEL-->   
+           
+            
         <div class="footer">
             <div class="pull-right">
                 10GB of <strong>250GB</strong> Free.
@@ -201,8 +201,8 @@
         </div>
 
         </div>
-        </div>
-<!--    INICIO MODAL                   -->
+        </div>// fin wrapper
+<!--    INICIO MODAL 1                  -->
     <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content animated bounceInRight">
@@ -214,7 +214,7 @@
                     <small class="font-bold">Ingrese todos los datos para la creacion de el medicamento.</small>
                 </div>
                 <div class="modal-body"> 
-                    
+<!--                    inicio M-body-->
                     <div class="form-group">
                         <label>Nombre</label> 
                         <input type="text" name="txtNombreMed" placeholder="Ingrese nombre de medicamento" class="form-control" id="txtNombreMed">
@@ -239,10 +239,10 @@
                     </div>
                     <div class="form-group"><label>Fabricante</label> <input type="text" placeholder="Ingrese fabricante del medicamento" class="form-control" name="txtFabricante" id="txtFabricante">
                     </div>
-                    
+<!--                    final M-body-->    
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary" id="btnIngresarMed">Ingresar Medicamento</button>
                 </div>
                 </form>
@@ -250,7 +250,60 @@
         </div>
     </div>
 <!--FIN MODAL-->
-    
+                    <!--INICIO MODAL 2-->
+                    <div class="modal inmodal" id="myModaL2" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content animated bounceInRight">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <i class="fa fa-eyedropper modal-icon"></i>
+                                    <h4 class="modal-title">Agregar Componente</h4>
+                                    <small class="font-bold">Ingrese todos los datos para agregar el componente</small>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- INICIO MODL BODY-->   
+
+                                    <form class="">
+
+                                        <!--    INICIO CB COMPONENTES-->
+                                        <div class="form-group">                               
+                                            <label class="control-label" >Seleccion de componente  </label>
+
+                                            <select data-placeholder="Seleccione componente" class="chosen-select"  tabindex="2" id="ddlComponentes"  name="ddlComponentes">
+                                                <option value="0">Seleccione componente</option>
+                                                <%
+                                                    try {
+                                                        //LISTA DE COMPONENTES   
+                                                        List<cl.cesfam.ENTITY.Componente> componentes = new cl.cesfam.DAO.ComponenteDAO().getList();
+
+                                                        if (componentes != null) {
+                                                            for (Componente item : componentes) {%> <option value="<%=item.getIdComponente()%>"><%=item.getNombreComponente()%></option>               
+                                                <%}
+                                                        }
+                                                    } catch (Exception e) {
+
+                                                        out.println(e.getMessage());
+                                                                        }%>
+                                            </select>
+                                        </div>
+                                        <!--                                    FIN CB COMPONENTES-->
+                                        <div class="form-group">
+                                            <label>Contenido Total</label>
+                                            <div class="input-group m-b">
+                                                <input type="number" placeholder="Ingrese cantidad" class="form-control" name="txtMg" id="txtContenido">
+                                                <span class="input-group-addon">MG.</span>
+                                            </div>
+                                        </div>
+                                     </form>
+                                 </div><!--  FIN MODL BODY-->  
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary">Agregar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+  <!--FIN  MODAL 2-->  
 
 
     <!-- Mainly scripts -->
@@ -270,7 +323,8 @@
     <script src="js/plugins/iCheck/icheck.min.js"></script>
     <!-- chosen -->
     <script src="js/plugins/chosen/chosen.jquery.js"></script>
-    
+    <!-- Sweet alert -->
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
 </body>
 
@@ -288,9 +342,13 @@
                 '.chosen-select-no-single' : {disable_search_threshold:10},
                 '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'}
                 }
+                
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
+                 $("#ddlComponentes").chosen(config[selector]);
+                
             }
+           
             
             $("#btnMedicina").click(function(){
               $("#myModal").modal();    
@@ -328,7 +386,7 @@
              var fabricante = $("#txtFabricante").val();
              var accion = "registrarRemedio";
              
-             var parametros = {"txtNombreMed" : nombre,"radioInline" : presentacion,"txtContenido" : contenido,"txtFabricante" : fabricante, "accion" : accion}
+             var parametros = {"txtNombreMed" : nombre,"radioInline" : presentacion,"txtContenido" : contenido,"txtFabricante" : fabricante, "accion" : accion};
 
             $.ajax({
                 data:  parametros,
@@ -339,7 +397,11 @@
                     var res = responseText;
                         if(res != "false")
                         {
-                            alert("La respuesta es: \n"+res);
+                            swal({
+                                title: "Éxito!",
+                                text: "Medicamento guardado correctamente!",
+                                type: "success"
+                            });
                             
                             $("#ddlMedicamentos").append("<option value="+res+">"+nombre+"</option>");
                             $("#ddlMedicamentos").val(res);
@@ -359,8 +421,47 @@
             }
 //          FIN VALIDACION
             });
-
+            
+            // Agregar componente
+            
+             $("#agregar").click(function(){
+              $("#myModaL2").modal();    
             });
+            
+              $('#ddlMedicamentos').on('change', function(e) {
+               
+                
+                //  INICIO RESPUESTA DE OBTENER COMPONENTES	
+             var id = $("#ddlMedicamentos").val();
+             var accion = "obtenercomposicion";
+            
+             
+             var parametros = {"id" : id,"accion": accion};
+
+            $.ajax({
+                data:  parametros,
+                url:   'RequestHelper',
+                type:  'post',
+                 success: function(result) 
+                 {
+                      $(".item").empty();
+                      var myObject = JSON.parse(result);
+  
+                    for( var i=0; i< myObject.data.length ; i++){
+
+                          $(".item").append("<div class=\"added_item\">"+myObject.data[i].nombre+" ("+myObject.data[i].cantidad+"ml) <a class=\"inherit_color\" onclick=\"if(!confirm('¿Estás seguro que deseas eliminar el componente?')){ return false; }\" href=\"#\"><i class=\"fa fa-times\"></i></a></div>");
+
+                     } //fin for
+                      $(".item").append("<div class=\"clearfix\"></div>");  
+                 }
+                });
+//            FIN RESPUESTA AJAX
+                
+              });
+            
+            
+
+            });//FIN DOCUMENT READY
            
         
         </script>

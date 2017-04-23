@@ -7,6 +7,7 @@ package cl.cesfam.DAO;
 
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -80,4 +81,20 @@ public class ComposicionDAO {
                 throw e;
             }
         }
+      
+         public static List<cl.cesfam.ENTITY.Composicion> getComposicionByIdMedicamento(int id) throws Exception {
+            Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+            try {
+                session.beginTransaction();
+                List<cl.cesfam.ENTITY.Composicion> tmp = (List<cl.cesfam.ENTITY.Composicion>) session.createCriteria(cl.cesfam.ENTITY.Composicion.class).add(Restrictions.eq("medicamento", id)).list();
+                session.getTransaction().commit();
+                session.close();
+                return tmp;
+            } catch (Exception e) {
+                System.err.print(e.getMessage());
+                session.close();
+                throw e;
+            }
+        }
+     
 }

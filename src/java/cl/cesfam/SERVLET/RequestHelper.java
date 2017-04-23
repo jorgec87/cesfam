@@ -5,12 +5,20 @@
  */
 package cl.cesfam.SERVLET;
 
+import cl.cesfam.ENTITY.Composicion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -20,6 +28,7 @@ public class RequestHelper extends HttpServlet {
 
     
     private static String ACTION_REGISTRAR_REMEDIO = "registrarRemedio";
+    private static String ACTION_OBTENER_COMPOSICION = "obtenercomposicion";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,8 +42,10 @@ public class RequestHelper extends HttpServlet {
             System.out.println("procesando peticion [" + request.getRequestURL()+ action + "]");
             
            if (action.equals(ACTION_REGISTRAR_REMEDIO)) {
-		RegistrarMedicamento(request, response);} 
-            
+		RegistrarMedicamento(request, response);
+           }else if (action.equals(ACTION_OBTENER_COMPOSICION)) {
+		ObtenerComposicion(request, response); 
+           } 
             
             
         }
@@ -116,6 +127,105 @@ public class RequestHelper extends HttpServlet {
             } catch (Exception e) {
                 e.getMessage();            
             }
+    }
+
+    public static void ObtenerComposicion(HttpServletRequest request, HttpServletResponse response) {
+        
+         cl.cesfam.ENTITY.Composicion compo = new cl.cesfam.ENTITY.Composicion();
+          cl.cesfam.ENTITY.Componente componente = new cl.cesfam.ENTITY.Componente();
+         int idMedicamneto = 0;
+         JSONArray composiciones = new JSONArray();
+            JSONObject salida = new JSONObject();
+         
+          if (request.getParameter("id") != null) {
+                   idMedicamneto = Integer.parseInt(request.getParameter("id"));
+                }
+         
+          
+        try {
+           
+       Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+         session.beginTransaction();
+        Query query = session.createQuery("from Composicion Composicion where Composicion.medicamento = "+idMedicamneto);
+        List<cl.cesfam.ENTITY.Composicion> lista = query.list();
+        session.close();
+            if (lista != null) {
+                
+                for (Composicion com : lista) {
+                   JSONObject item = new JSONObject();
+                   componente = cl.cesfam.DAO.ComponenteDAO.getComponenteById(com.getComponente().getIdComponente());
+                   
+                   item.put("id_composicion", com.getIdComposicion());
+                   item.put("nombre", componente.getNombreComponente());
+                   item.put("cantidad", com.getCantidad());
+                    
+                    composiciones.put(item);
+                }
+                
+                salida.put("data", composiciones);
+                
+                try (PrintWriter out = response.getWriter()) {
+                    System.out.println("el objeto es :"+salida);
+                    out.println(salida);
+                    out.flush();
+                }
+                
+            }else{
+            
+            
+            
+            }
+            
+//            
+//            JSONObject salida = new JSONObject();
+//		String action = request.getParameter("action");
+//		String id = request.getParameter("rut");
+//		
+//		if (action.equals("getCliente")) {
+//			
+//			try {
+//				salida.put("data", PruebaConceptoDAO.ObtenerCliente(id));
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//				PrintWriter out = response.getWriter();
+//					out.println(salida);
+//					out.flush();
+//					out.close();
+//		
+//			
+//		}else if (action.equals("getUsuarios")) {
+//			
+//			try {
+//				salida.put("data", PruebaConceptoDAO.ObtenerUsuarios());
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//				PrintWriter out = response.getWriter();
+//					out.println(salida);
+//					out.flush();
+//					out.close();
+//		}
+//		
+//		
+//		
+//		
+//			
+//				
+//				
+//			
+//	}//fin doGet
+//	
+            
+
+        } catch (Exception ex) {
+            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
 }
