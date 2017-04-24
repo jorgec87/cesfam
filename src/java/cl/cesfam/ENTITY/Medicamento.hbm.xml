@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cl.cesfam.ENTITY.Medicamento" table="MEDICAMENTO" schema="CESFAM_DBA" optimistic-lock="version">
+        <id name="idMedicamento" type="int">
+            <column name="ID_MEDICAMENTO" precision="8" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="stock" class="cl.cesfam.ENTITY.Stock" fetch="select">
+            <column name="STOCK_ID_STOCK" precision="8" scale="0" />
+        </many-to-one>
+        <property name="nombreMedicamento" type="string">
+            <column name="NOMBRE_MEDICAMENTO" length="45" not-null="true" />
+        </property>
+        <property name="presentacion" type="int">
+            <column name="PRESENTACION" precision="8" scale="0" not-null="true" />
+        </property>
+        <property name="contenidoEnvase" type="int">
+            <column name="CONTENIDO_ENVASE" precision="8" scale="0" not-null="true" />
+        </property>
+        <property name="fabricante" type="string">
+            <column name="FABRICANTE" length="45" not-null="true" />
+        </property>
+        <set name="composicions" table="COMPOSICION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="8" scale="0" />
+            </key>
+            <one-to-many class="cl.cesfam.ENTITY.Composicion" />
+        </set>
+        <set name="detallePartidas" table="DETALLE_PARTIDA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="8" scale="0" />
+            </key>
+            <one-to-many class="cl.cesfam.ENTITY.DetallePartida" />
+        </set>
+        <set name="eventoStocks" table="EVENTO_STOCK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="8" scale="0" />
+            </key>
+            <one-to-many class="cl.cesfam.ENTITY.EventoStock" />
+        </set>
+    </class>
+</hibernate-mapping>

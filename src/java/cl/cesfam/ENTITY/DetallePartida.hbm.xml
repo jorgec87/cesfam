@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cl.cesfam.ENTITY.DetallePartida" table="DETALLE_PARTIDA" schema="CESFAM_DBA" optimistic-lock="version">
+        <id name="idDetallePartida" type="int">
+            <column name="ID_DETALLE_PARTIDA" precision="8" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="medicamento" class="cl.cesfam.ENTITY.Medicamento" fetch="select">
+            <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="8" scale="0" />
+        </many-to-one>
+        <many-to-one name="partida" class="cl.cesfam.ENTITY.Partida" fetch="select">
+            <column name="PARTIDA_ID_PARTIDA" precision="8" scale="0" />
+        </many-to-one>
+        <property name="cantidad" type="int">
+            <column name="CANTIDAD" precision="8" scale="0" not-null="true" />
+        </property>
+        <property name="fechaIngreso" type="date">
+            <column name="FECHA_INGRESO" length="7" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

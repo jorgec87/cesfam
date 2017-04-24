@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-schema="CESFAM_DBA"/>
+  <table-filter match-name="COMPONENTE"/>
+  <table-filter match-name="FORMULARIO_MEDIAMENTO"/>
+  <table-filter match-name="FUNCIONARIO_FARMACIA"/>
+  <table-filter match-name="STOCK"/>
+  <table-filter match-name="EVENTO_STOCK"/>
+  <table-filter match-name="PACIENTE"/>
+  <table-filter match-name="COMPOSICION"/>
+  <table-filter match-name="PARTIDA"/>
+  <table-filter match-name="MEDICAMENTO"/>
+  <table-filter match-name="DETALLE_ENTREGA"/>
+  <table-filter match-name="DETALLE_PARTIDA"/>
+  <table-filter match-name="MEDICO"/>
+</hibernate-reverse-engineering>
