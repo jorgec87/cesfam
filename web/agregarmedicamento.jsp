@@ -178,7 +178,7 @@
                             </a>
                         </div>
                     </div> 
-                    <div class="ibox-content" style="background-color: #fff; height: auto; ">
+                    <div class="ibox-content" style="background-color: #fff; height: auto;" id="resumen">
                         <div class="item">
                                               
  
@@ -254,6 +254,7 @@
                     <div class="modal inmodal" id="myModaL2" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content animated bounceInRight">
+                            <form class="" id="composicionForm" name="composicionForm">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                     <i class="fa fa-eyedropper modal-icon"></i>
@@ -263,7 +264,7 @@
                                 <div class="modal-body">
                                     <!-- INICIO MODL BODY-->   
 
-                                    <form class="">
+
 
                                         <!--    INICIO CB COMPONENTES-->
                                         <div class="form-group">                               
@@ -290,16 +291,16 @@
                                         <div class="form-group">
                                             <label>Contenido Total</label>
                                             <div class="input-group m-b">
-                                                <input type="number" placeholder="Ingrese cantidad" class="form-control" name="txtMg" id="txtContenido">
+                                                <input type="number" placeholder="Ingrese cantidad" class="form-control" name="txtMg" id="txtMg">
                                                 <span class="input-group-addon">MG.</span>
                                             </div>
                                         </div>
-                                     </form>
                                  </div><!--  FIN MODL BODY-->  
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary">Agregar</button>
+                                    <button type="submit" class="btn btn-primary" id="btnIngresarComposicion">Agregar</button>
                                 </div>
+                               </form>
                             </div>
                         </div>
                     </div>
@@ -345,7 +346,7 @@
                 
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
-                 $("#ddlComponentes").chosen(config[selector]);
+                $("#ddlComponentes").chosen(config[selector]);
                 
             }
            
@@ -362,7 +363,7 @@
               $("#txtMedida").text("ML");    
             });  
             
-//          INICIO DE VALIDACION
+//          INICIO DE VALIDACION MEDICAMENTO
              //funcion que valida campos
             $("#medForm").validate
             ({
@@ -377,7 +378,7 @@
                     txtFabricante: {
                         required: true
                     }
-                },           
+                },
             submitHandler: function(form) {      
 //          INICIO RESPUESTA DE CREACION DE MEDICAMENTO		
              var nombre = $("#txtNombreMed").val();
@@ -417,10 +418,64 @@
                         }
                  }
                 });
-//            FIN RESPUESTA AJAX
+//            FIN RESPUESTA AJAX CREACION MEDICAMENTO          
+
             }
-//          FIN VALIDACION
+//          FIN VALIDACION MEDICAMENTO
             });
+            
+//          INICIO DE VALIDACION COMPOSICION
+             //funcion que valida campos
+            $("#composicionForm").validate
+            ({
+                rules: 
+                {
+                    txtMg: {
+                        required: true
+                    }
+                },     
+            submitHandler: function(form) {                
+//          INICIO RESPUESTA DE CREACION DE COMPOSICION	
+             var componente = $("#ddlComponentes").val();
+             var mg = $("#txtMg").val();
+             var medicamento = $("#ddlMedicamentos").val();
+             var accion = "RegistrarComposicion";
+             
+             var parametros = {"ddlComponentes" : componente,"txtMg" : mg,"ddlMedicamentos" : medicamento,"accion" : accion};
+
+            $.ajax({
+                data:  parametros,
+                url:   'RequestHelper',
+                type:  'post',
+                 success: function(responseText) 
+                 {
+                    var res2 = responseText;
+                    var res3 = responseText;
+                    var res4 = responseText;
+                        if(res2 != "false")
+                        {
+                            swal({
+                                title: "Éxito!",
+                                text: "Composicion guardada correctamente!",
+                                type: "success"
+                            });
+                            $("#myModaL2").modal('hide');
+                            $(".item").append("<div class=\"added_item\">"+res2+" ("+mg+"mg)</div>");                                                                                     
+                            $("#txtMg").val("");
+                            $("#txtFabricante").val(""); 
+                            $("#ddlComponentes").val("0");
+                            $("#ddlComponentes").trigger("chosen:updated");
+                        }
+                        else
+                        {    
+                            alert("Composicion no creada"); 
+                        }
+                 }
+                });
+//            FIN RESPUESTA AJAX COMPOSICION
+            }
+//          FIN VALIDACION COMPOSICION
+            });     
             
             // Agregar componente
             
@@ -428,6 +483,19 @@
               $("#myModaL2").modal();    
             });
             
+//            ELIMINAR COMPONENTE
+//            function eliminarComposicion() {
+//            if (document.getElementById()(res4).value != "") 
+//            {
+//                alert(if(!confirm('¿Estás seguro que deseas eliminar el componente?'))
+//            {
+//               
+//               return false; 
+//            }");
+//            } else {
+//                alert("");
+//            }
+//            }
               $('#ddlMedicamentos').on('change', function(e) {
                
                 
@@ -449,14 +517,13 @@
   
                     for( var i=0; i< myObject.data.length ; i++){
 
-                          $(".item").append("<div class=\"added_item\">"+myObject.data[i].nombre+" ("+myObject.data[i].cantidad+"ml) <a class=\"inherit_color\" onclick=\"if(!confirm('¿Estás seguro que deseas eliminar el componente?')){ return false; }\" href=\"#\"><i class=\"fa fa-times\"></i></a></div>");
-
+$(".item").append("<div class=\"added_item\">"+myObject.data[i].nombre+" ("+myObject.data[i].cantidad+"mg)</div>");
                      } //fin for
                       $(".item").append("<div class=\"clearfix\"></div>");  
                  }
                 });
 //            FIN RESPUESTA AJAX
-                
+            
               });
             
             

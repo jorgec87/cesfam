@@ -95,6 +95,22 @@ public class MedicamentoDAO {
                 session.close();
                 throw e;
             }
-        }         
+        }  
+      
+      public static  cl.cesfam.ENTITY.Medicamento getMedicamentoById(int id) throws Exception {
+            Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+            try {
+                session.beginTransaction();
+                cl.cesfam.ENTITY.Medicamento tmp = (cl.cesfam.ENTITY.Medicamento) 
+                        session.createCriteria(cl.cesfam.ENTITY.Medicamento.class).add(Restrictions.eq("idMedicamento", id)).uniqueResult();
+                session.getTransaction().commit();
+                session.close();
+                return tmp;
+            } catch (Exception e) {
+                System.err.print(e.getMessage());
+                session.close();
+                throw e;
+            }
+        }        
      
 }

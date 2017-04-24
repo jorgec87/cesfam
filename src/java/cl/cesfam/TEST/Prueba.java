@@ -69,99 +69,99 @@ public class Prueba {
 //		// TODO: handle exception
 //		System.err.println("No se encontro archivo");
 //	}
- cl.cesfam.ENTITY.Composicion compo = new cl.cesfam.ENTITY.Composicion();
-          cl.cesfam.ENTITY.Componente componente = new cl.cesfam.ENTITY.Componente();
-         int idMedicamneto = 0;
-         JSONArray composiciones = new JSONArray();
-            JSONObject salida = new JSONObject();
-
-
- try {
-     
-       Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
-         session.beginTransaction();
-        Query query = session.createQuery("from Composicion Composicion where Composicion.medicamento =1");
-        List<cl.cesfam.ENTITY.Composicion> lista = query.list();
-        session.close();
-            if (lista != null) {
-               
-                
-                  
-
-               
-                for (Composicion com : lista) {
-                   JSONObject item = new JSONObject();
-                   componente = cl.cesfam.DAO.ComponenteDAO.getComponenteById(com.getComponente().getIdComponente());
-                   
-                   item.put("id_composicion", com.getIdComposicion());
-                   item.put("nombre", componente.getNombreComponente());
-                   item.put("cantidad", com.getCantidad());
-                    
-                    composiciones.put(item);
-                }
-                
-                salida.put("data", composiciones);
-                
-               
-                    System.out.println("el objeto es :"+salida);
-                   
-                
-                
-            }else{
-            
-            
-            
-            }
-            
-//            
+// cl.cesfam.ENTITY.Composicion compo = new cl.cesfam.ENTITY.Composicion();
+//          cl.cesfam.ENTITY.Componente componente = new cl.cesfam.ENTITY.Componente();
+//         int idMedicamneto = 0;
+//         JSONArray composiciones = new JSONArray();
 //            JSONObject salida = new JSONObject();
-//		String action = request.getParameter("action");
-//		String id = request.getParameter("rut");
-//		
-//		if (action.equals("getCliente")) {
-//			
-//			try {
-//				salida.put("data", PruebaConceptoDAO.ObtenerCliente(id));
-//			} catch (JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//				PrintWriter out = response.getWriter();
-//					out.println(salida);
-//					out.flush();
-//					out.close();
-//		
-//			
-//		}else if (action.equals("getUsuarios")) {
-//			
-//			try {
-//				salida.put("data", PruebaConceptoDAO.ObtenerUsuarios());
-//			} catch (JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//				PrintWriter out = response.getWriter();
-//					out.println(salida);
-//					out.flush();
-//					out.close();
-//		}
-//		
-//		
-//		
-//		
-//			
-//				
-//				
-//			
-//	}//fin doGet
-//	
-            
-
-        } catch (Exception ex) {
-            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//
+//
+// try {
+//     
+//       Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+//         session.beginTransaction();
+//        Query query = session.createQuery("from Composicion Composicion where Composicion.medicamento =1");
+//        List<cl.cesfam.ENTITY.Composicion> lista = query.list();
+//        session.close();
+//            if (lista != null) {
+//               
+//                
+//                  
+//
+//               
+//                for (Composicion com : lista) {
+//                   JSONObject item = new JSONObject();
+//                   componente = cl.cesfam.DAO.ComponenteDAO.getComponenteById(com.getComponente().getIdComponente());
+//                   
+//                   item.put("id_composicion", com.getIdComposicion());
+//                   item.put("nombre", componente.getNombreComponente());
+//                   item.put("cantidad", com.getCantidad());
+//                    
+//                    composiciones.put(item);
+//                }
+//                
+//                salida.put("data", composiciones);
+//                
+//               
+//                    System.out.println("el objeto es :"+salida);
+//                   
+//                
+//                
+//            }else{
+//            
+//            
+//            
+//            }
+//            
+////            
+////            JSONObject salida = new JSONObject();
+////		String action = request.getParameter("action");
+////		String id = request.getParameter("rut");
+////		
+////		if (action.equals("getCliente")) {
+////			
+////			try {
+////				salida.put("data", PruebaConceptoDAO.ObtenerCliente(id));
+////			} catch (JSONException e) {
+////				// TODO Auto-generated catch block
+////				e.printStackTrace();
+////			}
+////			
+////				PrintWriter out = response.getWriter();
+////					out.println(salida);
+////					out.flush();
+////					out.close();
+////		
+////			
+////		}else if (action.equals("getUsuarios")) {
+////			
+////			try {
+////				salida.put("data", PruebaConceptoDAO.ObtenerUsuarios());
+////			} catch (JSONException e) {
+////				// TODO Auto-generated catch block
+////				e.printStackTrace();
+////			}
+////			
+////				PrintWriter out = response.getWriter();
+////					out.println(salida);
+////					out.flush();
+////					out.close();
+////		}
+////		
+////		
+////		
+////		
+////			
+////				
+////				
+////			
+////	}//fin doGet
+////	
+//            
+//
+//        } catch (Exception ex) {
+//            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
 	
 	

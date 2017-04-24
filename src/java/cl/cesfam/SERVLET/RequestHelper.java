@@ -29,6 +29,7 @@ public class RequestHelper extends HttpServlet {
     
     private static String ACTION_REGISTRAR_REMEDIO = "registrarRemedio";
     private static String ACTION_OBTENER_COMPOSICION = "obtenercomposicion";
+    private static String ACTION_REGISTRAR_COMPOSICION = "RegistrarComposicion";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -45,6 +46,8 @@ public class RequestHelper extends HttpServlet {
 		RegistrarMedicamento(request, response);
            }else if (action.equals(ACTION_OBTENER_COMPOSICION)) {
 		ObtenerComposicion(request, response); 
+           }else if (action.equals(ACTION_REGISTRAR_COMPOSICION)) {
+		RegistrarComposicion(request, response); 
            } 
             
             
@@ -90,8 +93,8 @@ public class RequestHelper extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    //      METODO DE CREACION MEDICAMENTO 
     public static void RegistrarMedicamento(HttpServletRequest request, HttpServletResponse response) {
-        
       try {
                 cl.cesfam.ENTITY.Medicamento medicamento = new cl.cesfam.ENTITY.Medicamento();
 
@@ -129,6 +132,87 @@ public class RequestHelper extends HttpServlet {
             }
     }
 
+        //      METODO DE CREACION COMPOSICION
+    public static void RegistrarComposicion(HttpServletRequest request, HttpServletResponse response) {
+      try {
+                cl.cesfam.ENTITY.Composicion composicion = new cl.cesfam.ENTITY.Composicion();
+
+                //medicamento
+                if (request.getParameter("ddlMedicamentos") != null) {
+                     composicion.setMedicamento(cl.cesfam.DAO.MedicamentoDAO.getMedicamentoById(Integer.parseInt(request.getParameter("ddlMedicamentos"))));
+                }
+                //Cantidad de composicion
+                if (request.getParameter("txtMg") != null) {
+                     composicion.setCantidad(Integer.parseInt(request.getParameter("txtMg")));
+                }
+                //composicion
+                if (request.getParameter("ddlComponentes") != null) {
+                     composicion.setComponente(cl.cesfam.DAO.ComponenteDAO.getComponenteById(Integer.parseInt(request.getParameter("ddlComponentes"))));
+                }
+                if (cl.cesfam.DAO.ComposicionDAO.add(composicion)) 
+                {
+                    cl.cesfam.ENTITY.Componente componenteTMP = cl.cesfam.DAO.ComponenteDAO.getComponenteById(Integer.parseInt(request.getParameter("ddlComponentes")));
+                       response.setContentType("text/plain");
+                       String res2 = componenteTMP.getNombreComponente();
+                       String res3 = request.getParameter("ddlMedicamentos");
+                       String res4 = Integer.toString(composicion.getIdComposicion());
+                       response.getWriter().write(res2);
+                       response.getWriter().write(res3);
+                       response.getWriter().write(res4);
+                }
+                else
+                {
+                       response.setContentType("text/plain");
+                       String res2 = "false";
+                       response.getWriter().write(res2);
+                }
+            } catch (Exception e) {
+                e.getMessage();            
+            }
+    }
+//    FIN REGISTRAR COMPOSICION
+    
+//        INICIO ELIMINAR COMPOSICION
+   public static void EliminarComposicion(HttpServletRequest request, HttpServletResponse response) {
+      try {
+                cl.cesfam.ENTITY.Composicion composicion = new cl.cesfam.ENTITY.Composicion();
+
+                //medicamento
+                if (request.getParameter("ddlMedicamentos") != null) {
+                     composicion.setMedicamento(cl.cesfam.DAO.MedicamentoDAO.getMedicamentoById(Integer.parseInt(request.getParameter("ddlMedicamentos"))));
+                }
+                //Cantidad de composicion
+                if (request.getParameter("") != null) {
+                     composicion.setCantidad(Integer.parseInt(request.getParameter("")));
+                }
+                //composicion
+                if (request.getParameter("") != null) {
+                     composicion.setComponente(cl.cesfam.DAO.ComponenteDAO.getComponenteById(Integer.parseInt(request.getParameter(""))));
+                }
+                if (cl.cesfam.DAO.ComposicionDAO.delete(composicion)) 
+                {
+                    cl.cesfam.ENTITY.Componente componenteTMP = cl.cesfam.DAO.ComponenteDAO.getComponenteById(Integer.parseInt(request.getParameter("ddlComponentes")));
+                       response.setContentType("text/plain");
+                       String res2 = componenteTMP.getNombreComponente();
+                       response.getWriter().write(res2);
+
+                }
+                else
+                {
+                       response.setContentType("text/plain");
+                       String res2 = "false";
+                       response.getWriter().write(res2);
+                }
+            } catch (Exception e) {
+                e.getMessage();            
+            }
+    } 
+    
+    
+    
+    
+    
+//        FIN ELIMINAR COMPOSICION
     public static void ObtenerComposicion(HttpServletRequest request, HttpServletResponse response) {
         
          cl.cesfam.ENTITY.Composicion compo = new cl.cesfam.ENTITY.Composicion();
@@ -168,12 +252,8 @@ public class RequestHelper extends HttpServlet {
                     System.out.println("el objeto es :"+salida);
                     out.println(salida);
                     out.flush();
-                }
-                
+                }               
             }else{
-            
-            
-            
             }
             
 //            
