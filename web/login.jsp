@@ -35,7 +35,7 @@
 
             <div class="col-md-6">
                 <h2 class="font-bold">Bienvenido a CESFAM</h2>
-                <img class="hidden-xs hid" src="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg" width="200" height="200" alt="LOGO-CESFAM-ORIGINAL-2"/>
+                <img id="test" class="hidden-xs hid" src="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg" width="200" height="200" alt="LOGO-CESFAM-ORIGINAL-2"/>
 
                 <p>
                     Establecimientos de atención primaria
@@ -107,17 +107,18 @@
         $(document).ready(function(){
             //funcion formatear rut
             $("#rut").Rut({format_on: 'keyup'});
-             
-           // Muestra un alert diciendo que el rut es incorrecto.
-           $("#rut").Rut({
-              on_error: function(){ 
-                $("#number-error").text("El RUT ingresado no es válido"); 
-                $("#number-error").css("display","block");
-                $("#rut").addClass("error");
-                $("#rut").removeClass("valid"); 
-                
-              }});
-           
+
+            
+   //Agregar validacion de rut a Jquery validate
+            jQuery.validator.addMethod("Rut", function(value, element){
+             if ($.Rut.validar(value)) {
+                 return true;
+             } else {
+                 return false;
+             };
+                }, "El RUT ingresado no es válido"); 
+
+
           // Muestra un alert diciendo que el rut es correcto.
            $("#rut").Rut({
               on_success: function(){ 
@@ -137,10 +138,12 @@
                     },
                     txtRut: {
                         required: true,
-                        number: false
+                        number: false,
+                        Rut : true
                     }
                 }
             });
+          
              
  <%    
         //mensaje de error en los datos de ingreso

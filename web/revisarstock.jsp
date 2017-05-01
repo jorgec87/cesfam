@@ -24,52 +24,10 @@
     <link rel="shortcut icon" href="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/plugins/chosen/chosen.css" rel="stylesheet">
-    <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
-    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
-    <style>
-.added_item {
-    font-family: "open sans";
-    font-size: 13px;
-    background-color: #1ab394;
-    color: #fff;
-    border-radius: 3px;
-    padding: 3px 10px;
-    display: inline;
-    float: left;
-    margin: 0 5px 5px 0;
-   
-}
-.item {
-    background-color: #fff;
-    padding: 10px;
-    margin-bottom: 10px;
-    
-}
-.content_view{
-    padding: 20px;
-}
-.added_item a {
-    color: #fff;
-}
-
-.inherit_color {
-    color: inherit;
-}
-.add{
-  color: #1ab394;
-  font-family: "open sans";
-}
-#b2{
-   font-family: "open sans";  
-}        
-        
-        
-    </style>
 </head>
 
 <body class="skin-1 " >
@@ -140,7 +98,7 @@
                 <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Buscar medicamento</h5>
+                        <h5>Medicamentos</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -160,55 +118,23 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-
                         <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example" >
-                    <thead>
-                    <tr>
-                        <th>Medicamento</th>
-                        <th>Fabricante</th>
-                        <th>presentacion</th>
-                        <th>Contenido Total</th>
-                        <th>Contenido en stock</th>
-                    </tr>
-                    <%
-                    
-                    try
-                    {
-                        
-                        for(cl.cesfam.ENTITY.Medicamento tmp: cl.cesfam.DAO.MedicamentoDAO.getList())
-                           
-                        {
-                           cl.cesfam.ENTITY.Stock stock = cl.cesfam.DAO.StockDAO.getStockById(tmp.getStock().getIdStock());
-                           System.out.print("HOLA"+stock.getStock());
-                           
-                    %>
-                    </thead>
-                    <tbody>
-                       <tr class="gradeC">
-                        <td><%out.println( tmp.getNombreMedicamento()); %></td>
-                        <td><%out.println( tmp.getFabricante()); %></td>
-                        <td><%out.println( tmp.getPresentacion()); %></td>
-                        <td class="center"><%out.println( tmp.getContenidoEnvase()); %></td>
-                        <td class="center"><%out.println( stock.getStock()); %></td>
-                       </tr> 
-                    </tbody>
-                  
-                   
-                    <%
-                        }
-                        
-                    }
-                    catch(Exception e)
-                    {
-                        out.println(e.getMessage());
-                    }
-                    %>
-                    </tfoot>
-                    </table>
-                        </div>
+                        <table id="tabla_medicamentos" class="table table-responsive table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                                <tr>
+                                    <th>Medicamento</th>
+                                    <th>Fabricante</th>
+                                    <th>presentacion</th>
+                                    <th>Contenido Total</th>
+                                    <th>Contenido en stock</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                    </div>
+                            </tbody>
+                       </table>
+                      </div>
+                     </div>
                 </div>
             </div>
             </div>
@@ -229,136 +155,52 @@
 
         </div>
         </div>// fin wrapper
-<!--    INICIO MODAL 1                  -->
-   
-                                    <!-- INICIO MODL BODY-->   
 
 
-
-                                        <!--    INICIO CB COMPONENTES-->
-                                        
-                                        <!--                                    FIN CB COMPONENTES-->
-                                        
-  <!--FIN  MODAL 2-->  
-
-
-    <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-    <!-- Jquery Validate -->
-    <script src="js/plugins/validate/jquery.validate.min.js"></script>
-    
-     <!-- Data Tables -->
-    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="js/plugins/dataTables/dataTables.responsive.js"></script>
-    <script src="js/plugins/dataTables/dataTables.tableTools.min.js"></script>
-    
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-    <script src="js/plugins/pace/pace.min.js"></script>
-
-    <!-- iCheck -->
-    <script src="js/plugins/iCheck/icheck.min.js"></script>
-    <!-- chosen -->
-    <script src="js/plugins/chosen/chosen.jquery.js"></script>
-    <!-- Sweet alert -->
-    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
-
-</body>
-
-    
-    <!-- Mainly scripts -->
+   <!-- Mainly scripts -->
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
 
-    <!-- Data Tables -->
-    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="js/plugins/dataTables/dataTables.responsive.js"></script>
-    <script src="js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+    <script src="js/plugins/dataTables/datatables.min.js"></script>
 
     <!-- Custom and plugin javascript -->
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
 
-    <!-- Page-Level Scripts -->
-    <script>
+
+ 
+</body>
+ <script>
         $(document).ready(function() {
-            $('.dataTables-example').dataTable({
-                responsive: true,
-                "dom": 'T<"clear">lfrtip',
-                "tableTools": {
-                    "sSwfPath": "js/plugins/dataTables/swf/copy_csv_xls_pdf.swf"
-                }
-            });
-
-            /* Init DataTables */
-            var oTable = $('#editable').dataTable();
-
-            /* Apply the jEditable handlers to the table */
-            oTable.$('td').editable( '../example_ajax.php', {
-                "callback": function( sValue, y ) {
-                    var aPos = oTable.fnGetPosition( this );
-                    oTable.fnUpdate( sValue, aPos[0], aPos[1] );
-                },
-                "submitdata": function ( value, settings ) {
-                    return {
-                        "row_id": this.parentNode.getAttribute('id'),
-                        "column": oTable.fnGetPosition( this )[2]
-                    };
-                },
-
-                "width": "90%",
-                "height": "100%"
-            } );
-
-
+           
+           
+            $('#tabla_medicamentos').dataTable({
+            "ajax" : "RequestHelper?accion=ObtenerMedicamentos",
+            "columns": [
+                        { "data": "nombre"},
+                        { "data": "fabricante" },
+                        { "data": "presentacion" },
+                        { "data": "contenido" },
+                        { "data": "stock" }
+                    ],
+             "columnDefs": [
+                 {
+                      "targets": [0], 
+                      "data": "nombre", 
+                      "render": function(data, type, full) { 
+                          return "<a>" + data + "</a>";
+                      }
+                  } ]
         });
 
-        function fnClickAddRow() {
-            $('#editable').dataTable().fnAddData( [
-                "Custom row",
-                "New row",
-                "New row",
-                "New row",
-                "New row" ] );
+           
+          
+           
+            });
 
-        }
+
+      
     </script>
-<style>
-    body.DTTT_Print {
-        background: #fff;
-
-    }
-    .DTTT_Print #page-wrapper {
-        margin: 0;
-        background:#fff;
-    }
-
-    button.DTTT_button, div.DTTT_button, a.DTTT_button {
-        border: 1px solid #e7eaec;
-        background: #fff;
-        color: #676a6c;
-        box-shadow: none;
-        padding: 6px 8px;
-    }
-    button.DTTT_button:hover, div.DTTT_button:hover, a.DTTT_button:hover {
-        border: 1px solid #d2d2d2;
-        background: #fff;
-        color: #676a6c;
-        box-shadow: none;
-        padding: 6px 8px;
-    }
-
-    .dataTables_filter label {
-        margin-right: 5px;
-
-    }
-</style>

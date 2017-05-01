@@ -97,11 +97,11 @@ public class ComposicionDAO {
             }
         }
          
-          public static List<cl.cesfam.ENTITY.Composicion> getComposicionByIdComposicion(int id) throws Exception {
+          public static cl.cesfam.ENTITY.Composicion getComposicionByIdComposicion(int id) throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             try {
                 session.beginTransaction();
-                List<cl.cesfam.ENTITY.Composicion> tmp = (List<cl.cesfam.ENTITY.Composicion>) session.createCriteria(cl.cesfam.ENTITY.Composicion.class).add(Restrictions.eq("idComposicion", id)).list();
+                cl.cesfam.ENTITY.Composicion tmp = (cl.cesfam.ENTITY.Composicion) session.createCriteria(cl.cesfam.ENTITY.Composicion.class).add(Restrictions.eq("idComposicion", id)).uniqueResult();
                 session.getTransaction().commit();
                 session.close();
                 return tmp;

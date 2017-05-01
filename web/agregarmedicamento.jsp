@@ -23,6 +23,8 @@
     <title>CESFAM | Agregar Stock</title>
     <link rel="shortcut icon" href="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+       <!-- Toastr style -->
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
@@ -30,12 +32,11 @@
     <link href="css/plugins/chosen/chosen.css" rel="stylesheet">
     <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-         <!-- Toastr style -->
-    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+      
 
     <style>
 .added_item {
-    font-family: "open sans";
+    font-family: sans-serif;
     font-size: 13px;
     background-color: #1ab394;
     color: #fff;
@@ -64,10 +65,10 @@
 }
 .add{
   color: #1ab394;
-  font-family: "open sans";
+  font-family: sans-serif;
 }
 #b2{
-   font-family: "open sans";  
+   font-family: sans-serif;  
 }        
         
         
@@ -147,7 +148,7 @@
                         
                             <!--                            INICIO CB MEDICAMENTO-->
                             <div class="form-group">                               
-                                <label class="col-sm-4 col-md-4 control-label" style="margin-top: 23px;">Nombre De Medicamento</label>
+                                <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Nombre De Medicamento</label>
                                 <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
                                     <select data-placeholder="Seleccione el medicamento" class="chosen-select" tabindex="2"  id="ddlMedicamentos"  name="ddlMedicamentos">
                                         <option value="0">Seleccione Medicamento</option>
@@ -182,9 +183,9 @@
                     </div> 
                     <div class="ibox-content" style="background-color: #fff; height: auto;" id="resumen">
                         <div class="item">
-                                              
- 
-                         </div>
+                <!--               Carga de componetes por Ajax                     -->
+                         <div class="clearfix"></div>
+                        </div>
                     </div>
                 </div>
                                                
@@ -392,7 +393,8 @@
              var fabricante = $("#txtFabricante").val();
              var accion = "registrarRemedio";
              
-             var parametros = {"txtNombreMed" : nombre,"radioInline" : presentacion,"txtContenido" : contenido,"txtFabricante" : fabricante, "accion" : accion};
+             var parametros = {"txtNombreMed" : nombre,"radioInline" : presentacion,"txtContenido" : contenido,
+                 "txtFabricante" : fabricante, "accion" : accion};
 
             $.ajax({
                 data:  parametros,
@@ -452,20 +454,34 @@
                 data:  parametros,
                 url:   'RequestHelper',
                 type:  'post',
-                 success: function(responseText) 
-                 {
-                    var res2 = responseText;
-                    var res3 = responseText;
-                    var res4 = responseText;
-                        if(res2 != "false")
+                 success: function(item) 
+                 {  
+                     var obj = jQuery.parseJSON( item );
+                        
+                    
+                     if(item != null)
                         {
-                            swal({
-                                title: "Éxito!",
-                                text: "Composicion guardada correctamente!",
-                                type: "success"
-                            });
+                              toastr.options = {
+                      "closeButton": true,
+                      "debug": true,
+                      "progressBar": true,
+                      "preventDuplicates": false,
+                      "positionClass": "toast-top-center",
+                      "onclick": null,
+                      "showDuration": "400",
+                      "hideDuration": "600",
+                      "timeOut": "2500",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    };
+                     toastr.success("Componente agregado correctamente!", "Éxito");
+                            
                             $("#myModaL2").modal('hide');
-                            $(".item").append("<div class=\"added_item\">"+res2+" ("+mg+"mg)</div>");                                                                                     
+                            $(".item").prepend("<div id=\"c-"+obj.id_composicion+"\" class=\"added_item\">"+obj.nombre_componente
+                                +" ("+obj.mg+"mg)<a class=\"inherit_color\" onclick=\"EliminarComponente("+obj.id_composicion+")\" href=\"#\"> <i class=\"fa fa-times\"></i></a></div>");                                                                                     
                             $("#txtMg").val("");
                             $("#txtFabricante").val(""); 
                             $("#ddlComponentes").val("0");
@@ -488,42 +504,72 @@
              {
                  if ($("#ddlMedicamentos").val() != 0) 
                  {
-    $("#myModaL2").modal();  
-}
-       else
-       {
-         toastr.options = {
-                    closeButton: true,
-                    progressBar: true,
-                    showMethod: 'slideDown',
-                    timeOut: 4000
-                };
-                toastr.warning('Alerta', 'Debe Seleccionar un medicamento');  
-        
-       }
+                     $("#myModaL2").modal();  
+                 }
+                 else
+                 {
+                        toastr.options = {
+                                  closeButton: true,
+                                  progressBar: true,
+                                  showMethod: 'slideDown',
+                                  timeOut: 4000
+                              };
+                              toastr.error('Debe Seleccionar un medicamento', 'Alerta !');  
+
+                 }
             });
-            
+
 //            ELIMINAR COMPONENTE
-//            function eliminarComposicion() {
-//            if (document.getElementById()(res4).value != "") 
-//            {
-//                alert(if(!confirm('¿Estás seguro que deseas eliminar el componente?'))
-//            {
-//               
-//               return false; 
-//            }");
-//            } else {
-//                alert("");
-//            }
-//            }
+            window.EliminarComponente =  function(id){
+            
+                if(!confirm('¿Estás seguro que deseas eliminar el Componente?')){
+                    return false; 
+                }
+                var id_composicion = id;
+                var accion = "EliminarComposicion";
+
+                var parametros = {"id" : id_composicion,"accion": accion};
+               
+                $.ajax({
+                data:  parametros,
+                url:   'RequestHelper',
+                type:  'post',
+                 success: function(result) 
+                 { if (result == "true") {
+                   $("#c-"+id+"").remove();
+                  
+                    toastr.options = {
+                      "closeButton": true,
+                      "debug": true,
+                      "progressBar": true,
+                      "preventDuplicates": false,
+                      "positionClass": "toast-top-center",
+                      "onclick": null,
+                      "showDuration": "400",
+                      "hideDuration": "600",
+                      "timeOut": "2500",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    };
+                   toastr.success("Componente eliminado correctamente", "Éxito");
+                                       }   
+                   
+                 }
+                });
+                
+            
+            }
+
+  // CAMBIA LOS COMPONENTES SEGÚN LA SELECCIÓN DE MEDICAMENTO
               $('#ddlMedicamentos').on('change', function(e) {
                
-                
                 //  INICIO RESPUESTA DE OBTENER COMPONENTES	
              var id = $("#ddlMedicamentos").val();
              var accion = "obtenercomposicion";
             
-             
              var parametros = {"id" : id,"accion": accion};
 
             $.ajax({
@@ -531,22 +577,27 @@
                 url:   'RequestHelper',
                 type:  'post',
                  success: function(result) 
-                 {
-                      $(".item").empty();
+                 {    
+                      $(".added_item").remove();
                       var myObject = JSON.parse(result);
   
                     for( var i=0; i< myObject.data.length ; i++){
 
-$(".item").append("<div class=\"added_item\">"+myObject.data[i].nombre+" ("+myObject.data[i].cantidad+"mg)</div>");
+                        $(".item").prepend("<div id=\"c-"+myObject.data[i].id_composicion+"\" class=\"added_item\">"+myObject.data[i].nombre
+                                +" ("+myObject.data[i].cantidad+"mg)<a class=\"inherit_color\" onclick=\"EliminarComponente("+myObject.data[i].id_composicion+")\" href=\"#\"> <i class=\"fa fa-times\"></i></a></div>");
+                        
+
                      } //fin for
-                      $(".item").append("<div class=\"clearfix\"></div>");  
                  }
                 });
+//        
 //            FIN RESPUESTA AJAX
             
               });
             
             
+
+
 
             });//FIN DOCUMENT READY
            

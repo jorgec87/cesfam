@@ -162,8 +162,14 @@ public class Prueba {
 //        } catch (Exception ex) {
 //            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        
-	
+       
+                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                    Query query = session.createQuery("select max(cc.idComposicion) from Composicion cc");
+                     List<Integer> lista = query.list();
+                    System.out.println(lista);
+                    session.close(); 
+//	(select max(ff.version) from FeatureList ff where ff.name = f.name
 	
 	
 	}//fin main
