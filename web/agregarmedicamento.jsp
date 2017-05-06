@@ -410,14 +410,15 @@
                                 text: "Medicamento guardado correctamente!",
                                 type: "success"
                             });
-                            
+                            $(".item").empty().append('<div class="clearfix"></div>');
                             $("#ddlMedicamentos").append("<option value="+res+">"+nombre+"</option>");
                             $("#ddlMedicamentos").val(res);
                             $("#ddlMedicamentos").trigger("chosen:updated");
                             $("#myModal").modal('hide');
                             $("#txtNombreMed").val("");
                             $("#txtContenido").val("");
-                            $("#txtFabricante").val("");                        
+                            $("#txtFabricante").val("");
+                            
                         }
                         else
                         {    

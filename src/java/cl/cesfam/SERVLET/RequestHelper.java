@@ -120,6 +120,21 @@ public class RequestHelper extends HttpServlet {
                 if (request.getParameter("txtFabricante") != null) {
                      medicamento.setFabricante(request.getParameter("txtFabricante"));
                 }
+                
+                cl.cesfam.ENTITY.Stock stock = new cl.cesfam.ENTITY.Stock(0,0);
+
+                if (cl.cesfam.DAO.StockDAO.add(stock)) 
+                {
+                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                    Query query = session.createQuery("select max(cc.idStock) from Stock cc");
+                     List<Integer> lista = query.list();
+                    System.out.println(lista);
+                    session.close(); 
+                    stock.setIdStock(lista.get(0));
+                    medicamento.setStock(stock);
+                }
+                
                 if (cl.cesfam.DAO.MedicamentoDAO.add(medicamento)) 
                 {
                     medicamento = cl.cesfam.DAO.MedicamentoDAO.getMedicamentoByName(medicamento.getNombreMedicamento());

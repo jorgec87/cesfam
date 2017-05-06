@@ -165,7 +165,7 @@ public class Prueba {
        
                     Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
                     session.beginTransaction();
-                    Query query = session.createQuery("select max(cc.idComposicion) from Composicion cc");
+                    Query query = session.createQuery("select max(cc.idStock) from Stock cc");
                      List<Integer> lista = query.list();
                     System.out.println(lista);
                     session.close(); 
