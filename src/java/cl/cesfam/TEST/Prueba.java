@@ -165,8 +165,11 @@ public class Prueba {
        
                     Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
                     session.beginTransaction();
-                    Query query = session.createQuery("select max(cc.idStock) from Stock cc");
-                     List<Integer> lista = query.list();
+                    Query query2 = session.createQuery("select count(cc.idMedicamento) from Medicamento cc where cc.stock in (select ss.idStock"
+                            + " from Stock ss where stock = 0) ");
+//                    select count(*) from MEDICAMENTO where STOCK_ID_STOCK in (select id_stock from STOCK where STOCK = 0); 
+
+                     List<Integer> lista = query2.list();
                     System.out.println(lista);
                     session.close(); 
 //	(select max(ff.version) from FeatureList ff where ff.name = f.name

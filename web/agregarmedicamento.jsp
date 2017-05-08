@@ -84,7 +84,7 @@
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg" />
+                            <i style="color: white" class="fa fa-user-md fa-5x"></i>
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%=userSession.getNombreUsuario() %></strong>
@@ -107,8 +107,8 @@
                 <li class="active">
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class="active"><a href="agregarmedicamento.jsp">Agregar Medicamento</a></li>
-                        <li><a href="revisarstock.jsp">Revisar Stock Disponible</a></li>
+                        <li class="active"><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
+                        <li><a href="revisarstock.jsp"><i class="fa fa-table"></i>Revisar Stock Disponible</a></li>
                     </ul>
                 </li>
             </ul>
@@ -121,16 +121,11 @@
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-                <div class="form-group">
-                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
         </div>
             <ul class="nav navbar-top-links navbar-right">              
                 <li>
                     <a href="LogoutServlet">
-                        <i class="fa fa-sign-out"></i> Log out
+                        <i class="fa fa-sign-out"></i> Cerrar sesión
                     </a>
                 </li>
             </ul>
@@ -195,11 +190,11 @@
            
             
         <div class="footer">
-            <div class="pull-right">
+<!--            <div class="pull-right">
                 10GB of <strong>250GB</strong> Free.
-            </div>
+            </div>-->
             <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2015
+                 <strong>Copyright</strong> Duoc-UC &copy; 2017
             </div>
         </div>
 
@@ -523,7 +518,7 @@
 //            ELIMINAR COMPONENTE
             window.EliminarComponente =  function(id){
             
-                if(!confirm('¿Estás seguro que deseas eliminar el Componente?')){
+                if(!confirm('¿Estás seguro que deseas eliminar el Componente '+$("#c-"+id+"").text()+' ?')){
                     return false; 
                 }
                 var id_composicion = id;

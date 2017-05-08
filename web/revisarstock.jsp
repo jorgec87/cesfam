@@ -39,7 +39,7 @@
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="img/profile_small.jpg" />
+                            <i style="color: white" class="fa fa-user-md fa-5x"></i>
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%=userSession.getNombreUsuario() %></strong>
@@ -62,8 +62,8 @@
                 <li class="active">
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li ><a href="agregarmedicamento.jsp">Agregar Medicamento</a></li>
-                        <li class="active"><a href="revisarstock.jsp">Revisar Stock Disponible</a></li>
+                        <li><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
+                        <li class="active"><a href="revisarstock.jsp"><i class="fa fa-table"></i>Revisar Stock Disponible</a></li>
                     </ul>
                 </li>
             </ul>
@@ -76,16 +76,11 @@
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-                <div class="form-group">
-                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
         </div>
             <ul class="nav navbar-top-links navbar-right">              
                 <li>
                     <a href="LogoutServlet">
-                        <i class="fa fa-sign-out"></i> Log out
+                        <i class="fa fa-sign-out"></i> Cerrar sesión
                     </a>
                 </li>
             </ul>
@@ -125,7 +120,7 @@
                                     <th>Medicamento</th>
                                     <th>Fabricante</th>
                                     <th>presentacion</th>
-                                    <th>Contenido Total</th>
+                                    <th>Contenido Envase</th>
                                     <th>Contenido en stock</th>
                                 </tr>
                             </thead>
@@ -145,16 +140,17 @@
            
             
         <div class="footer">
-            <div class="pull-right">
+<!--            <div class="pull-right">
                 10GB of <strong>250GB</strong> Free.
-            </div>
+            </div>-->
             <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2015
+                <strong>Copyright</strong> Duoc-UC &copy; 2017
             </div>
         </div>
 
         </div>
-        </div>// fin wrapper
+        </div> 
+<!--        fin wrapper-->
 
 
    <!-- Mainly scripts -->
@@ -176,9 +172,46 @@
  <script>
         $(document).ready(function() {
            
-           
-            $('#tabla_medicamentos').dataTable({
-            "ajax" : "RequestHelper?accion=ObtenerMedicamentos",
+            $('#tabla_medicamentos').dataTable( {
+ 
+        "language": {
+ 
+    "sProcessing":     "Procesando...",
+ 
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+ 
+    "sZeroRecords":    "No se encontraron resultados",
+ 
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+ 
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+ 
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+ 
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+ 
+    "sInfoPostFix":    "",
+ 
+    "sSearch":         "Buscar:",
+ 
+    "sUrl":            "",
+ 
+    "sInfoThousands":  ",",
+ 
+    "sLoadingRecords": "Cargando...",
+ 
+    "oPaginate": {
+ 
+        "sFirst":    "Primero",
+ 
+        "sLast":     "Último",
+ 
+        "sNext":     "Siguiente",
+ 
+        "sPrevious": "Anterior"
+ 
+    
+    }}, "ajax" : "RequestHelper?accion=ObtenerMedicamentos",
             "columns": [
                         { "data": "nombre"},
                         { "data": "fabricante" },
@@ -191,14 +224,49 @@
                       "targets": [0], 
                       "data": "nombre", 
                       "render": function(data, type, full) { 
-                          return "<a>" + data + "</a>";
+                          return "<a><strong>" + data.toUpperCase() + "</strong></a>";
                       }
-                  } ]
-        });
+                  },
+                    {
+                      "targets": [2], 
+                      "data": "presentacion", 
+                      "render": function(data, type, full) {
+                          if(data == 1){
+                          return "<p><span class=\"label label-primary\">Solida</span></p>";
+                      }else{
+                         return "<p><span class=\"label label-info\">Liquida</span></p>"; 
+                      }
+                      }
+                  },{
+                      "targets": [3], 
+                      "data": "contenido",
+                      "render": function(data, type, full) { 
+                          var p_val = full.presentacion;
+                          if(p_val == 1){
+                          return "<td >"+data + " UN</td>";
+                      }else{
+                          return "<td >"+data + " ML</td>";
+                      }
+                      }
+                  },
+                    {
+                      "targets": [4], 
+                      "data": "stock", 
+                      "render": function(data, type, full) { 
+                          if(data > 0){
+                          return "<td ><span style=\"color:#1ab394;\">"+data + " UN</span></td>";
+                      }else{
+                          return "<td ><span style=\"color:#ed5565;\">"+data + " UN</span></td>";
+                      }
+                      }
+                  }]
+ 
+    
+ 
+    } );
 
-           
-          
-           
+//"sClass": "text-center",
+
             });
 
 

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -32,6 +33,7 @@ public class RequestHelper extends HttpServlet {
     private static String ACTION_REGISTRAR_COMPOSICION = "RegistrarComposicion";
     private static String ACTION_ELIMINAR_COMPOSICION = "EliminarComposicion";
     private static String ACTION_OBTENER_MEDICAMENTOS = "ObtenerMedicamentos";
+    private static String ACTION_OBTENER_MEDICAMENTOS_STOCK = "ObtenerMedicamentosStock";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -54,7 +56,9 @@ public class RequestHelper extends HttpServlet {
 		EliminarComposicion(request, response); 
            }else if (action.equals(ACTION_OBTENER_MEDICAMENTOS)) {
 		ObtenerMedicamentos(request, response); 
-           }    
+           }else if (action.equals(ACTION_OBTENER_MEDICAMENTOS_STOCK)) {
+		ObtenerMedicamentosStock(request, response); 
+           }     
             
             
         }
@@ -327,6 +331,43 @@ public class RequestHelper extends HttpServlet {
         }
         
        
+    }
+    
+//        METODO QUE OBTIENE  MEDICAMENTOS
+    private void ObtenerMedicamentosStock(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject salida = new JSONObject();
+        
+        
+                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                    Query query = session.createQuery("select count(cc.idMedicamento) from Medicamento cc");
+                     List<Integer> lista = query.list();
+                    System.out.println(lista);
+                    
+                   
+                   
+                   Query query2 = session.createQuery("select count(cc.idMedicamento) from Medicamento cc where cc.stock in (select ss.idStock"
+                            + " from Stock ss where stock = 0) ");
+                    List<Integer> lista1 = query2.list();
+                    System.out.println(lista);
+                    session.close();  
+        
+                try {
+                    salida.put("total_medicamentos", lista.get(0));
+                    salida.put("total_sin_stock", lista1.get(0));
+                    PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+salida);
+                    out.println(salida);
+                    out.flush();
+                } catch (JSONException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+        
+        
+        
     }
 
     
