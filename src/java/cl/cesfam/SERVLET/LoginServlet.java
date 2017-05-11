@@ -7,6 +7,7 @@ package cl.cesfam.SERVLET;
 
 import cl.cesfam.DTO.SessionUsuario;
 import cl.cesfam.ENTITY.FuncionarioFarmacia;
+import cl.cesfam.ENTITY.Medico;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -29,6 +30,7 @@ public class LoginServlet extends HttpServlet {
             
             HttpServletResponse res = (HttpServletResponse) response;
             cl.cesfam.ENTITY.FuncionarioFarmacia funcionario = new FuncionarioFarmacia();
+            cl.cesfam.ENTITY.Medico medico = new Medico();
             String rut = "";
 	    String contraseña = "";
             
@@ -62,7 +64,7 @@ public class LoginServlet extends HttpServlet {
                     userSession.setNombreUsuario(funcionario.getPrimerNombreFuncionario()+" "+funcionario.getApellidoPaternoFuncionario());
                     request.getSession().setAttribute("usuario", userSession); 
                     System.out.println("armo la sessión");
-                    request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+                    request.getRequestDispatcher("dashboard_F.jsp").forward(request, response);
                 }
                 else
                 {     
@@ -70,6 +72,27 @@ public class LoginServlet extends HttpServlet {
                     res.sendRedirect("login.jsp?error=1");
                 }
              }
+              else if (cl.cesfam.DAO.MedicoDAO.getMedicoByRut(rut) != null) 
+              {
+                  medico = cl.cesfam.DAO.MedicoDAO.getMedicoByRut(rut);
+                
+                if (medico.getPassword().equals(contraseña))
+                {
+                    System.out.println("Autenticando usuario ["+rut+":OK]");
+                    SessionUsuario userSession = new SessionUsuario();
+                    userSession.setIdUsuario(medico.getIdMedico());
+                    userSession.setRutUsuario(medico.getRutMedico());
+                    userSession.setNombreUsuario(medico.getPrimerNombreMedico()+" "+medico.getApellidoPaternoMedico());
+                    request.getSession().setAttribute("usuario", userSession);
+                    System.out.println("armo la sessión");
+                    request.getRequestDispatcher("dashboard_M.jsp").forward(request, response);
+                }
+                else
+                {     
+                    System.out.println("Autenticando usuario ["+rut+":PASSWORD NO OK]");
+                    res.sendRedirect("login.jsp?error=1");
+                }
+                }
               else
               {
                      System.out.println("Autenticando usuario ["+rut+":NOMBRE DE USUARIO NO OK]");

@@ -8,7 +8,15 @@
 <%@page import="cl.cesfam.DTO.SessionUsuario"%>
 <%@page import="cl.cesfam.ENTITY.Medicamento"%>
 <%    
-	cl.cesfam.DTO.SessionUsuario userSession = (cl.cesfam.DTO.SessionUsuario)request.getSession(false).getAttribute("usuario");
+    cl.cesfam.DTO.SessionUsuario userSession = (cl.cesfam.DTO.SessionUsuario)request.getSession(false).getAttribute("usuario"); 
+    if (userSession != null) 
+    {
+          
+    }
+    else
+    {
+    request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -56,7 +64,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="dashboard.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
+                    <a href="dashboard_F.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
                         <span></span></a>              
                 </li>
                 <li class="active">

@@ -5,8 +5,15 @@
 --%>
 <%@page import="cl.cesfam.DTO.SessionUsuario"%>
 <%
-    
-	cl.cesfam.DTO.SessionUsuario userSession = (cl.cesfam.DTO.SessionUsuario)request.getSession(false).getAttribute("usuario");
+    cl.cesfam.DTO.SessionUsuario userSession = (cl.cesfam.DTO.SessionUsuario)request.getSession(false).getAttribute("usuario"); 
+    if (userSession != null) 
+    {
+          
+    }
+    else
+    {
+    request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -49,7 +56,7 @@
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%=userSession.getNombreUsuario() %></strong>
-                             </span> <span class="text-muted text-xs block">Software Developer <b class="caret"></b></span> </span> </a>
+                             </span> <span class="text-muted text-xs block">Farmaceutico <b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="profile.html">Profile</a></li>
 
@@ -62,7 +69,7 @@
                     </div>
                 </li>
                 <li class="active">
-                    <a href="dashboard.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
+                    <a href="dashboard_F.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
                         <span></span></a>              
                 </li>
                 <li>
