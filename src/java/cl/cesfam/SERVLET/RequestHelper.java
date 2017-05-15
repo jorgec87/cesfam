@@ -8,6 +8,7 @@ package cl.cesfam.SERVLET;
 import cl.cesfam.ENTITY.Composicion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +35,7 @@ public class RequestHelper extends HttpServlet {
     private static String ACTION_ELIMINAR_COMPOSICION = "EliminarComposicion";
     private static String ACTION_OBTENER_MEDICAMENTOS = "ObtenerMedicamentos";
     private static String ACTION_OBTENER_MEDICAMENTOS_STOCK = "ObtenerMedicamentosStock";
+    private static String ACTION_CADUCAR_MEDICAMENTO = "CaducarMedicamento";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -58,7 +60,9 @@ public class RequestHelper extends HttpServlet {
 		ObtenerMedicamentos(request, response); 
            }else if (action.equals(ACTION_OBTENER_MEDICAMENTOS_STOCK)) {
 		ObtenerMedicamentosStock(request, response); 
-           }     
+           }else if (action.equals(ACTION_CADUCAR_MEDICAMENTO)) {
+		CaducarMedicamento(request, response); 
+           }      
             
             
         }
@@ -204,9 +208,9 @@ public class RequestHelper extends HttpServlet {
                 e.getMessage();            
             }
     }
-//    FIN REGISTRAR COMPOSICION
+ //    FIN REGISTRAR COMPOSICION
     
-//        INICIO ELIMINAR COMPOSICION
+ //        INICIO ELIMINAR COMPOSICION
    public static void EliminarComposicion(HttpServletRequest request, HttpServletResponse response) {
       try {
                 cl.cesfam.ENTITY.Composicion composicion = new cl.cesfam.ENTITY.Composicion();
@@ -237,7 +241,7 @@ public class RequestHelper extends HttpServlet {
     } //        FIN ELIMINAR COMPOSICION
    
    
-   //        METODO QUE OBTIENE  COMPOSICION
+ //        METODO QUE OBTIENE  COMPOSICION
     public static void ObtenerComposicion(HttpServletRequest request, HttpServletResponse response) {
         
          cl.cesfam.ENTITY.Composicion compo = new cl.cesfam.ENTITY.Composicion();
@@ -287,8 +291,8 @@ public class RequestHelper extends HttpServlet {
         
     }   //        METODO QUE OBTIENE  COMPOSICION
 
-     //        METODO QUE OBTIENE  MEDICAMENTOS
-    private void ObtenerMedicamentos(HttpServletRequest request, HttpServletResponse response) {
+ //        METODO QUE OBTIENE  MEDICAMENTOS
+    private static void ObtenerMedicamentos(HttpServletRequest request, HttpServletResponse response) {
          JSONArray medicamentos = new JSONArray();
             JSONObject salida = new JSONObject();
         
@@ -334,7 +338,7 @@ public class RequestHelper extends HttpServlet {
     }
     
 //        METODO QUE OBTIENE  MEDICAMENTOS
-    private void ObtenerMedicamentosStock(HttpServletRequest request, HttpServletResponse response) {
+    private static void ObtenerMedicamentosStock(HttpServletRequest request, HttpServletResponse response) {
         JSONObject salida = new JSONObject();
         
         
@@ -368,6 +372,85 @@ public class RequestHelper extends HttpServlet {
         
         
         
+    }
+    
+//        METODO QUE CADUCA  MEDICAMENTOS
+    private static void CaducarMedicamento(HttpServletRequest request, HttpServletResponse response) {
+       
+        cl.cesfam.ENTITY.Caducar caducar = new cl.cesfam.ENTITY.Caducar();
+         cl.cesfam.ENTITY.Partida partida = new cl.cesfam.ENTITY.Partida();
+          cl.cesfam.ENTITY.Medicamento medicamento = new cl.cesfam.ENTITY.Medicamento();
+           cl.cesfam.ENTITY.FuncionarioFarmacia funcionario = new cl.cesfam.ENTITY.FuncionarioFarmacia();
+
+                //Catidad de caducacion
+                if (request.getParameter("txtCantidad") != null) {
+                     caducar.setCantidad(Integer.parseInt(request.getParameter("txtCantidad")));
+                }
+                //Fecha caducacion
+                java.util.Date fecha = new Date();
+                caducar.setFechaCaducar(fecha);
+                 //Motivo caducacion
+                if (request.getParameter("ddlMotivo") != null) {
+                     caducar.setMotivoCaducar(Integer.parseInt(request.getParameter("ddlMotivo")));
+                }
+                //Estado 1 Caducado, 2 desechado
+                caducar.setEstadoCaducar(1);
+                 //Partida caducacion
+                if (request.getParameter("ddlPartida") != null) {
+                    try {
+                        partida = cl.cesfam.DAO.PartidaDAO.getPartidaById(Integer.parseInt(request.getParameter("ddlPartida")));
+                        caducar.setPartida(partida);
+                        
+                    } catch (Exception ex) {
+                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                 //Medicamento caducacion
+                if (request.getParameter("ddlMedicamentos") != null) {
+                    try {
+                        medicamento = cl.cesfam.DAO.MedicamentoDAO.getMedicamentoById(Integer.parseInt(request.getParameter("ddlMedicamentos")));
+                        caducar.setMedicamento(medicamento);
+                        
+                    } catch (Exception ex) {
+                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                 //funcionario caducacion
+                if (request.getParameter("idFuncionario") != null) {
+                    try {
+                        funcionario = cl.cesfam.DAO.FuncionarioFarmaciaDAO.getFuncionarioById(Integer.parseInt(request.getParameter("idFuncionario")));
+                        caducar.setFuncionarioFarmacia(funcionario);
+                        
+                    } catch (Exception ex) {
+                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+           
+                
+                     
+            try {
+                if (cl.cesfam.DAO.CaducarDAO.add(caducar)) 
+                {
+                        response.setContentType("text/plain");
+                        String res = "true";
+                        response.getWriter().write(res);
+             
+                
+            } else
+                {
+                       response.setContentType("text/plain");
+                       String res = "false";
+                       response.getWriter().write(res);
+                }
+                
+             } catch (IOException ex) {
+                 Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+             } catch (Exception ex) {
+                     Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
     }
 
     

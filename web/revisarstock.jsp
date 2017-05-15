@@ -67,12 +67,17 @@
                     <a href="dashboard_F.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
                         <span></span></a>              
                 </li>
-                <li class="active">
+                  <li>
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
-                        <li class="active"><a href="revisarstock.jsp"><i class="fa fa-table"></i>Revisar Stock Disponible</a></li>
+                        <li><a href="caducarmedicamentos.jsp"><i class="fa fa-trash"></i>Caducar Medicamento</a></li>
+                        
                     </ul>
+                </li>
+                 <li  class="active">
+                     <a href="revisarstock.jsp"><i class="fa fa-table"></i> <span class="nav-label">Revisar Stock Disponible</span> 
+                        <span></span></a>              
                 </li>
             </ul>
 

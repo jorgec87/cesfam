@@ -11,6 +11,7 @@
     <mapping resource="cl/cesfam/ENTITY/FormularioMediamento.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/EventoStock.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/FuncionarioFarmacia.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/Caducar.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Composicion.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Partida.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Stock.hbm.xml"/>

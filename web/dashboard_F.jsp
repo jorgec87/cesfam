@@ -72,12 +72,17 @@
                     <a href="dashboard_F.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
                         <span></span></a>              
                 </li>
-                <li>
+                  <li>
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li class=""><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
-                        <li><a href="revisarstock.jsp"><i class="fa fa-table"></i>Revisar Stock Disponible</a></li>
+                        <li><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
+                        <li><a href="caducarmedicamentos.jsp"><i class="fa fa-trash"></i>Caducar Medicamento</a></li>
+                        
                     </ul>
+                </li>
+                 <li>
+                     <a href="revisarstock.jsp"><i class="fa fa-table"></i> <span class="nav-label">Revisar Stock Disponible</span> 
+                        <span></span></a>              
                 </li>
             </ul>
 
@@ -144,7 +149,7 @@
                                     </div>
                                     <div class="col-xs-8 text-right">
                                         <span> PACIENTES ATENDIDOS EN EL MES</span>
-                                        <h2 class="font-bold"><span id="m_u" class="timer" data-from="0" data-to="124" data-speed="1500" data-refresh-interval="50">
+                                        <h2 class="font-bold"><span id="m_u" class="timer" data-from="0" data-to="124" data-speed="2000" data-refresh-interval="50">
                                             </span></h2>
                                     </div>
                                 </div>

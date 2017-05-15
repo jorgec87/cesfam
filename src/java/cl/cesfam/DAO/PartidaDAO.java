@@ -7,6 +7,7 @@ package cl.cesfam.DAO;
 
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -77,6 +78,22 @@ public class PartidaDAO {
                 session.getTransaction().rollback();
                 session.close();
                 System.err.println(e.getMessage());
+                throw e;
+            }
+        }
+      
+      
+      public static cl.cesfam.ENTITY.Partida getPartidaById(int id) throws Exception {
+            Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+            try {
+                session.beginTransaction();
+                cl.cesfam.ENTITY.Partida tmp = (cl.cesfam.ENTITY.Partida) session.createCriteria(cl.cesfam.ENTITY.Partida.class).add(Restrictions.eq("idPartida", id)).uniqueResult();
+                session.getTransaction().commit();
+                session.close();
+                return tmp;
+            } catch (Exception e) {
+                System.err.print(e.getMessage());
+                session.close();
                 throw e;
             }
         }

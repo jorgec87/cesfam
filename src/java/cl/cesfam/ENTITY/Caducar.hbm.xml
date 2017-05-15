@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 14-05-2017 18:10:15 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cl.cesfam.ENTITY.Caducar" table="CADUCAR" schema="CESFAM_DBA" optimistic-lock="version">
+        <id name="idCaducar" type="int">
+            <column name="ID_CADUCAR" precision="8" scale="0" not-null="true" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="funcionarioFarmacia" class="cl.cesfam.ENTITY.FuncionarioFarmacia" fetch="select">
+            <column name="ID_FUNC_FARMACIA" precision="8" scale="0" />
+        </many-to-one>
+        <many-to-one name="medicamento" class="cl.cesfam.ENTITY.Medicamento" fetch="select">
+            <column name="ID_MEDICAMENTO" precision="8" scale="0" />
+        </many-to-one>
+        <many-to-one name="partida" class="cl.cesfam.ENTITY.Partida" fetch="select">
+            <column name="ID_PARTIDA" precision="8" scale="0" />
+        </many-to-one>
+        <property name="cantidad" type="int">
+            <column name="CANTIDAD" precision="8" scale="0" not-null="true" />
+        </property>
+        <property name="fechaCaducar" type="date">
+            <column name="FECHA_CADUCAR" length="7" not-null="true" />
+        </property>
+        <property name="motivoCaducar" type="int">
+            <column name="MOTIVO_CADUCAR" precision="8" scale="0" not-null="true" />
+        </property>
+        <property name="estadoCaducar" type="int">
+            <column name="ESTADO_CADUCAR" precision="8" scale="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
