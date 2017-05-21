@@ -8,11 +8,14 @@ package cl.cesfam.TEST;
 import cl.cesfam.ENTITY.Componente;
 import cl.cesfam.ENTITY.Composicion;
 import cl.cesfam.SERVLET.RequestHelper;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Date;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -165,13 +168,30 @@ public class Prueba {
        
                     Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
                     session.beginTransaction();
-                    Query query2 = session.createQuery("select count(cc.idMedicamento) from Medicamento cc where cc.stock in (select ss.idStock"
-                            + " from Stock ss where stock = 0) ");
-//                    select count(*) from MEDICAMENTO where STOCK_ID_STOCK in (select id_stock from STOCK where STOCK = 0); 
 
-                     List<Integer> lista = query2.list();
-                    System.out.println(lista);
+                    Query query2 = session.createQuery("select (select me.nombreMedicamento from Medicamento me where me.idMedicamento = ca.medicamento),\n" +
+                    "(select fu.primerNombreFuncionario||' '||fu.apellidoPaternoFuncionario from FuncionarioFarmacia fu where fu.idFuncionario = ca.funcionarioFarmacia),\n" +
+                    "ca.cantidad,\n" +
+                    "ca.fechaCaducar,\n" +
+                    "ca.motivoCaducar,\n" +
+                    "ca.estadoCaducar\n" +
+                    "from Caducar ca");
+//                    select count(*) from MEDICAMENTO where STOCK_ID_STOCK in (select id_stock from STOCK where STOCK = 0); 
+                    List<Object[]> studentList= query2.list();
+                    
+             
                     session.close(); 
+                    for(Object[] list:studentList){
+                    System.out.println((String)list[0]+"1");
+                    System.out.println((String)list[1]+"2");
+                    System.out.println((int)list[2]+"3");
+                    Date fecha = (Date)list[3];
+                    System.out.println(fecha+"4");
+                    System.out.println((int)list[4]+"5");
+                    System.out.println((int)list[5]+"6");
+                    
+                   
+        }
 //	(select max(ff.version) from FeatureList ff where ff.name = f.name
 	
 	

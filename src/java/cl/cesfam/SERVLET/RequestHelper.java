@@ -8,6 +8,8 @@ package cl.cesfam.SERVLET;
 import cl.cesfam.ENTITY.Composicion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,6 +38,10 @@ public class RequestHelper extends HttpServlet {
     private static String ACTION_OBTENER_MEDICAMENTOS = "ObtenerMedicamentos";
     private static String ACTION_OBTENER_MEDICAMENTOS_STOCK = "ObtenerMedicamentosStock";
     private static String ACTION_CADUCAR_MEDICAMENTO = "CaducarMedicamento";
+    private static String ACTION_OBTENER_CADUCADOS = "ObtenerCaducados";
+    private static String ACTION_DESECHAR_MEDICAMENTO = "DesecharMedicamento";
+    
+    //  http://localhost:8083/CESFAM/RequestHelper?accion=ObtenerCaducados
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -62,7 +68,11 @@ public class RequestHelper extends HttpServlet {
 		ObtenerMedicamentosStock(request, response); 
            }else if (action.equals(ACTION_CADUCAR_MEDICAMENTO)) {
 		CaducarMedicamento(request, response); 
-           }      
+           }else if (action.equals(ACTION_OBTENER_CADUCADOS)) {
+		ObtenerCaducados(request, response); 
+           }else if (action.equals(ACTION_DESECHAR_MEDICAMENTO)) {
+		DesecharMedicamento(request, response); 
+           }         
             
             
         }
@@ -107,7 +117,7 @@ public class RequestHelper extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    //      METODO DE CREACION MEDICAMENTO 
+//      METODO DE CREACION MEDICAMENTO 
     public static void RegistrarMedicamento(HttpServletRequest request, HttpServletResponse response) {
       try {
                 cl.cesfam.ENTITY.Medicamento medicamento = new cl.cesfam.ENTITY.Medicamento();
@@ -161,7 +171,7 @@ public class RequestHelper extends HttpServlet {
             }
     }
 
-        //      METODO DE CREACION COMPOSICION
+//      METODO DE CREACION COMPOSICION
     public static void RegistrarComposicion(HttpServletRequest request, HttpServletResponse response) {
       try {
                 cl.cesfam.ENTITY.Composicion composicion = new cl.cesfam.ENTITY.Composicion();
@@ -208,9 +218,9 @@ public class RequestHelper extends HttpServlet {
                 e.getMessage();            
             }
     }
- //    FIN REGISTRAR COMPOSICION
+//    FIN REGISTRAR COMPOSICION
     
- //        INICIO ELIMINAR COMPOSICION
+//        INICIO ELIMINAR COMPOSICION
    public static void EliminarComposicion(HttpServletRequest request, HttpServletResponse response) {
       try {
                 cl.cesfam.ENTITY.Composicion composicion = new cl.cesfam.ENTITY.Composicion();
@@ -241,7 +251,7 @@ public class RequestHelper extends HttpServlet {
     } //        FIN ELIMINAR COMPOSICION
    
    
- //        METODO QUE OBTIENE  COMPOSICION
+//        METODO QUE OBTIENE  COMPOSICION
     public static void ObtenerComposicion(HttpServletRequest request, HttpServletResponse response) {
         
          cl.cesfam.ENTITY.Composicion compo = new cl.cesfam.ENTITY.Composicion();
@@ -291,7 +301,7 @@ public class RequestHelper extends HttpServlet {
         
     }   //        METODO QUE OBTIENE  COMPOSICION
 
- //        METODO QUE OBTIENE  MEDICAMENTOS
+//        METODO QUE OBTIENE  MEDICAMENTOS
     private static void ObtenerMedicamentos(HttpServletRequest request, HttpServletResponse response) {
          JSONArray medicamentos = new JSONArray();
             JSONObject salida = new JSONObject();
@@ -451,6 +461,112 @@ public class RequestHelper extends HttpServlet {
                      Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
                 
+    }
+    
+//        METODO QUE OBTIENE  CADUCADOS
+    private static void ObtenerCaducados(HttpServletRequest request, HttpServletResponse response) {
+            JSONArray caducados = new JSONArray();
+            JSONObject caducado = new JSONObject();
+            
+                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                    Query query = session.createQuery("select (select me.nombreMedicamento from Medicamento me where me.idMedicamento = ca.medicamento),\n" +
+                    "(select fu.primerNombreFuncionario||' '||fu.apellidoPaternoFuncionario from FuncionarioFarmacia fu where fu.idFuncionario = ca.funcionarioFarmacia),\n" +
+                    "(select pa.nombrePartida from Partida pa where pa.idPartida = ca.partida),\n" +
+                    "ca.cantidad,\n" +
+                    "ca.fechaCaducar,\n" +
+                    "ca.motivoCaducar,\n" +
+                    "ca.estadoCaducar,\n" +
+                    "ca.idCaducar\n" +
+                    "from Caducar ca where ca.estadoCaducar = 1  order by ca.fechaCaducar");
+                    List<Object[]> lista = query.list();
+                    session.close();
+                    
+                   if(lista != null){
+                try {
+                    for (Object[] item : lista) {
+                        
+                        for (int i = 0; i < 1; i++) {
+                           
+                            try {
+                                JSONObject objeto = new JSONObject();
+                                objeto.put("medicamento", (String)item[0]);
+                                objeto.put("funcionario", (String)item[1]);
+                                objeto.put("partida", (String)item[2]);
+                                objeto.put("cantidad", (int)item[3]);
+                                DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                String fecha = df.format((Date)item[4]).toString();
+                                objeto.put("fecha",fecha );
+                                objeto.put("motivo", (int)item[5]);
+                                objeto.put("estado", (int)item[6]);
+                                objeto.put("id_caducar", (int)item[7]);
+                                
+                                caducados.put(objeto);
+                                
+                            } catch (JSONException ex) {
+                                Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
+                    } // fin foercha
+                    
+                    caducado.put("data", caducados);
+                    PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+caducado);
+                    out.println(caducado);
+                    out.flush();
+                } catch (JSONException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                 }else{
+                    
+                    
+                    
+                    }
+     
+        
+        
+    }
+    
+//        METODO QUE DESECHA MEDICAMENTOS
+    private static void DesecharMedicamento(HttpServletRequest request, HttpServletResponse response) {
+      
+            try {
+                cl.cesfam.ENTITY.Caducar caducar = new cl.cesfam.ENTITY.Caducar();
+                int id = 0;
+                //medicamento
+                if (request.getParameter("id") != null) {
+                    id = Integer.parseInt(request.getParameter("id"));
+                }
+                System.out.println("desechando medicamento .............. id : "+id);
+                
+                caducar = cl.cesfam.DAO.CaducarDAO.getCaducarById(id);
+                caducar.setEstadoCaducar(2);
+                
+                 if (cl.cesfam.DAO.CaducarDAO.update(caducar)) 
+                {
+                       response.setContentType("text/plain");
+                       String res = "true";
+                       response.getWriter().write(res);
+                    System.out.println("desechando correctamente");
+                }
+                else
+                {
+                       response.setContentType("text/plain");
+                       String res = "false";
+                       response.getWriter().write(res);
+                       System.out.println("Error al desechar");
+                }
+            } catch (Exception e) {
+                e.getMessage();            
+            }
+        
+        
+        
+        
+        
     }
 
     

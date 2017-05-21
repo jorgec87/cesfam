@@ -30,6 +30,8 @@
     <title>HOME | Caducar</title>
      <link rel="shortcut icon" href="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+     <!-- Toastr style -->
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
    <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
@@ -170,27 +172,34 @@
                              <div class="form-group" style="margin-top: 23px;">
                                  <label class="col-lg-3 col-lg-offset-1 control-label">Cantidad</label>
                                  <div class="col-lg-3">
-                                     <input type="number" placeholder="Unidades" id="txtCantidad" class="form-control">
+                                     <input type="number"  placeholder="Unidades" name="txtCantidad"  id="txtCantidad" class="form-control">
                                  </div>
                              </div>
                             <div class="clearfix"></div>
                              <div class="form-group" style="margin-top: 23px;">
                                  <label class="col-sm-3  col-lg-offset-1 control-label">Motivo de caducación </label>
                                  <div class="col-md-5">
-                                     <select class="form-control m-b" id="ddlMotivo" name="ddlMotivo">
-                                         <option value="">Seleccione un Motivo</option>
+                                     <select class="form-control m-b" id="ddlMotivo"  name="ddlMotivo">
+                                        <option value="" value="" selected>Seleccione un Motivo</option>
                                         <option value="1">Medicamento Vencido</option>
                                         <option value="2">Mal Estado</option>
                                         <option value="3">Envase Dañado</option>
-                                        <option value="4">Otro</option>
                                     </select>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary" id="btnCaducar">Caducar Medicamento</button>
+                            <button type="submit" class="btn btn-primary" id="btnCaducar">Caducar Medicamento</button>
                             </form>
                           </div>
                 </div>
             </div><!--FINAL PANEL-->   
+            
+            
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Medicamentos Caducados</h5>
+                    </div>
            
              <div class="ibox-content">
                         <div class="table-responsive">
@@ -200,9 +209,10 @@
                                     <th>Medicamento</th>
                                     <th>Funcionario</th>
                                     <th>Cantidad Caducada</th>
+                                    <th>Partida</th>
                                     <th>Fecha Caducación</th>
                                     <th>Motivo Caducación</th>
-                                    <th>Estado</th>
+                                    <th>Desechar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -211,7 +221,9 @@
                        </table>
                       </div>
             </div>
-
+            </div>
+         </div>
+      </div>
 
 
 
@@ -237,7 +249,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
+                <!-- Jquery Validate -->
+    <script src="js/plugins/validate/jquery.validate.min.js"></script>
  
    <!-- Toastr -->
     <script src="js/plugins/toastr/toastr.min.js"></script>
@@ -247,7 +260,8 @@
     <!-- Custom and plugin javascript -->
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
-
+    <script src="js/fnReloadAjax.js"></script>
+  
 
 
 
@@ -272,41 +286,11 @@
             
             
             
-            $("#btnCaducar").click(function(){
-                  
-                 //          INICIO AJAX CADUCAR		
-             var cantidad = $("#txtCantidad").val();
-             var motivo = $("#ddlMotivo").val();
-             var partida = $("#ddlPartida").val();
-             var medicamento = $("#ddlMedicamentos").val();
-             var idFuncionario = "<%=userSession.getIdUsuario()%>";
-             var accion = "CaducarMedicamento";
+   
+        
+            
+            
              
-             var parametros = {"txtCantidad" : cantidad,"ddlMotivo" : motivo,"ddlPartida" : partida,
-                 "ddlMedicamentos" : medicamento, "idFuncionario" : idFuncionario, "accion" : accion};
-
-            $.ajax({
-                data:  parametros,
-                url:   'RequestHelper',
-                type:  'post',
-                 success: function(responseText) 
-                 {
-                    alert(responseText);
-                 }
-                });
-//            FIN //          INICIO AJAX CADUCAR 
-                  
-             });
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             // datatable
               $('#tabla_caducar').dataTable( {
  
@@ -347,59 +331,185 @@
         "sPrevious": "Anterior"
  
     
-    }}, "ajax" : "",
+    }}, "ajax" : "RequestHelper?accion=ObtenerCaducados",
             "columns": [
-                        { "data": "nombre"},
-                        { "data": "fabricante" },
-                        { "data": "presentacion" },
-                        { "data": "contenido" },
-                        { "data": "stock" }
+                        { "data": "medicamento"},
+                        { "data": "funcionario" },
+                        { "data": "cantidad" },
+                        { "data": "partida" },
+                        { "data": "fecha" },
+                        { "data": "motivo" },
+                        { "data": "id_caducar" }
                     ],
              "columnDefs": [
                  {
                       "targets": [0], 
-                      "data": "nombre", 
+                      "data": "medicamento", 
                       "render": function(data, type, full) { 
                           return "<a><strong>" + data.toUpperCase() + "</strong></a>";
                       }
                   },
                     {
-                      "targets": [2], 
-                      "data": "presentacion", 
+                      "targets": [1], 
+                      "data": "funcionario", 
                       "render": function(data, type, full) {
-                          if(data == 1){
-                          return "<p><span class=\"label label-primary\">Solida</span></p>";
-                      }else{
-                         return "<p><span class=\"label label-info\">Liquida</span></p>"; 
-                      }
+                           return  data.toUpperCase();
                       }
                   },{
-                      "targets": [3], 
-                      "data": "contenido",
+                      "targets": [5], 
+                      "data": "motivo",
                       "render": function(data, type, full) { 
-                          var p_val = full.presentacion;
-                          if(p_val == 1){
-                          return "<td >"+data + " UN</td>";
-                      }else{
-                          return "<td >"+data + " ML</td>";
+                         if(data == 1){
+                           return "<p><span class=\"label label-primary\">Medicamento Vencido</span></p>";
+                      }else if(data == 2){
+                          return "<p><span class=\"label label-primary\">Mal Estado</span></p>";
+                      }else if(data == 3){
+                          return "<p><span class=\"label label-primary\">Envase Dañado</span></p>";
                       }
                       }
                   },
                     {
-                      "targets": [4], 
-                      "data": "stock", 
+                      "targets": [6], 
+                      "data": "id_caducar", 
                       "render": function(data, type, full) { 
-                          if(data > 0){
-                          return "<td ><span style=\"color:#1ab394;\">"+data + " UN</span></td>";
-                      }else{
-                          return "<td ><span style=\"color:#ed5565;\">"+data + " UN</span></td>";
-                      }
+                         return "<a onclick=\"DesecharMedicamento("+data+")\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash\">  </i>  Desechar</a>";
                       }
                   }]
- 
-    
+              
+               
  
     } );
+    
+    //            ELIMINAR COMPONENTE
+            window.DesecharMedicamento =  function(id){
+            
+                if(!confirm('¿Estás seguro que deseas Desechar Medicamento ?')){
+                    return false; 
+                }
+                var id_caducar = id;
+                var accion = "DesecharMedicamento";
+
+                var parametros = {"id" : id_caducar,"accion": accion};
+               
+                $.ajax({
+                data:  parametros,
+                url:   'RequestHelper',
+                type:  'post',
+                 success: function(result) 
+                 {
+                   
+                    if (result == "true") {
+                  //actualzar tabla
+                  var table = $('#tabla_caducar').dataTable();
+                  table.fnReloadAjax( 'RequestHelper?accion=ObtenerCaducados' );
+                  table.fnReloadAjax();
+                  
+                    toastr.options = {
+                      "closeButton": true,
+                      "debug": true,
+                      "progressBar": true,
+                      "preventDuplicates": false,
+                      "positionClass": "toast-top-center",
+                      "onclick": null,
+                      "showDuration": "400",
+                      "hideDuration": "600",
+                      "timeOut": "2500",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    };
+                   toastr.success("Medicamento desechado correctamente", "Éxito");
+                                       }   
+                   
+                 }
+                });
+             }   //            ELIMINAR COMPONENTE
+            
+            
+            
+            //          INICIO DE VALIDACION MEDICAMENTO
+             //funcion que valida campos
+            $("#caducar_form").validate
+            ({
+                rules: 
+                {
+                    txtCantidad: {
+                        required: true
+                    },
+                    ddlMotivo: {
+                        required: true
+                    }
+                },
+            submitHandler: function(form) {      
+                
+                
+                          
+          //          INICIO AJAX CADUCAR		
+             var cantidad = $("#txtCantidad").val();
+             var motivo = $("#ddlMotivo").val();
+             var partida = $("#ddlPartida").val();
+             var medicamento = $("#ddlMedicamentos").val();
+             var idFuncionario = "<%=userSession.getIdUsuario()%>";
+             var accion = "CaducarMedicamento";
+             
+             var parametros = {"txtCantidad" : cantidad,"ddlMotivo" : motivo,"ddlPartida" : partida,
+                 "ddlMedicamentos" : medicamento, "idFuncionario" : idFuncionario, "accion" : accion};
+
+            $.ajax({
+                data:  parametros,
+                url:   'RequestHelper',
+                type:  'post',
+                 success: function(responseText) 
+                 {
+                    toastr.options = {
+                      "closeButton": true,
+                      "debug": true,
+                      "progressBar": true,
+                      "preventDuplicates": false,
+                      "positionClass": "toast-top-center",
+                      "onclick": null,
+                      "showDuration": "400",
+                      "hideDuration": "600",
+                      "timeOut": "2500",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    };
+                     toastr.success("Medicamento caducado correctamente!", "Éxito");
+                   //actualzar tabla
+                   
+                    $("#ddlMedicamentos").val(0);
+                    $("#ddlPartida").val(0);
+                    $("#ddlMedicamentos").trigger("chosen:updated");
+                    $("#ddlPartida").trigger("chosen:updated");
+                    $("#txtCantidad").val("");
+                    $("#ddlMotivo").val("");
+                     $("#ddlMotivo").change();
+                    
+                            
+                  var table = $('#tabla_caducar').dataTable();
+                  table.fnReloadAjax( 'RequestHelper?accion=ObtenerCaducados' );
+                  table.fnReloadAjax();
+
+                    
+                 }
+                });
+//            FIN //          INICIO AJAX CADUCAR 
+                  
+
+
+            
+
+            }
+//          FIN VALIDACION MEDICAMENTO
+            });
+            
+            
+            
 
 
         
