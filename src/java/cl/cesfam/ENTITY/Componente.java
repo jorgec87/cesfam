@@ -1,5 +1,5 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
+// Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -19,12 +19,11 @@ public class Componente  implements java.io.Serializable {
     }
 
 	
-    public Componente(String nombreComponente) {
-        
+    public Componente(int idComponente, String nombreComponente) {
+        this.idComponente = idComponente;
         this.nombreComponente = nombreComponente;
     }
-    public Componente( String nombreComponente, Set composicions) {
-       
+    public Componente(String nombreComponente, Set composicions) {
        this.nombreComponente = nombreComponente;
        this.composicions = composicions;
     }

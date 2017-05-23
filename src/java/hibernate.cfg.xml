@@ -9,16 +9,19 @@
     <property name="hibernate.connection.password">cesfam</property>
     <mapping resource="cl/cesfam/ENTITY/Medico.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/FormularioMediamento.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/EstadoPrescripcion.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/EventoStock.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/FuncionarioFarmacia.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Caducar.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Composicion.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/Prescripcion.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Partida.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/Stock.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Paciente.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Componente.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Medicamento.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/DetalleEntrega.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/EstadoCaducar.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/DetallePartida.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/EstadoEventoStock.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

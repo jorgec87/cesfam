@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1 -->
+<!-- Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cl.cesfam.ENTITY.FormularioMediamento" table="FORMULARIO_MEDIAMENTO" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idFormularioMedicamento" type="int">
@@ -23,5 +23,11 @@
         <property name="pacienteIdPaciente" type="java.lang.Integer">
             <column name="PACIENTE_ID_PACIENTE" precision="8" scale="0" />
         </property>
+        <set name="prescripcions" table="PRESCRIPCION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_FORMULARIO_MEDICAMENTO" precision="8" scale="0" />
+            </key>
+            <one-to-many class="cl.cesfam.ENTITY.Prescripcion" />
+        </set>
     </class>
 </hibernate-mapping>

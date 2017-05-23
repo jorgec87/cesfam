@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1 -->
+<!-- Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cl.cesfam.ENTITY.Partida" table="PARTIDA" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idPartida" type="int">
             <column name="ID_PARTIDA" precision="8" scale="0" />
             <generator class="increment" />
         </id>
-        <property name="fechaVencimineto" type="date">
-            <column name="FECHA_VENCIMINETO" length="7" not-null="true" />
-        </property>
         <property name="nombrePartida" type="string">
             <column name="NOMBRE_PARTIDA" length="45" not-null="true" />
         </property>
@@ -19,6 +16,12 @@
                 <column name="PARTIDA_ID_PARTIDA" precision="8" scale="0" />
             </key>
             <one-to-many class="cl.cesfam.ENTITY.DetallePartida" />
+        </set>
+        <set name="caducars" table="CADUCAR" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_PARTIDA" precision="8" scale="0" />
+            </key>
+            <one-to-many class="cl.cesfam.ENTITY.Caducar" />
         </set>
         <set name="detalleEntregas" table="DETALLE_ENTREGA" inverse="true" lazy="true" fetch="select">
             <key>

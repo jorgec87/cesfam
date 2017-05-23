@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cl.cesfam.ENTITY.EstadoEventoStock" table="ESTADO_EVENTO_STOCK" schema="CESFAM_DBA" optimistic-lock="version">
+        <id name="idEstadoEventoStock" type="int">
+            <column name="ID_ESTADO_EVENTO_STOCK" precision="8" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="nombreEstado" type="string">
+            <column name="NOMBRE_ESTADO" length="45" not-null="true" />
+        </property>
+        <set name="eventoStocks" table="EVENTO_STOCK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_ESTADO_EVENTO_STOCK" precision="8" scale="0" />
+            </key>
+            <one-to-many class="cl.cesfam.ENTITY.EventoStock" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,8 +1,7 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
+// Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1
 
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,24 +12,24 @@ public class Partida  implements java.io.Serializable {
 
 
      private int idPartida;
-     private Date fechaVencimineto;
      private String nombrePartida;
      private Set detallePartidas = new HashSet(0);
+     private Set caducars = new HashSet(0);
      private Set detalleEntregas = new HashSet(0);
 
     public Partida() {
     }
 
 	
-    public Partida( Date fechaVencimineto, String nombrePartida) {
-       
-        this.fechaVencimineto = fechaVencimineto;
+    public Partida(int idPartida, String nombrePartida) {
+        this.idPartida = idPartida;
         this.nombrePartida = nombrePartida;
     }
-    public Partida(Date fechaVencimineto, String nombrePartida, Set detallePartidas, Set detalleEntregas) {
-       this.fechaVencimineto = fechaVencimineto;
+    public Partida(int idPartida, String nombrePartida, Set detallePartidas, Set caducars, Set detalleEntregas) {
+       this.idPartida = idPartida;
        this.nombrePartida = nombrePartida;
        this.detallePartidas = detallePartidas;
+       this.caducars = caducars;
        this.detalleEntregas = detalleEntregas;
     }
    
@@ -40,13 +39,6 @@ public class Partida  implements java.io.Serializable {
     
     public void setIdPartida(int idPartida) {
         this.idPartida = idPartida;
-    }
-    public Date getFechaVencimineto() {
-        return this.fechaVencimineto;
-    }
-    
-    public void setFechaVencimineto(Date fechaVencimineto) {
-        this.fechaVencimineto = fechaVencimineto;
     }
     public String getNombrePartida() {
         return this.nombrePartida;
@@ -61,6 +53,13 @@ public class Partida  implements java.io.Serializable {
     
     public void setDetallePartidas(Set detallePartidas) {
         this.detallePartidas = detallePartidas;
+    }
+    public Set getCaducars() {
+        return this.caducars;
+    }
+    
+    public void setCaducars(Set caducars) {
+        this.caducars = caducars;
     }
     public Set getDetalleEntregas() {
         return this.detalleEntregas;

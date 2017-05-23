@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1 -->
+<!-- Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cl.cesfam.ENTITY.FuncionarioFarmacia" table="FUNCIONARIO_FARMACIA" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idFuncionario" type="int">
@@ -26,5 +26,11 @@
         <property name="apellidoMaternoFuncionario" type="string">
             <column name="APELLIDO_MATERNO_FUNCIONARIO" length="45" not-null="true" />
         </property>
+        <set name="caducars" table="CADUCAR" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_FUNC_FARMACIA" precision="8" scale="0" />
+            </key>
+            <one-to-many class="cl.cesfam.ENTITY.Caducar" />
+        </set>
     </class>
 </hibernate-mapping>

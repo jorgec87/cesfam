@@ -1,5 +1,5 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
+// Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1
 
 
 
@@ -21,16 +21,16 @@ public class Medico  implements java.io.Serializable {
     }
 
 	
-    public Medico(String rutMedico, String password, String primerNombreMedico, String apellidoPaternoMedico, String apellidoMaternoMedico) {
-      
+    public Medico(int idMedico, String rutMedico, String password, String primerNombreMedico, String apellidoPaternoMedico, String apellidoMaternoMedico) {
+        this.idMedico = idMedico;
         this.rutMedico = rutMedico;
         this.password = password;
         this.primerNombreMedico = primerNombreMedico;
         this.apellidoPaternoMedico = apellidoPaternoMedico;
         this.apellidoMaternoMedico = apellidoMaternoMedico;
     }
-    public Medico( String rutMedico, String password, String primerNombreMedico, String segundoNombreMedico, String apellidoPaternoMedico, String apellidoMaternoMedico) {
-       
+    public Medico(int idMedico, String rutMedico, String password, String primerNombreMedico, String segundoNombreMedico, String apellidoPaternoMedico, String apellidoMaternoMedico) {
+       this.idMedico = idMedico;
        this.rutMedico = rutMedico;
        this.password = password;
        this.primerNombreMedico = primerNombreMedico;

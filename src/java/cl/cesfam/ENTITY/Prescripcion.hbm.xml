@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cl.cesfam.ENTITY.Prescripcion" table="PRESCRIPCION" schema="CESFAM_DBA" optimistic-lock="version">
+        <id name="idPrescripcion" type="int">
+            <column name="ID_PRESCRIPCION" precision="8" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="estadoPrescripcion" class="cl.cesfam.ENTITY.EstadoPrescripcion" fetch="select">
+            <column name="ID_ESTADO_PRESCRIPCION" precision="8" scale="0" />
+        </many-to-one>
+        <many-to-one name="formularioMediamento" class="cl.cesfam.ENTITY.FormularioMediamento" fetch="select">
+            <column name="ID_FORMULARIO_MEDICAMENTO" precision="8" scale="0" />
+        </many-to-one>
+        <many-to-one name="medicamento" class="cl.cesfam.ENTITY.Medicamento" fetch="select">
+            <column name="ID_MEDICAMENTO" precision="8" scale="0" />
+        </many-to-one>
+        <property name="periodo" type="int">
+            <column name="PERIODO" precision="8" scale="0" />
+        </property>
+        <property name="frecuencia" type="int">
+            <column name="FRECUENCIA" precision="8" scale="0" />
+        </property>
+        <property name="tipo" type="int">
+            <column name="TIPO" precision="8" scale="0" />
+        </property>
+        <property name="duracionTratamiento" type="int">
+            <column name="DURACION_TRATAMIENTO" precision="8" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

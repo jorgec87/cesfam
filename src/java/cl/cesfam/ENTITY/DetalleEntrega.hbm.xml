@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1 -->
+<!-- Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cl.cesfam.ENTITY.DetalleEntrega" table="DETALLE_ENTREGA" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idEntrega" type="int">
@@ -11,10 +11,10 @@
         <many-to-one name="partida" class="cl.cesfam.ENTITY.Partida" fetch="select">
             <column name="PARTIDA_ID_PARTIDA" precision="8" scale="0" />
         </many-to-one>
-        <property name="entregaIdEntrega" type="java.lang.Integer">
+        <property name="entregaIdEntrega" type="int">
             <column name="ENTREGA_ID_ENTREGA" precision="8" scale="0" />
         </property>
-        <property name="prescripcionIdPrescripcion" type="java.lang.Integer">
+        <property name="prescripcionIdPrescripcion" type="int">
             <column name="PRESCRIPCION_ID_PRESCRIPCION" precision="8" scale="0" />
         </property>
     </class>

@@ -1,5 +1,5 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
+// Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -15,22 +15,24 @@ public class DetallePartida  implements java.io.Serializable {
      private Partida partida;
      private int cantidad;
      private Date fechaIngreso;
+     private Date fechaVencimiento;
 
     public DetallePartida() {
     }
 
 	
     public DetallePartida( int cantidad, Date fechaIngreso) {
-        
+       
         this.cantidad = cantidad;
         this.fechaIngreso = fechaIngreso;
     }
-    public DetallePartida(Medicamento medicamento, Partida partida, int cantidad, Date fechaIngreso) {
-       
+    public DetallePartida(int idDetallePartida, Medicamento medicamento, Partida partida, int cantidad, Date fechaIngreso, Date fechaVencimiento) {
+       this.idDetallePartida = idDetallePartida;
        this.medicamento = medicamento;
        this.partida = partida;
        this.cantidad = cantidad;
        this.fechaIngreso = fechaIngreso;
+       this.fechaVencimiento = fechaVencimiento;
     }
    
     public int getIdDetallePartida() {
@@ -67,6 +69,13 @@ public class DetallePartida  implements java.io.Serializable {
     
     public void setFechaIngreso(Date fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
+    }
+    public Date getFechaVencimiento() {
+        return this.fechaVencimiento;
+    }
+    
+    public void setFechaVencimiento(Date fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
     }
 
 

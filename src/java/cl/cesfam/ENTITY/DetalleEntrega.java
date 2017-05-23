@@ -1,5 +1,5 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
+// Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1
 
 
 
@@ -11,16 +11,18 @@ public class DetalleEntrega  implements java.io.Serializable {
 
      private int idEntrega;
      private Partida partida;
-     private Integer entregaIdEntrega;
-     private Integer prescripcionIdPrescripcion;
+     private int entregaIdEntrega;
+     private int prescripcionIdPrescripcion;
 
     public DetalleEntrega() {
     }
 
 	
-   
-    public DetalleEntrega( Partida partida, Integer entregaIdEntrega, Integer prescripcionIdPrescripcion) {
-       
+    public DetalleEntrega(int idEntrega) {
+        this.idEntrega = idEntrega;
+    }
+    public DetalleEntrega(int idEntrega, Partida partida, Integer entregaIdEntrega, Integer prescripcionIdPrescripcion) {
+       this.idEntrega = idEntrega;
        this.partida = partida;
        this.entregaIdEntrega = entregaIdEntrega;
        this.prescripcionIdPrescripcion = prescripcionIdPrescripcion;
@@ -44,14 +46,14 @@ public class DetalleEntrega  implements java.io.Serializable {
         return this.entregaIdEntrega;
     }
     
-    public void setEntregaIdEntrega(Integer entregaIdEntrega) {
+    public void setEntregaIdEntrega(int entregaIdEntrega) {
         this.entregaIdEntrega = entregaIdEntrega;
     }
-    public Integer getPrescripcionIdPrescripcion() {
+    public int getPrescripcionIdPrescripcion() {
         return this.prescripcionIdPrescripcion;
     }
     
-    public void setPrescripcionIdPrescripcion(Integer prescripcionIdPrescripcion) {
+    public void setPrescripcionIdPrescripcion(int prescripcionIdPrescripcion) {
         this.prescripcionIdPrescripcion = prescripcionIdPrescripcion;
     }
 

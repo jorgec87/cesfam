@@ -1,5 +1,5 @@
 package cl.cesfam.ENTITY;
-// Generated 16-04-2017 17:23:15 by Hibernate Tools 4.3.1
+// Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,36 +12,43 @@ public class Medicamento  implements java.io.Serializable {
 
 
      private int idMedicamento;
-     private Stock stock;
      private String nombreMedicamento;
      private int presentacion;
      private int contenidoEnvase;
      private String fabricante;
+     private int stock;
+     private Integer stockCritico;
+     private Set caducars = new HashSet(0);
      private Set composicions = new HashSet(0);
      private Set detallePartidas = new HashSet(0);
      private Set eventoStocks = new HashSet(0);
+     private Set prescripcions = new HashSet(0);
 
     public Medicamento() {
     }
 
 	
-    public Medicamento( String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante) {
-        
+    public Medicamento(int idMedicamento, String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante, int stock) {
+        this.idMedicamento = idMedicamento;
         this.nombreMedicamento = nombreMedicamento;
         this.presentacion = presentacion;
         this.contenidoEnvase = contenidoEnvase;
         this.fabricante = fabricante;
+        this.stock = stock;
     }
-    public Medicamento(Stock stock, String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante, Set composicions, Set detallePartidas, Set eventoStocks) {
-      
-       this.stock = stock;
+    public Medicamento(int idMedicamento, String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante, int stock, Integer stockCritico, Set caducars, Set composicions, Set detallePartidas, Set eventoStocks, Set prescripcions) {
+       this.idMedicamento = idMedicamento;
        this.nombreMedicamento = nombreMedicamento;
        this.presentacion = presentacion;
        this.contenidoEnvase = contenidoEnvase;
        this.fabricante = fabricante;
+       this.stock = stock;
+       this.stockCritico = stockCritico;
+       this.caducars = caducars;
        this.composicions = composicions;
        this.detallePartidas = detallePartidas;
        this.eventoStocks = eventoStocks;
+       this.prescripcions = prescripcions;
     }
    
     public int getIdMedicamento() {
@@ -50,13 +57,6 @@ public class Medicamento  implements java.io.Serializable {
     
     public void setIdMedicamento(int idMedicamento) {
         this.idMedicamento = idMedicamento;
-    }
-    public Stock getStock() {
-        return this.stock;
-    }
-    
-    public void setStock(Stock stock) {
-        this.stock = stock;
     }
     public String getNombreMedicamento() {
         return this.nombreMedicamento;
@@ -86,6 +86,27 @@ public class Medicamento  implements java.io.Serializable {
     public void setFabricante(String fabricante) {
         this.fabricante = fabricante;
     }
+    public int getStock() {
+        return this.stock;
+    }
+    
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+    public Integer getStockCritico() {
+        return this.stockCritico;
+    }
+    
+    public void setStockCritico(Integer stockCritico) {
+        this.stockCritico = stockCritico;
+    }
+    public Set getCaducars() {
+        return this.caducars;
+    }
+    
+    public void setCaducars(Set caducars) {
+        this.caducars = caducars;
+    }
     public Set getComposicions() {
         return this.composicions;
     }
@@ -106,6 +127,13 @@ public class Medicamento  implements java.io.Serializable {
     
     public void setEventoStocks(Set eventoStocks) {
         this.eventoStocks = eventoStocks;
+    }
+    public Set getPrescripcions() {
+        return this.prescripcions;
+    }
+    
+    public void setPrescripcions(Set prescripcions) {
+        this.prescripcions = prescripcions;
     }
 
 
