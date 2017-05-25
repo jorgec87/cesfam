@@ -125,20 +125,9 @@
                                 <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Medicamento</label>
                                 <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
                                     <select data-placeholder="Seleccione el medicamento" class="chosen-select" tabindex="2"  id="ddlMedicamentos"  name="ddlPartida">
-                                        <option value="0">Seleccione Medicamento</option>
-                                        <%
-                                            try {
-                                                //LISTA DE MEDICAMENTOS    
-                                                List<cl.cesfam.ENTITY.Medicamento> medicamentos = new cl.cesfam.DAO.MedicamentoDAO().getList();
-
-                                                if (medicamentos != null) {
-                                                    for (Medicamento item : medicamentos) {%> <option value="<%=item.getIdMedicamento()%>"><%=item.getNombreMedicamento()%></option>               
-                                        <%}
-                                                }
-                                            } catch (Exception e) {
-
-                                                out.println(e.getMessage());
-                    } %>
+                                        <option value="1">Medicamento Vencido</option>
+                                        <option value="2">Mal Estado</option>
+                                        <option value="3">Envase Dañado</option>
                                     </select>
                                 </div>
                             </div>
@@ -181,9 +170,19 @@
                                  <div class="col-md-5">
                                      <select class="form-control m-b" id="ddlMotivo"  name="ddlMotivo">
                                         <option value="" value="" selected>Seleccione un Motivo</option>
-                                        <option value="1">Medicamento Vencido</option>
-                                        <option value="2">Mal Estado</option>
-                                        <option value="3">Envase Dañado</option>
+  <%
+                                            try {
+                                                //LISTA DE MEDICAMENTOS    
+                                                List<cl.cesfam.ENTITY.EstadoCaducar> EstadoC = new cl.cesfam.DAO.EstadoC().getList();
+
+                                                if (EstadoC != null) {
+                                                    for (cl.cesfam.ENTITY.EstadoCaducar item : EstadoC) {%> <option value="<%=item.getIdEstadoCaducar()%>"><%=item.getNombreEstado()%></option>               
+                                        <%}
+                                                }
+                                            } catch (Exception e) {
+
+                                                out.println(e.getMessage());
+                    } %>
                                     </select>
                                 </div>
                             </div>

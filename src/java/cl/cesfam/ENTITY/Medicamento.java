@@ -28,7 +28,7 @@ public class Medicamento  implements java.io.Serializable {
     }
 
 	
-    public Medicamento(int idMedicamento, String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante, int stock) {
+    public Medicamento(int idMedicamento, String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante, int stock, int stockCritico) {
         this.idMedicamento = idMedicamento;
         this.nombreMedicamento = nombreMedicamento;
         this.presentacion = presentacion;
@@ -36,7 +36,7 @@ public class Medicamento  implements java.io.Serializable {
         this.fabricante = fabricante;
         this.stock = stock;
     }
-    public Medicamento(int idMedicamento, String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante, int stock, Integer stockCritico, Set caducars, Set composicions, Set detallePartidas, Set eventoStocks, Set prescripcions) {
+    public Medicamento(int idMedicamento, String nombreMedicamento, int presentacion, int contenidoEnvase, String fabricante, int stock, int stockCritico, Set caducars, Set composicions, Set detallePartidas, Set eventoStocks, Set prescripcions) {
        this.idMedicamento = idMedicamento;
        this.nombreMedicamento = nombreMedicamento;
        this.presentacion = presentacion;

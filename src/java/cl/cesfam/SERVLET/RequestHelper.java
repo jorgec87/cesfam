@@ -139,19 +139,8 @@ public class RequestHelper extends HttpServlet {
                      medicamento.setFabricante(request.getParameter("txtFabricante"));
                 }
                 
-                cl.cesfam.ENTITY.Stock stock = new cl.cesfam.ENTITY.Stock(0,0);
-
-                if (cl.cesfam.DAO.StockDAO.add(stock)) 
-                {
-                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
-                    session.beginTransaction();
-                    Query query = session.createQuery("select max(cc.idStock) from Stock cc");
-                     List<Integer> lista = query.list();
-                    System.out.println(lista);
-                    session.close(); 
-                    stock.setIdStock(lista.get(0));
-                    medicamento.setStock(stock);
-                }
+                medicamento.setStock(0);
+                medicamento.setStockCritico(0);
                 
                 if (cl.cesfam.DAO.MedicamentoDAO.add(medicamento)) 
                 {
@@ -311,13 +300,13 @@ public class RequestHelper extends HttpServlet {
         try {
             if (cl.cesfam.DAO.MedicamentoDAO.getList() != null) {
             for(cl.cesfam.ENTITY.Medicamento tmp: cl.cesfam.DAO.MedicamentoDAO.getList()){
-                cl.cesfam.ENTITY.Stock stock = cl.cesfam.DAO.StockDAO.getStockById(tmp.getStock().getIdStock());
               JSONObject item = new JSONObject();
                item.put("nombre", tmp.getNombreMedicamento());
                item.put("fabricante", tmp.getFabricante());
                item.put("presentacion", tmp.getPresentacion());
                item.put("contenido", tmp.getContenidoEnvase());
-               item.put("stock", stock.getStock());
+               item.put("stock", tmp.getStock());
+               item.put("stockCritico", tmp.getStockCritico());
                
                medicamentos.put(item);
             
@@ -404,6 +393,7 @@ public class RequestHelper extends HttpServlet {
                      caducar.setMotivoCaducar(Integer.parseInt(request.getParameter("ddlMotivo")));
                 }
                 //Estado 1 Caducado, 2 desechado
+                cl.cesfam.ENTITY.EstadoCaducar = 
                 caducar.setEstadoCaducar(1);
                  //Partida caducacion
                 if (request.getParameter("ddlPartida") != null) {

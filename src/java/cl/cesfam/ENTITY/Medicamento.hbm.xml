@@ -23,7 +23,7 @@
         <property name="stock" type="int">
             <column name="STOCK" precision="8" scale="0" not-null="true" />
         </property>
-        <property name="stockCritico" type="java.lang.Integer">
+        <property name="stockCritico" type="int">
             <column name="STOCK_CRITICO" precision="8" scale="0" />
         </property>
         <set name="caducars" table="CADUCAR" inverse="true" lazy="true" fetch="select">
