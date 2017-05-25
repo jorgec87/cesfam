@@ -26,7 +26,7 @@
         <property name="cantidad" type="int">
             <column name="CANTIDAD" precision="8" scale="0" not-null="true" />
         </property>
-        <property name="fechaCaducar" type="serializable">
+        <property name="fechaCaducar" type="date">
             <column name="FECHA_CADUCAR" not-null="true" />
         </property>
     </class>

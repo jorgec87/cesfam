@@ -230,8 +230,7 @@
                         { "data": "fabricante" },
                         { "data": "presentacion" },
                         { "data": "contenido" },
-                        { "data": "stock" },
-                        { "data": "stockCritico" }
+                        { "data": "stock" }
                     ],
              "columnDefs": [
                  {
@@ -266,17 +265,6 @@
                     {
                       "targets": [4], 
                       "data": "stock", 
-                      "render": function(data, type, full) { 
-                          if(data > 0){
-                          return "<td ><span style=\"color:#1ab394;\">"+data + " UN</span></td>";
-                      }else{
-                          return "<td ><span style=\"color:#ed5565;\">"+data + " UN</span></td>";
-                      }
-                      }
-                  },
-                   {
-                      "targets": [4], 
-                      "data": "stockCritico", 
                       "render": function(data, type, full) { 
                           if(data > 0){
                           return "<td ><span style=\"color:#1ab394;\">"+data + " UN</span></td>";

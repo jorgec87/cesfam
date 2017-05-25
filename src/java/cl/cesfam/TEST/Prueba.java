@@ -14,6 +14,8 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import java.util.List;
@@ -169,27 +171,31 @@ public class Prueba {
                     Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
                     session.beginTransaction();
 
-                    Query query2 = session.createQuery("select (select me.nombreMedicamento from Medicamento me where me.idMedicamento = ca.medicamento),\n" +
+                     Query query = session.createQuery("select (select me.nombreMedicamento from Medicamento me where me.idMedicamento = ca.medicamento),\n" +
                     "(select fu.primerNombreFuncionario||' '||fu.apellidoPaternoFuncionario from FuncionarioFarmacia fu where fu.idFuncionario = ca.funcionarioFarmacia),\n" +
+                    "(select pa.nombrePartida from Partida pa where pa.idPartida = ca.partida),\n" +
+                    "(select mo.nombreMotivoCaducar from MotivoCaducar mo where mo.idMotivoCaducar = ca.motivoCaducar),\n" +  
+                    "(select es.nombreEstado from EstadoCaducar es where es.idEstadoCaducar = ca.estadoCaducar),\n" +         
                     "ca.cantidad,\n" +
                     "ca.fechaCaducar,\n" +
-                    "ca.motivoCaducar,\n" +
-                    "ca.estadoCaducar\n" +
-                    "from Caducar ca");
-//                    select count(*) from MEDICAMENTO where STOCK_ID_STOCK in (select id_stock from STOCK where STOCK = 0); 
-                    List<Object[]> studentList= query2.list();
-                    
+                    "ca.estadoCaducar,\n" +
+                    "ca.idCaducar\n" +
+                    "from Caducar ca ");
+                    List<Object[]> lista = query.list();
+                   
+              
+                                
              
                     session.close(); 
-                    for(Object[] list:studentList){
+                    for(Object[] list: lista){
                     System.out.println((String)list[0]+"1");
                     System.out.println((String)list[1]+"2");
-                    System.out.println((int)list[2]+"3");
-                    Date fecha = (Date)list[3];
-                    System.out.println(fecha+"4");
-                    System.out.println((int)list[4]+"5");
-                    System.out.println((int)list[5]+"6");
-                    
+//                    System.out.println((int)list[2]+"3");
+//                    Date fecha = (Date)list[3];
+//                    System.out.println(fecha+"4");
+//                    System.out.println((int)list[4]+"5");
+//                    System.out.println((int)list[5]+"6");
+//                    
                    
         }
 //	(select max(ff.version) from FeatureList ff where ff.name = f.name

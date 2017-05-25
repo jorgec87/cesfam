@@ -349,8 +349,7 @@ public class RequestHelper extends HttpServlet {
                     
                    
                    
-                   Query query2 = session.createQuery("select count(cc.idMedicamento) from Medicamento cc where cc.stock in (select ss.idStock"
-                            + " from Stock ss where stock = 0) ");
+                   Query query2 = session.createQuery("select count(cc.idMedicamento) from Medicamento cc where cc.stock = 0");
                     List<Integer> lista1 = query2.list();
                     System.out.println(lista);
                     session.close();  
@@ -390,12 +389,19 @@ public class RequestHelper extends HttpServlet {
                 caducar.setFechaCaducar(fecha);
                  //Motivo caducacion
                 if (request.getParameter("ddlMotivo") != null) {
-                     caducar.setMotivoCaducar(Integer.parseInt(request.getParameter("ddlMotivo")));
+            try {
+                caducar.setMotivoCaducar(cl.cesfam.DAO.MotivoCaducarDAO.getMotivoById(Integer.parseInt(request.getParameter("ddlMotivo")) ));
+            } catch (Exception ex) {
+                Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
                 }
-                //Estado 1 Caducado, 2 desechado
-                cl.cesfam.ENTITY.EstadoCaducar = 
-                caducar.setEstadoCaducar(1);
-                 //Partida caducacion
+            try {
+                //Estado 1 Caducado, 2 Desechado
+                caducar.setEstadoCaducar(cl.cesfam.DAO.EstadoCaducarDAO.getEstadoById(1));
+            } catch (Exception ex) {
+                Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                     //Partida caducacion
                 if (request.getParameter("ddlPartida") != null) {
                     try {
                         partida = cl.cesfam.DAO.PartidaDAO.getPartidaById(Integer.parseInt(request.getParameter("ddlPartida")));
@@ -463,10 +469,10 @@ public class RequestHelper extends HttpServlet {
                     Query query = session.createQuery("select (select me.nombreMedicamento from Medicamento me where me.idMedicamento = ca.medicamento),\n" +
                     "(select fu.primerNombreFuncionario||' '||fu.apellidoPaternoFuncionario from FuncionarioFarmacia fu where fu.idFuncionario = ca.funcionarioFarmacia),\n" +
                     "(select pa.nombrePartida from Partida pa where pa.idPartida = ca.partida),\n" +
+                    "(select mo.nombreMotivoCaducar from MotivoCaducar mo where mo.idMotivoCaducar = ca.motivoCaducar),\n" +  
+                    "(select es.nombreEstado from EstadoCaducar es where es.idEstadoCaducar = ca.estadoCaducar),\n" +         
                     "ca.cantidad,\n" +
                     "ca.fechaCaducar,\n" +
-                    "ca.motivoCaducar,\n" +
-                    "ca.estadoCaducar,\n" +
                     "ca.idCaducar\n" +
                     "from Caducar ca where ca.estadoCaducar = 1  order by ca.fechaCaducar");
                     List<Object[]> lista = query.list();
@@ -483,12 +489,12 @@ public class RequestHelper extends HttpServlet {
                                 objeto.put("medicamento", (String)item[0]);
                                 objeto.put("funcionario", (String)item[1]);
                                 objeto.put("partida", (String)item[2]);
-                                objeto.put("cantidad", (int)item[3]);
+                                objeto.put("motivo", (String)item[3]);
+                                objeto.put("estado", (String)item[4]);
+                                objeto.put("cantidad", (int)item[5]);
                                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                String fecha = df.format((Date)item[4]).toString();
+                                String fecha = df.format((Date)item[6]);
                                 objeto.put("fecha",fecha );
-                                objeto.put("motivo", (int)item[5]);
-                                objeto.put("estado", (int)item[6]);
                                 objeto.put("id_caducar", (int)item[7]);
                                 
                                 caducados.put(objeto);
@@ -533,7 +539,8 @@ public class RequestHelper extends HttpServlet {
                 System.out.println("desechando medicamento .............. id : "+id);
                 
                 caducar = cl.cesfam.DAO.CaducarDAO.getCaducarById(id);
-                caducar.setEstadoCaducar(2);
+                
+                caducar.setEstadoCaducar(cl.cesfam.DAO.EstadoCaducarDAO.getEstadoById(2));
                 
                  if (cl.cesfam.DAO.CaducarDAO.update(caducar)) 
                 {
