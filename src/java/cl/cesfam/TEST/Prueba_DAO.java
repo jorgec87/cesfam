@@ -40,7 +40,7 @@ public class Prueba_DAO {
                      caducar.setCantidad(1);
                 
                 //Estado 1 Caducado, 2 desechado
-                caducar.setEstadoCaducar(1);
+//                caducar.setEstadoCaducar(1);
                  //Partida caducacion
                
                     try {

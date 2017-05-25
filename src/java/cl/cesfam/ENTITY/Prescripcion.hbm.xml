@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1 -->
+<!-- Generated 25-05-2017 9:08:41 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="cl.cesfam.ENTITY.Prescripcion" table="PRESCRIPCION" schema="CESFAM_DBA" optimistic-lock="version">
         <id name="idPrescripcion" type="int">
@@ -17,16 +17,16 @@
         <many-to-one name="medicamento" class="cl.cesfam.ENTITY.Medicamento" fetch="select">
             <column name="ID_MEDICAMENTO" precision="8" scale="0" />
         </many-to-one>
-        <property name="periodo" type="int">
+        <many-to-one name="tipoPrescripcion" class="cl.cesfam.ENTITY.TipoPrescripcion" fetch="select">
+            <column name="ID_TIPO_PRESCRIPCION" precision="8" scale="0" />
+        </many-to-one>
+        <property name="periodo" type="java.lang.Integer">
             <column name="PERIODO" precision="8" scale="0" />
         </property>
-        <property name="frecuencia" type="int">
+        <property name="frecuencia" type="java.lang.Integer">
             <column name="FRECUENCIA" precision="8" scale="0" />
         </property>
-        <property name="tipo" type="int">
-            <column name="TIPO" precision="8" scale="0" />
-        </property>
-        <property name="duracionTratamiento" type="int">
+        <property name="duracionTratamiento" type="java.lang.Integer">
             <column name="DURACION_TRATAMIENTO" precision="8" scale="0" />
         </property>
     </class>

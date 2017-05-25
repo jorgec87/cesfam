@@ -1,5 +1,5 @@
 package cl.cesfam.ENTITY;
-// Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1
+// Generated 25-05-2017 9:08:39 by Hibernate Tools 4.3.1
 
 
 
@@ -13,10 +13,10 @@ public class Prescripcion  implements java.io.Serializable {
      private EstadoPrescripcion estadoPrescripcion;
      private FormularioMediamento formularioMediamento;
      private Medicamento medicamento;
-     private int periodo;
-     private int frecuencia;
-     private int tipo;
-     private int duracionTratamiento;
+     private TipoPrescripcion tipoPrescripcion;
+     private Integer periodo;
+     private Integer frecuencia;
+     private Integer duracionTratamiento;
 
     public Prescripcion() {
     }
@@ -25,14 +25,14 @@ public class Prescripcion  implements java.io.Serializable {
     public Prescripcion(int idPrescripcion) {
         this.idPrescripcion = idPrescripcion;
     }
-    public Prescripcion(int idPrescripcion, EstadoPrescripcion estadoPrescripcion, FormularioMediamento formularioMediamento, Medicamento medicamento, int periodo, int frecuencia, int tipo, int duracionTratamiento) {
+    public Prescripcion(int idPrescripcion, EstadoPrescripcion estadoPrescripcion, FormularioMediamento formularioMediamento, Medicamento medicamento, TipoPrescripcion tipoPrescripcion, Integer periodo, Integer frecuencia, Integer duracionTratamiento) {
        this.idPrescripcion = idPrescripcion;
        this.estadoPrescripcion = estadoPrescripcion;
        this.formularioMediamento = formularioMediamento;
        this.medicamento = medicamento;
+       this.tipoPrescripcion = tipoPrescripcion;
        this.periodo = periodo;
        this.frecuencia = frecuencia;
-       this.tipo = tipo;
        this.duracionTratamiento = duracionTratamiento;
     }
    
@@ -64,28 +64,28 @@ public class Prescripcion  implements java.io.Serializable {
     public void setMedicamento(Medicamento medicamento) {
         this.medicamento = medicamento;
     }
-    public int getPeriodo() {
+    public TipoPrescripcion getTipoPrescripcion() {
+        return this.tipoPrescripcion;
+    }
+    
+    public void setTipoPrescripcion(TipoPrescripcion tipoPrescripcion) {
+        this.tipoPrescripcion = tipoPrescripcion;
+    }
+    public Integer getPeriodo() {
         return this.periodo;
     }
     
-    public void setPeriodo(int periodo) {
+    public void setPeriodo(Integer periodo) {
         this.periodo = periodo;
     }
-    public int getFrecuencia() {
+    public Integer getFrecuencia() {
         return this.frecuencia;
     }
     
-    public void setFrecuencia(int frecuencia) {
+    public void setFrecuencia(Integer frecuencia) {
         this.frecuencia = frecuencia;
     }
-    public Integer getTipo() {
-        return this.tipo;
-    }
-    
-    public void setTipo(Integer tipo) {
-        this.tipo = tipo;
-    }
-    public int getDuracionTratamiento() {
+    public Integer getDuracionTratamiento() {
         return this.duracionTratamiento;
     }
     

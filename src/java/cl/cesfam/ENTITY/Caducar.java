@@ -1,5 +1,5 @@
 package cl.cesfam.ENTITY;
-// Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1
+// Generated 25-05-2017 9:08:39 by Hibernate Tools 4.3.1
 
 
 import java.io.Serializable;
@@ -15,28 +15,28 @@ public class Caducar  implements java.io.Serializable {
      private FuncionarioFarmacia funcionarioFarmacia;
      private Medicamento medicamento;
      private Partida partida;
+     private MotivoCaducar motivoCaducar;
      private int cantidad;
      private Serializable fechaCaducar;
-     private int motivoCaducar;
 
     public Caducar() {
     }
 
 	
-    public Caducar( int cantidad, Serializable fechaCaducar, int motivoCaducar) {
+    public Caducar(int idCaducar, int cantidad, Serializable fechaCaducar) {
+        this.idCaducar = idCaducar;
         this.cantidad = cantidad;
         this.fechaCaducar = fechaCaducar;
-        this.motivoCaducar = motivoCaducar;
     }
-    public Caducar(int idCaducar, EstadoCaducar estadoCaducar, FuncionarioFarmacia funcionarioFarmacia, Medicamento medicamento, Partida partida, int cantidad, Serializable fechaCaducar, int motivoCaducar) {
+    public Caducar(int idCaducar, EstadoCaducar estadoCaducar, FuncionarioFarmacia funcionarioFarmacia, Medicamento medicamento, Partida partida, MotivoCaducar motivoCaducar, int cantidad, Serializable fechaCaducar) {
        this.idCaducar = idCaducar;
        this.estadoCaducar = estadoCaducar;
        this.funcionarioFarmacia = funcionarioFarmacia;
        this.medicamento = medicamento;
        this.partida = partida;
+       this.motivoCaducar = motivoCaducar;
        this.cantidad = cantidad;
        this.fechaCaducar = fechaCaducar;
-       this.motivoCaducar = motivoCaducar;
     }
    
     public int getIdCaducar() {
@@ -74,6 +74,13 @@ public class Caducar  implements java.io.Serializable {
     public void setPartida(Partida partida) {
         this.partida = partida;
     }
+    public MotivoCaducar getMotivoCaducar() {
+        return this.motivoCaducar;
+    }
+    
+    public void setMotivoCaducar(MotivoCaducar motivoCaducar) {
+        this.motivoCaducar = motivoCaducar;
+    }
     public int getCantidad() {
         return this.cantidad;
     }
@@ -87,13 +94,6 @@ public class Caducar  implements java.io.Serializable {
     
     public void setFechaCaducar(Serializable fechaCaducar) {
         this.fechaCaducar = fechaCaducar;
-    }
-    public int getMotivoCaducar() {
-        return this.motivoCaducar;
-    }
-    
-    public void setMotivoCaducar(int motivoCaducar) {
-        this.motivoCaducar = motivoCaducar;
     }
 
 
