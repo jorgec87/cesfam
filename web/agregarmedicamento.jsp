@@ -116,6 +116,7 @@
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li  class="active"><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
+                        <li><a href="agregarpartida.jsp"><i class="fa fa-trash"></i>Agregar Partida</a></li> 
                         <li><a href="caducarmedicamentos.jsp"><i class="fa fa-trash"></i>Caducar Medicamento</a></li>
                         
                     </ul>

@@ -24,14 +24,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- *
- * @author **Jorge Carrenca**
- */
 public class RequestHelper extends HttpServlet {
 
     
     private static String ACTION_REGISTRAR_REMEDIO = "registrarRemedio";
+    private static String ACTION_REGISTRAR_PARTIDA = "registrarPartida";
     private static String ACTION_OBTENER_COMPOSICION = "obtenercomposicion";
     private static String ACTION_REGISTRAR_COMPOSICION = "RegistrarComposicion";
     private static String ACTION_ELIMINAR_COMPOSICION = "EliminarComposicion";
@@ -73,7 +70,9 @@ public class RequestHelper extends HttpServlet {
            }else if (action.equals(ACTION_DESECHAR_MEDICAMENTO)) {
 		DesecharMedicamento(request, response); 
            }         
-            
+           else if (action.equals(ACTION_REGISTRAR_PARTIDA)) {
+		RegistrarPartida(request, response); 
+           }   
             
         }
     }
@@ -159,7 +158,33 @@ public class RequestHelper extends HttpServlet {
                 e.getMessage();            
             }
     }
+//      METODO DE CREACION PARTIDA
+    public static void RegistrarPartida(HttpServletRequest request, HttpServletResponse response) {    
+try {
+                cl.cesfam.ENTITY.Partida partida = new cl.cesfam.ENTITY.Partida();
 
+                //nombre de partida
+                if (request.getParameter("txtNombrePartida") != null) {
+                     partida.setNombrePartida(request.getParameter("txtNombrePartida"));
+                }
+              
+                if (cl.cesfam.DAO.PartidaDAO.add(partida)) 
+                {
+                cl.cesfam.ENTITY.Partida partidaTMP = cl.cesfam.DAO.PartidaDAO.getPartidaByNombre(partida.getNombrePartida());
+                       response.setContentType("text/plain");
+                       String res = Integer.toString(partidaTMP.getIdPartida());
+                       response.getWriter().write(res);
+                }
+                else
+                {
+                       response.setContentType("text/plain");
+                       String res = "false";
+                       response.getWriter().write(res);
+                }
+            } catch (Exception e) {
+                e.getMessage();            
+            }
+}
 //      METODO DE CREACION COMPOSICION
     public static void RegistrarComposicion(HttpServletRequest request, HttpServletResponse response) {
       try {

@@ -97,4 +97,19 @@ public class PartidaDAO {
                 throw e;
             }
         }
+      
+      public static cl.cesfam.ENTITY.Partida getPartidaByNombre(String nombre) throws Exception {
+            Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+            try {
+                session.beginTransaction();
+                cl.cesfam.ENTITY.Partida tmp = (cl.cesfam.ENTITY.Partida) session.createCriteria(cl.cesfam.ENTITY.Partida.class).add(Restrictions.eq("nombrePartida", nombre)).uniqueResult();
+                session.getTransaction().commit();
+                session.close();
+                return tmp;
+            } catch (Exception e) {
+                System.err.print(e.getMessage());
+                session.close();
+                throw e;
+            }
+        }
 }

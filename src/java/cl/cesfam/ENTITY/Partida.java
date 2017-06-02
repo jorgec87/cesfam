@@ -21,7 +21,7 @@ public class Partida  implements java.io.Serializable {
     }
 
 	
-    public Partida(int idPartida, String nombrePartida) {
+    public Partida(int idPartida,String nombrePartida) {
         this.idPartida = idPartida;
         this.nombrePartida = nombrePartida;
     }
