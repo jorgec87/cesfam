@@ -38,8 +38,6 @@
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/plugins/chosen/chosen.css" rel="stylesheet">
-   <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-    <link href="css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">  
     <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
@@ -164,7 +162,7 @@
                         AGREGAR PARTIDA
                     </div>
                     <div class="panel-body" style="height: auto;">
-                        <form id="caducar_form" name="detParForm">
+                        <form id="detParForm" name="detParForm">
                          <!--                            INICIO CB PARTIDA-->
                             <div class="form-group">                               
                                 <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Partida</label>
@@ -216,7 +214,7 @@
                                 </div>
                             </div>
                                      <div class="clearfix"></div>
-                            <!--                                    FIN CB MEDICAMENTO-->
+                            <!--FIN CB MEDICAMENTO-->
                                                          <div class="form-group" style="margin-top: 23px;">
                                  <label class="col-lg-3 col-lg-offset-1 control-label">Cantidad</label>
                                  <div class="col-lg-3">
@@ -227,26 +225,14 @@
                             <div class="form-group">                               
                                 <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Partida</label>
                                 <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
-                                <div class="form-group" id="data_1">
-                                <label class="font-noraml">Fecha De Ingreso</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    <input type="text" class="form-control" id='FechaDeCreacion' value="" name="txtFechaCreacion">
-                                </div>
-                            </div>
                             <div class="form-group" id="data_1">
-                                <label class="font-noraml">Fecha De Vencimiento</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    <input type="text" class="form-control" id='FechaDeVencimiento' value="" name="txtFechaVencimiento">
-                                </div>
+                                <label class="font-noraml">Fecha De Vencimiento</label>                                  
+                                    <input type="date" class="form-control" id='txtFechaVencimiento' name="txtFechaVencimiento">
                             </div>
                                 </div>
                             </div>
-
-
-                             
-                            <button type="submit" class="btn btn-primary" id="btnCaducar">Crear Partida</button>
+                        
+                            <button type="submit" class="btn btn-primary" id="btnDetPartida">Crear Partida</button>
                             </form>
                           </div>
                 </div>
@@ -351,15 +337,7 @@
             $("#btnPartida").click(function(){
               $("#myModal").modal();    
             });            
-         
-            $('#data_1 .input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-                
-            });
+
 //          INICIO DE VALIDACION PARTIDA
              //funcion que valida campos
             $("#ParForm").validate
@@ -419,9 +397,6 @@
                     txtNombrePartida: {
                         required: true
                     },
-                    txtFechaCreacion: {
-                        required: true
-                    },
                     txtFechaVencimiento: {
                         required: true
                     },
@@ -435,15 +410,13 @@
             submitHandler: function(form) {      
 //          INICIO RESPUESTA DE CREACION DE PARTIDA		
              var cantidadPartida = $("#txtCantidadPartida").val();
-             var fCreacion = $("#txtFechaCreacion").val();
              var fVencimiento = $("#txtFechaVencimiento").val();
              var medicamento = $("#ddlMedicamentos").val();
              var partida = $("#ddlPartida").val();
              var accion = "registrarDetallePartida";
              
-             var parametros = {"txtCantidadPartida" : cantidadPartida,"txtFechaCreacion" : fCreacion,
-                 "txtFechaVencimiento" : fVencimiento, "ddlMedicamentos" : medicamento,
-                 "ddlPartida" : partida ,"accion" : accion};
+             var parametros = {"txtCantidadPartida" : cantidadPartida,"txtFechaVencimiento" : fVencimiento, 
+                 "ddlMedicamentos" : medicamento,"ddlPartida" : partida ,"accion" : accion};
 
             $.ajax({
                 data:  parametros,

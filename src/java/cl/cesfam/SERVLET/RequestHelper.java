@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -198,27 +199,25 @@ try {
                 cl.cesfam.ENTITY.Partida partida = new cl.cesfam.ENTITY.Partida();
 
                 //nombre de partida
-                /*
-PARTIDA_ID_PARTIDA
-MEDICAMENTO_ID_MEDICAMENTO
-                */
     if (request.getParameter("txtCantidadPartida") != null) {
         detPartida.setCantidad(Integer.parseInt(request.getParameter("txtCantidadPartida")));
     }
     if (request.getParameter("txtFechaCreacion") != null) {
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-            Date date1 = simpleDateFormat.parse(request.getParameter("txtFechaCreacion"));
-            detPartida.setFechaIngreso(date1);
+            String startDateStr = request.getParameter("txtFechaVencimiento");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaI = sdf.parse(startDateStr); 
+            detPartida.setFechaIngreso(fechaI);
         } catch (Exception e) {
             e.getMessage();
         }
     }
     if (request.getParameter("txtFechaVencimiento") != null) {
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-            Date date2 = simpleDateFormat.parse(request.getParameter("txtFechaVencimiento"));
-            detPartida.setFechaVencimiento(date2);
+            String startDateStr = request.getParameter("txtFechaVencimiento");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaV = sdf.parse(startDateStr);     
+            detPartida.setFechaVencimiento(fechaV);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -238,7 +237,7 @@ MEDICAMENTO_ID_MEDICAMENTO
                 if (request.getParameter("ddlPartida") != null) {
                     try {
                         partida = cl.cesfam.DAO.PartidaDAO.getPartidaById(Integer.parseInt(request.getParameter("ddlPartida")));
-                        detPartida.setMedicamento(medicamento);
+                        detPartida.setPartida(partida);
                         
                     } catch (Exception ex) {
                         Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
