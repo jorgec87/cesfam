@@ -164,7 +164,7 @@
                         AGREGAR PARTIDA
                     </div>
                     <div class="panel-body" style="height: auto;">
-                        <form id="caducar_form" name="cadForm">
+                        <form id="caducar_form" name="detParForm">
                          <!--                            INICIO CB PARTIDA-->
                             <div class="form-group">                               
                                 <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Partida</label>
@@ -216,74 +216,41 @@
                                 </div>
                             </div>
                                      <div class="clearfix"></div>
-                            <!--                                    FIN CB MEDICAMENTO-->  
+                            <!--                                    FIN CB MEDICAMENTO-->
+                                                         <div class="form-group" style="margin-top: 23px;">
+                                 <label class="col-lg-3 col-lg-offset-1 control-label">Cantidad</label>
+                                 <div class="col-lg-3">
+                                     <input type="number"  placeholder="Unidades" name="txtCantidadPartida"  id="txtCantidadPartida" class="form-control">
+                                 </div>
+                             </div>
+                            <div class="clearfix"></div>
                             <div class="form-group">                               
                                 <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Partida</label>
                                 <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
                                 <div class="form-group" id="data_1">
                                 <label class="font-noraml">Fecha De Ingreso</label>
                                 <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" id='FechaDeCreacion' value="">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" id='FechaDeCreacion' value="" name="txtFechaCreacion">
                                 </div>
                             </div>
                             <div class="form-group" id="data_1">
                                 <label class="font-noraml">Fecha De Vencimiento</label>
                                 <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" id='FechaDeVencimiento' value="">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" id='FechaDeVencimiento' value="" name="txtFechaVencimiento">
                                 </div>
                             </div>
                                 </div>
                             </div>
-                         
-                            
-                             <div class="form-group" style="margin-top: 23px;">
-                                 <label class="col-lg-3 col-lg-offset-1 control-label">Cantidad</label>
-                                 <div class="col-lg-3">
-                                     <input type="number"  placeholder="Unidades" name="txtCantidad"  id="txtCantidad" class="form-control">
-                                 </div>
-                             </div>
-                            <div class="clearfix"></div>
+
+
                              
                             <button type="submit" class="btn btn-primary" id="btnCaducar">Crear Partida</button>
                             </form>
                           </div>
                 </div>
             </div><!--FINAL PANEL-->   
-            
-            
-            <div class="row">
-                <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Partidas Agregadas</h5>
-                    </div>
-           
-             <div class="ibox-content">
-                        <div class="table-responsive">
-                        <table id="tabla_caducar" class="table table-responsive table-striped table-bordered table-hover dataTables-example" >
-                            <thead>
-                                <tr>
-                                    <th>Medicamento</th>
-                                    <th>Funcionario</th>
-                                    <th>Cantidad Caducada</th>
-                                    <th>Partida</th>
-                                    <th>Fecha Caducación</th>
-                                    <th>Motivo Caducación</th>
-                                    <th>Desechar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                       </table>
-                      </div>
-            </div>
-            </div>
-         </div>
-      </div>
-
-
-
             </div>
             <div class="footer">
                 <!--            <div class="pull-right">
@@ -368,6 +335,18 @@
                     radioClass: 'iradio_square-green',
                 });
 
+                var config = {
+                '.chosen-select'           : {},
+                '.chosen-select-deselect'  : {allow_single_deselect:true},
+                '.chosen-select-no-single' : {disable_search_threshold:10},
+                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'}
+                }
+                
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+                $("#ddlPartida").chosen(config[selector]);
+                
+            }
 
             $("#btnPartida").click(function(){
               $("#myModal").modal();    
@@ -381,7 +360,7 @@
                 autoclose: true
                 
             });
-//          INICIO DE VALIDACION MEDICAMENTO
+//          INICIO DE VALIDACION PARTIDA
              //funcion que valida campos
             $("#ParForm").validate
             ({
@@ -396,7 +375,7 @@
              var nombre = $("#txtNombrePartida").val();
              var accion = "registrarPartida";
              
-             var parametros = {"txtNombreMed" : nombre, "accion" : accion};
+             var parametros = {"txtNombrePartida" : nombre, "accion" : accion};
 
             $.ajax({
                 data:  parametros,
@@ -425,10 +404,72 @@
                         }
                  }
                 });
-//            FIN RESPUESTA AJAX CREACION MEDICAMENTO          
+//            FIN RESPUESTA AJAX CREACION PARTIDA          
 
             }
-//          FIN VALIDACION MEDICAMENTO
+//          FIN VALIDACION PARTIDA
+            });
+            
+            //INICIO DE VALIDACION DETALLE PARTIDA
+             //funcion que valida campos
+            $("#detParForm").validate
+            ({
+                rules: 
+                {
+                    txtNombrePartida: {
+                        required: true
+                    },
+                    txtFechaCreacion: {
+                        required: true
+                    },
+                    txtFechaVencimiento: {
+                        required: true
+                    },
+                    ddlMedicamentos: {
+                        required: true
+                    },
+                    ddlPartida: {
+                        required: true
+                    },
+                },
+            submitHandler: function(form) {      
+//          INICIO RESPUESTA DE CREACION DE PARTIDA		
+             var cantidadPartida = $("#txtCantidadPartida").val();
+             var fCreacion = $("#txtFechaCreacion").val();
+             var fVencimiento = $("#txtFechaVencimiento").val();
+             var medicamento = $("#ddlMedicamentos").val();
+             var partida = $("#ddlPartida").val();
+             var accion = "registrarDetallePartida";
+             
+             var parametros = {"txtCantidadPartida" : cantidadPartida,"txtFechaCreacion" : fCreacion,
+                 "txtFechaVencimiento" : fVencimiento, "ddlMedicamentos" : medicamento,
+                 "ddlPartida" : partida ,"accion" : accion};
+
+            $.ajax({
+                data:  parametros,
+                url:   'RequestHelper',
+                type:  'post',
+                 success: function(responseText) 
+                 {
+                    var res = responseText;
+                        if(res !== "false")
+                        {
+                            swal({
+                                title: "Éxito!",
+                                text: "Partida guardada correctamente!",
+                                type: "success"
+                            });                     
+                        }
+                        else
+                        {    
+                            alert("Partida no creada"); 
+                        }
+                 }
+                });
+//            FIN RESPUESTA AJAX CREACION DETALLE PARTIDA        
+
+            }
+//          FIN VALIDACION DETALLE PARTIDA
             });      
             });//FIN DOCUMENT READY
            

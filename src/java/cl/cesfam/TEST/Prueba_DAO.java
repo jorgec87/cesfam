@@ -20,81 +20,25 @@ public class Prueba_DAO {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        
-        
-         cl.cesfam.ENTITY.Caducar caducar = new cl.cesfam.ENTITY.Caducar();
-         cl.cesfam.ENTITY.Partida partida = new cl.cesfam.ENTITY.Partida();
-          cl.cesfam.ENTITY.Medicamento medicamento = new cl.cesfam.ENTITY.Medicamento();
-           cl.cesfam.ENTITY.FuncionarioFarmacia funcionario = new cl.cesfam.ENTITY.FuncionarioFarmacia();
+    public static void main(String[] args) throws Exception {
 
-                //Catidad de caducacion
-                
-                     caducar.setCantidad(2);
+        
+         cl.cesfam.ENTITY.Partida partida = new cl.cesfam.ENTITY.Partida();
+
+                //nombre de partida
+                     partida.setNombrePartida("BIEN");
               
-                //Fecha caducacion
-                java.util.Date fecha = new Date();
-                caducar.setFechaCaducar(fecha);
-                 //Motivo caducacion
-               
-                     caducar.setCantidad(1);
-                
-                //Estado 1 Caducado, 2 desechado
-//                caducar.setEstadoCaducar(1);
-                 //Partida caducacion
-               
-                    try {
-                        partida = cl.cesfam.DAO.PartidaDAO.getPartidaById(1);
-                        caducar.setPartida(partida);
-                        
-                    } catch (Exception ex) {
-                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                
-                
-                 //Medicamento caducacion
-               
-                    try {
-                        medicamento = cl.cesfam.DAO.MedicamentoDAO.getMedicamentoById(1);
-                        caducar.setMedicamento(medicamento);
-                        
-                    } catch (Exception ex) {
-                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                
-                
-                 //funcionario caducacion
-               
-                    try {
-                        funcionario = cl.cesfam.DAO.FuncionarioFarmaciaDAO.getFuncionarioById(2);
-                        caducar.setFuncionarioFarmacia(funcionario);
-                        
-                    } catch (Exception ex) {
-                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                
-           
-                
-                     
-            try {
-                if (cl.cesfam.DAO.CaducarDAO.add(caducar)) 
+                if (cl.cesfam.DAO.PartidaDAO.add(partida)) 
                 {
-                       System.out.println("caducado correctamente");
-             
-                
-            } else
-                {
-                     System.out.println("caducado con error");  
+                System.out.println("Se agrego");
                 }
-                
-             } catch (IOException ex) {
-                 Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-             } catch (Exception ex) {
-                     Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-        
+                else
+                {
+                System.out.println("No se agrego");      
+                }
+
+} 
         
     }
     
-}
+

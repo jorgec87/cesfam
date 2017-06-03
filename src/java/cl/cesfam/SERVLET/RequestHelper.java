@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -29,6 +30,7 @@ public class RequestHelper extends HttpServlet {
     
     private static String ACTION_REGISTRAR_REMEDIO = "registrarRemedio";
     private static String ACTION_REGISTRAR_PARTIDA = "registrarPartida";
+    private static String ACTION_REGISTRAR_DETALLE_PARTIDA = "registrarDetallePartida";
     private static String ACTION_OBTENER_COMPOSICION = "obtenercomposicion";
     private static String ACTION_REGISTRAR_COMPOSICION = "RegistrarComposicion";
     private static String ACTION_ELIMINAR_COMPOSICION = "EliminarComposicion";
@@ -52,7 +54,11 @@ public class RequestHelper extends HttpServlet {
             System.out.println("procesando peticion [" + request.getRequestURL()+ action + "]");
             
            if (action.equals(ACTION_REGISTRAR_REMEDIO)) {
-		RegistrarMedicamento(request, response);
+		RegistrarMedicamento(request, response); 
+           }else if (action.equals(ACTION_REGISTRAR_PARTIDA)) {
+		RegistrarPartida(request, response); 
+           }else if (action.equals(ACTION_REGISTRAR_DETALLE_PARTIDA)) {
+		RegistrarDetallePartida(request, response); 
            }else if (action.equals(ACTION_OBTENER_COMPOSICION)) {
 		ObtenerComposicion(request, response); 
            }else if (action.equals(ACTION_REGISTRAR_COMPOSICION)) {
@@ -70,9 +76,7 @@ public class RequestHelper extends HttpServlet {
            }else if (action.equals(ACTION_DESECHAR_MEDICAMENTO)) {
 		DesecharMedicamento(request, response); 
            }         
-           else if (action.equals(ACTION_REGISTRAR_PARTIDA)) {
-		RegistrarPartida(request, response); 
-           }   
+ 
             
         }
     }
@@ -164,7 +168,8 @@ try {
                 cl.cesfam.ENTITY.Partida partida = new cl.cesfam.ENTITY.Partida();
 
                 //nombre de partida
-                if (request.getParameter("txtNombrePartida") != null) {
+                if (request.getParameter("txtNombrePartida") != null) 
+                {
                      partida.setNombrePartida(request.getParameter("txtNombrePartida"));
                 }
               
@@ -185,7 +190,79 @@ try {
                 e.getMessage();            
             }
 }
-//      METODO DE CREACION COMPOSICION
+//      METODO DE CREACION PARTIDA
+    public static void RegistrarDetallePartida(HttpServletRequest request, HttpServletResponse response) {    
+try {
+                cl.cesfam.ENTITY.DetallePartida detPartida = new cl.cesfam.ENTITY.DetallePartida();
+                cl.cesfam.ENTITY.Medicamento medicamento = new cl.cesfam.ENTITY.Medicamento();
+                cl.cesfam.ENTITY.Partida partida = new cl.cesfam.ENTITY.Partida();
+
+                //nombre de partida
+                /*
+PARTIDA_ID_PARTIDA
+MEDICAMENTO_ID_MEDICAMENTO
+                */
+    if (request.getParameter("txtCantidadPartida") != null) {
+        detPartida.setCantidad(Integer.parseInt(request.getParameter("txtCantidadPartida")));
+    }
+    if (request.getParameter("txtFechaCreacion") != null) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            Date date1 = simpleDateFormat.parse(request.getParameter("txtFechaCreacion"));
+            detPartida.setFechaIngreso(date1);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+    if (request.getParameter("txtFechaVencimiento") != null) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            Date date2 = simpleDateFormat.parse(request.getParameter("txtFechaVencimiento"));
+            detPartida.setFechaVencimiento(date2);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+      //Medicamento
+                if (request.getParameter("ddlMedicamentos") != null) {
+                    try {
+                        medicamento = cl.cesfam.DAO.MedicamentoDAO.getMedicamentoById(Integer.parseInt(request.getParameter("ddlMedicamentos")));
+                        detPartida.setMedicamento(medicamento);
+                        
+                    } catch (Exception ex) {
+                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+      //Partida
+                if (request.getParameter("ddlPartida") != null) {
+                    try {
+                        partida = cl.cesfam.DAO.PartidaDAO.getPartidaById(Integer.parseInt(request.getParameter("ddlPartida")));
+                        detPartida.setMedicamento(medicamento);
+                        
+                    } catch (Exception ex) {
+                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                    
+              
+                if (cl.cesfam.DAO.DetallePartidaDAO.add(detPartida)) 
+                {
+                       response.setContentType("text/plain");
+                       String res = Integer.toString(detPartida.getIdDetallePartida());
+                       response.getWriter().write(res);
+                }
+                else
+                {
+                       response.setContentType("text/plain");
+                       String res = "false";
+                       response.getWriter().write(res);
+                }
+            } catch (Exception e) {
+                e.getMessage();            
+            }
+}
+//METODO DE CREACION COMPOSICION
     public static void RegistrarComposicion(HttpServletRequest request, HttpServletResponse response) {
       try {
                 cl.cesfam.ENTITY.Composicion composicion = new cl.cesfam.ENTITY.Composicion();
