@@ -11,7 +11,7 @@
     <mapping resource="cl/cesfam/ENTITY/MotivoCaducar.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/FormularioMediamento.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/EstadoPrescripcion.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/EventoStock.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/Reserva.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/FuncionarioFarmacia.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Caducar.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/Composicion.hbm.xml"/>
@@ -24,6 +24,6 @@
     <mapping resource="cl/cesfam/ENTITY/TipoPrescripcion.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/EstadoCaducar.hbm.xml"/>
     <mapping resource="cl/cesfam/ENTITY/DetallePartida.hbm.xml"/>
-    <mapping resource="cl/cesfam/ENTITY/EstadoEventoStock.hbm.xml"/>
+    <mapping resource="cl/cesfam/ENTITY/EstadoReserva.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="cl.cesfam.ENTITY.EstadoReserva" optimistic-lock="version" schema="CESFAM_DBA" table="ESTADO_RESERVA">
+    <id name="idEstadoReserva" type="int">
+      <column name="ID_ESTADO_RESERVA" precision="8" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <property name="nombreEstado" type="string">
+      <column length="45" name="NOMBRE_ESTADO" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="reserva" table="RESERVA">
+      <key>
+        <column name="ID_ESTADO_RESERVA" precision="8" scale="0"/>
+      </key>
+      <one-to-many class="cl.cesfam.ENTITY.Reserva"/>
+    </set>
+  </class>
+</hibernate-mapping>

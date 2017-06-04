@@ -1,60 +1,59 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="cl.cesfam.ENTITY.Medicamento" table="MEDICAMENTO" schema="CESFAM_DBA" optimistic-lock="version">
-        <id name="idMedicamento" type="int">
-            <column name="ID_MEDICAMENTO" precision="8" scale="0" />
-            <generator class="increment" />
-        </id>
-        <property name="nombreMedicamento" type="string">
-            <column name="NOMBRE_MEDICAMENTO" length="45" not-null="true" />
-        </property>
-        <property name="presentacion" type="int">
-            <column name="PRESENTACION" precision="8" scale="0" not-null="true" />
-        </property>
-        <property name="contenidoEnvase" type="int">
-            <column name="CONTENIDO_ENVASE" precision="8" scale="0" not-null="true" />
-        </property>
-        <property name="fabricante" type="string">
-            <column name="FABRICANTE" length="45" not-null="true" />
-        </property>
-        <property name="stock" type="int">
-            <column name="STOCK" precision="8" scale="0" not-null="true" />
-        </property>
-        <property name="stockCritico" type="int">
-            <column name="STOCK_CRITICO" precision="8" scale="0" />
-        </property>
-        <set name="caducars" table="CADUCAR" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ID_MEDICAMENTO" precision="8" scale="0" />
-            </key>
-            <one-to-many class="cl.cesfam.ENTITY.Caducar" />
-        </set>
-        <set name="composicions" table="COMPOSICION" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="8" scale="0" />
-            </key>
-            <one-to-many class="cl.cesfam.ENTITY.Composicion" />
-        </set>
-        <set name="detallePartidas" table="DETALLE_PARTIDA" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="8" scale="0" />
-            </key>
-            <one-to-many class="cl.cesfam.ENTITY.DetallePartida" />
-        </set>
-        <set name="eventoStocks" table="EVENTO_STOCK" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="8" scale="0" />
-            </key>
-            <one-to-many class="cl.cesfam.ENTITY.EventoStock" />
-        </set>
-        <set name="prescripcions" table="PRESCRIPCION" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ID_MEDICAMENTO" precision="8" scale="0" />
-            </key>
-            <one-to-many class="cl.cesfam.ENTITY.Prescripcion" />
-        </set>
-    </class>
+  <class name="cl.cesfam.ENTITY.Medicamento" optimistic-lock="version" schema="CESFAM_DBA" table="MEDICAMENTO">
+    <id name="idMedicamento" type="int">
+      <column name="ID_MEDICAMENTO" precision="8" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <property name="nombreMedicamento" type="string">
+      <column length="45" name="NOMBRE_MEDICAMENTO" not-null="true"/>
+    </property>
+    <property name="presentacion" type="int">
+      <column name="PRESENTACION" not-null="true" precision="8" scale="0"/>
+    </property>
+    <property name="contenidoEnvase" type="int">
+      <column name="CONTENIDO_ENVASE" not-null="true" precision="8" scale="0"/>
+    </property>
+    <property name="fabricante" type="string">
+      <column length="45" name="FABRICANTE" not-null="true"/>
+    </property>
+    <property name="stock" type="int">
+      <column name="STOCK" not-null="true" precision="8" scale="0"/>
+    </property>
+    <property name="stockCritico" type="int">
+      <column name="STOCK_CRITICO" precision="8" scale="0"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="caducars" table="CADUCAR">
+      <key>
+        <column name="ID_MEDICAMENTO" precision="8" scale="0"/>
+      </key>
+      <one-to-many class="cl.cesfam.ENTITY.Caducar"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="composicions" table="COMPOSICION">
+      <key>
+        <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="8" scale="0"/>
+      </key>
+      <one-to-many class="cl.cesfam.ENTITY.Composicion"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="detallePartidas" table="DETALLE_PARTIDA">
+      <key>
+        <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="8" scale="0"/>
+      </key>
+      <one-to-many class="cl.cesfam.ENTITY.DetallePartida"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="eventoStocks" table="EVENTO_STOCK">
+      <key>
+        <column name="MEDICAMENTO_ID_MEDICAMENTO" precision="8" scale="0"/>
+      </key>
+      <one-to-many class="cl.cesfam.ENTITY.Reserva"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="prescripcions" table="PRESCRIPCION">
+      <key>
+        <column name="ID_MEDICAMENTO" precision="8" scale="0"/>
+      </key>
+      <one-to-many class="cl.cesfam.ENTITY.Prescripcion"/>
+    </set>
+  </class>
 </hibernate-mapping>

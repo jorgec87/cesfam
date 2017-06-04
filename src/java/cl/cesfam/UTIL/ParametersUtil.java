@@ -25,7 +25,7 @@ public  class ParametersUtil {
 			Enumeration attrs =  parsReq.getParameterNames();
 			while(attrs.hasMoreElements()) {
 				String attr = (String) attrs.nextElement();
-				System.out.println("atributo: "+ attr +" = "+((HttpServletRequest) parameters).getParameter(attr));
+				System.out.println("atributo: "+ attr +" => "+((HttpServletRequest) parameters).getParameter(attr));
 				
 			}
 		}else {
