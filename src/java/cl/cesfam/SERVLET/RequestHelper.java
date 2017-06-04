@@ -6,14 +6,13 @@
 package cl.cesfam.SERVLET;
 
 import cl.cesfam.ENTITY.Composicion;
+import cl.cesfam.ENTITY.Medicamento;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -629,6 +628,7 @@ try {
       
             try {
                 cl.cesfam.ENTITY.Caducar caducar = new cl.cesfam.ENTITY.Caducar();
+                cl.cesfam.ENTITY.Medicamento medicamento = new  Medicamento();
                 int id = 0;
                 //medicamento
                 if (request.getParameter("id") != null) {
@@ -637,11 +637,11 @@ try {
                 System.out.println("desechando medicamento .............. id : "+id);
                 
                 caducar = cl.cesfam.DAO.CaducarDAO.getCaducarById(id);
-                
                 caducar.setEstadoCaducar(cl.cesfam.DAO.EstadoCaducarDAO.getEstadoById(2));
-                
+                medicamento = cl.cesfam.DAO.MedicamentoDAO.getMedicamentoById(caducar.getMedicamento().getIdMedicamento());
                  if (cl.cesfam.DAO.CaducarDAO.update(caducar)) 
-                {
+                {     medicamento.setStock((medicamento.getStock() - caducar.getCantidad() ));
+                      cl.cesfam.DAO.MedicamentoDAO.update(medicamento);
                        response.setContentType("text/plain");
                        String res = "true";
                        response.getWriter().write(res);
