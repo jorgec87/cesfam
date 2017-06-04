@@ -242,6 +242,8 @@ try {
               
                 if (cl.cesfam.DAO.DetallePartidaDAO.add(detPartida)) 
                 {
+                       medicamento.setStock(Integer.parseInt(request.getParameter("txtCantidadPartida")) + medicamento.getStock());
+                       cl.cesfam.DAO.MedicamentoDAO.update(medicamento);
                        response.setContentType("text/plain");
                        String res = Integer.toString(detPartida.getIdDetallePartida());
                        response.getWriter().write(res);

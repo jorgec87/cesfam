@@ -267,11 +267,12 @@
                 <div class="modal-body"> 
 <!--                    inicio M-body-->
                              <div class="form-group" style="margin-top: 23px;">
-                                 <label class="col-lg-3 col-lg-offset-1 control-label">Nombre De Partida</label>
-                                 <div class="col-lg-3">
-                                     <input type="text"  placeholder="Ingrese el nombre de la partida" name="txtNombrePartida"  id="txtNombrePartida" class="form-control">
+                                 <label class="col-lg-3  control-label">Nombre De Partida</label>
+                                 <div class="col-lg-6">
+                                     <input type="text"  placeholder="Ingrese nombre" name="txtNombrePartida"  id="txtNombrePartida" class="form-control">
                                  </div>
-                             </div>
+                             </div> 
+                        <div class="clearfix"></div>
 <!--                    final M-body-->    
                 </div>
                 <div class="modal-footer">
