@@ -31,10 +31,11 @@
     <title>HOME | Agregar Partida De Partidas</title>
      <link rel="shortcut icon" href="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
      <!-- Toastr style -->
     <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-   <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/plugins/chosen/chosen.css" rel="stylesheet">
@@ -119,7 +120,7 @@
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
-                        <li class="active"><a href="agregarpartida.jsp"><i class="fa fa-trash"></i>Agregar Partida</a></li> 
+                        <li class="active"><a href="agregarpartida.jsp"><i class="fa fa-ambulance"></i>Agregar Partida</a></li> 
                         <li><a href="caducarmedicamentos.jsp"><i class="fa fa-trash"></i>Caducar Medicamento</a></li>   
 
                     </ul>
@@ -222,14 +223,14 @@
                                  </div>
                              </div>
                             <div class="clearfix"></div>
-                            <div class="form-group">                               
-                                <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Partida</label>
+                            <div class="form-group" id="data_1">                               
+                                <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Fecha de Vencimiento</label>
                                 <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
-                            <div class="form-group" id="data_1">
-                                <label class="font-noraml">Fecha De Vencimiento</label>                                  
-                                    <input type="date" class="form-control" id='txtFechaVencimiento' name="txtFechaVencimiento">
-                            </div>
+                                <div class="input-group date">
+                                    <span class="input-group-addon "><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" id='txtFechaVencimiento' name="txtFechaVencimiento" value="">
                                 </div>
+                            </div>
                             </div>
                         
                             <button type="submit" class="btn btn-primary" id="btnDetPartida">Crear Partida</button>
@@ -288,7 +289,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
+    <!-- Data picker -->
+   <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
     <!-- Jquery Validate -->
     <script src="js/plugins/validate/jquery.validate.min.js"></script>
     
@@ -320,7 +322,30 @@
                     checkboxClass: 'icheckbox_square-green',
                     radioClass: 'iradio_square-green',
                 });
-
+                
+                $.fn.datepicker.dates['en'] = {
+    days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado"],
+    daysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+    daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    today: "Hoy",
+    clear: "Clear",
+    format: "dd/mm/yyyy",
+    titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+    weekStart: 0
+};
+                
+                
+                 $('#data_1 .input-group.date').datepicker({
+                startView: 2,
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true,
+                weekStart: 1
+            });
+            
                 var config = {
                 '.chosen-select'           : {},
                 '.chosen-select-deselect'  : {allow_single_deselect:true},

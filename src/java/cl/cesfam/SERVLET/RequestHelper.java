@@ -197,26 +197,21 @@ try {
                 cl.cesfam.ENTITY.DetallePartida detPartida = new cl.cesfam.ENTITY.DetallePartida();
                 cl.cesfam.ENTITY.Medicamento medicamento = new cl.cesfam.ENTITY.Medicamento();
                 cl.cesfam.ENTITY.Partida partida = new cl.cesfam.ENTITY.Partida();
-
+               
                 //nombre de partida
     if (request.getParameter("txtCantidadPartida") != null) {
         detPartida.setCantidad(Integer.parseInt(request.getParameter("txtCantidadPartida")));
     }
-    if (request.getParameter("txtFechaCreacion") != null) {
-        try {
-            String startDateStr = request.getParameter("txtFechaVencimiento");
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date fechaI = sdf.parse(startDateStr); 
-            detPartida.setFechaIngreso(fechaI);
-        } catch (Exception e) {
-            e.getMessage();
-        }
-    }
+   
+        
+           Date startDate= new Date();
+           detPartida.setFechaIngreso(startDate);
+        
+    
     if (request.getParameter("txtFechaVencimiento") != null) {
         try {
-            String startDateStr = request.getParameter("txtFechaVencimiento");
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date fechaV = sdf.parse(startDateStr);     
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+            Date fechaV = sdf.parse(request.getParameter("txtFechaVencimiento"));     
             detPartida.setFechaVencimiento(fechaV);
         } catch (Exception e) {
             e.getMessage();
