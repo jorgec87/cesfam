@@ -7,11 +7,13 @@ package cl.cesfam.SERVLET;
 
 import cl.cesfam.ENTITY.Composicion;
 import cl.cesfam.ENTITY.Medicamento;
+import cl.cesfam.UTIL.ParametersUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -193,7 +195,9 @@ try {
 //      METODO DE CREACION PARTIDA
     public static void RegistrarDetallePartida(HttpServletRequest request, HttpServletResponse response) {    
 try {
-                cl.cesfam.ENTITY.DetallePartida detPartida = new cl.cesfam.ENTITY.DetallePartida();
+             ParametersUtil.MostrarParametros(request);
+            
+            cl.cesfam.ENTITY.DetallePartida detPartida = new cl.cesfam.ENTITY.DetallePartida();
                 cl.cesfam.ENTITY.Medicamento medicamento = new cl.cesfam.ENTITY.Medicamento();
                 cl.cesfam.ENTITY.Partida partida = new cl.cesfam.ENTITY.Partida();
                
@@ -446,7 +450,7 @@ try {
                     
                    
                    
-                   Query query2 = session.createQuery("select count(cc.idMedicamento) from Medicamento cc where cc.stock = 0");
+                   Query query2 = session.createQuery("select count(cc.idMedicamento) from Medicamento cc where cc.stock < 1");
                     List<Integer> lista1 = query2.list();
                     System.out.println(lista);
                     session.close();  

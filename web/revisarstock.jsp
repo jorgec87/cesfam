@@ -133,9 +133,9 @@
                                 <tr>
                                     <th>Medicamento</th>
                                     <th>Fabricante</th>
-                                    <th>presentacion</th>
+                                    <th>Presentación</th>
                                     <th>Contenido Envase</th>
-                                    <th>Contenido en stock</th>
+                                    <th>Contenido en Stock</th>
                                 </tr>
                             </thead>
                             <tbody>
