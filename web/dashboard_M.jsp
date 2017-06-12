@@ -83,6 +83,9 @@
                 <li>
                     <a href="revisarstock.jsp"><i class="fa fa-table"></i>Revisar Stock Disponible</a>
                 </li>
+                 <li>
+                     <a href="prescripcion.jsp"><i class="fa fa-stethoscope"></i>Generar Prescripción</a>
+                </li>
             </ul>
 
         </div>

@@ -5,8 +5,10 @@
  */
 package cl.cesfam.SERVLET;
 
+import cl.cesfam.DAO.PacienteDAO;
 import cl.cesfam.ENTITY.Composicion;
 import cl.cesfam.ENTITY.Medicamento;
+import cl.cesfam.ENTITY.Paciente;
 import cl.cesfam.UTIL.ParametersUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,6 +43,7 @@ public class RequestHelper extends HttpServlet {
     private static String ACTION_CADUCAR_MEDICAMENTO = "CaducarMedicamento";
     private static String ACTION_OBTENER_CADUCADOS = "ObtenerCaducados";
     private static String ACTION_DESECHAR_MEDICAMENTO = "DesecharMedicamento";
+    private static String ACTION_OBTENER_PACIENTE = "ObtenerPaciente";
     
     //  http://localhost:8083/CESFAM/RequestHelper?accion=ObtenerCaducados
     
@@ -77,7 +80,9 @@ public class RequestHelper extends HttpServlet {
 		ObtenerCaducados(request, response); 
            }else if (action.equals(ACTION_DESECHAR_MEDICAMENTO)) {
 		DesecharMedicamento(request, response); 
-           }         
+           }else if (action.equals(ACTION_OBTENER_PACIENTE)) {
+		ObtenerPaciente(request, response); 
+           }          
  
             
         }
@@ -664,6 +669,45 @@ try {
         
         
         
+        
+        
+    }
+
+    private void ObtenerPaciente(HttpServletRequest request, HttpServletResponse response) {
+       
+          JSONObject salida = new JSONObject();
+          Paciente paciente = null;
+            
+          try {
+              
+                //rut paciente
+                if (request.getParameter("txtRut") != null) {
+                    paciente = PacienteDAO.getPacienteByRut(request.getParameter("txtRut"));
+                }
+                
+                if(paciente != null){
+                    salida.put("nombre", paciente.getPrimerNombrePaciente()+" "+paciente.getApellidoPaternoPaciente()+" "+paciente.getApellidoMaternoPaciente());
+                    salida.put("rut", paciente.getRutPaciente());
+                    salida.put("email", paciente.getEmailPaciente());
+                    salida.put("telefono", paciente.getTelefonoPaciente());
+                    PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+salida);
+                    out.println(salida);
+                    out.flush();
+                }else{
+                       response.setContentType("text/plain");
+                       String res = "false";
+                       response.getWriter().write(res);
+                
+                }
+                } catch (JSONException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         
         
     }

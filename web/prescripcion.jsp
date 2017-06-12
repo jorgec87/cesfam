@@ -28,7 +28,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HOME | Caducar</title>
+    <title>HOME | Prescripción</title>
      <link rel="shortcut icon" href="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg">
     <link href="css/bootstrap.min.css" rel="stylesheet">
      <!-- Toastr style -->
@@ -38,8 +38,10 @@
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/plugins/chosen/chosen.css" rel="stylesheet">
+ <link href="css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+    <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
    
-
+  <link href="css/plugins/switchery/switchery.css" rel="stylesheet">
 
 
 </head>
@@ -84,10 +86,11 @@
                     </ul>
                 </li>
                  <li>
-                     <a href="revisarstock.jsp"><i class="fa fa-table"></i> <span class="nav-label">Revisar Stock Disponible</span> 
-                        <span></span></a>              
+                     <a href="revisarstock.jsp"><i class="fa fa-table"></i> <span class="nav-label">Revisar Stock Disponible</span></a>              
                 </li>
-                 
+                  <li>
+                     <a href="prescripcion.jsp"><i class="fa fa-stethoscope"></i>Generar Prescripción</a>
+                </li>
             </ul>
 
         </div>
@@ -110,22 +113,63 @@
 
         </nav>
         </div>
-
+<!--  Fin menu-->
             <div class="wrapper wrapper-content animated fadeIn">
-
-                     <!--INICIO PANEL-->
-            <div class="col-lg-6 col-md-offset-3" style="margin-top: 10px;">
+                <div class="row">
+    
                 
-                <div class="panel panel-primary animated fadeIn">
-                    <div class="panel-heading">
-                        CADUCAR MEDICAMENTO
-                    </div>
-                    <div class="panel-body" style="height: auto;">
-                        <form id="caducar_form" name="cadForm">
-                            <!--                            INICIO CB MEDICAMENTO-->
-                            <div class="form-group">                               
-                                <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Nombre De Medicamento</label>
-                                <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
+         <!--inicio panel buscar paciemte-->
+         <div class="col-lg-12">
+             <div class="ibox float-e-margins">
+                 <div class="ibox-title">
+                     <h5>Formulario de Farmacia</h5>
+
+                 </div>
+                 <div class="ibox-content">
+                     <div class="row">
+ <!--                         MODULO BUSCAR PACIENTE-->       
+                         <div class="col-sm-3 b-r">
+                             <h3 class="m-t-none m-b">Paso 1</h3>
+                             <p>Ingrese rut del paciente</p>
+                             <form id="form">
+                                 <div class="form-group">
+                                     <input id="rut" type="text"   class="form-control valid" name="txtRut" aria-required="true" aria-invalid="false">
+                                     <label id="number-error" class="error" for="number" style="display: none;"></label>
+                                 </div>
+                                 <div>
+                                     <button style="margin-left: 10px" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Buscar</strong></button>
+                                     <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnLimpiar" type="button"><strong>Limpiar</strong></button>
+                                 </div>
+                             </form>
+                             <div class="row">
+                                 <div class="col-sm-12 datos_paciente">
+<!--                                        AQUI SE CARGAN LOS DATOS DEL PACIENTE-->
+                                 </div>
+                             </div>
+                         </div>
+<!--                       FIN MODULO BUSCAR PACIENTE--> 
+                                 
+<!--                          MODULO  PROXIMA EVALUACION-->
+                            <div class="col-sm-2 b-r">
+                                <h3 class="m-t-none m-b">Paso 2</h3>
+                                <p>Requiere proxima evaluacion?</p>
+                                <input type="checkbox" id="prox_evaluacion" class="js-switch js-check-change" />
+                                 <div class="form-group" id="data_1">                               
+                                <label class="control-label" style="margin-top: 23px;">Fecha prox. evaluación</label>
+                               <div class="input-group date">
+                                    <span class="input-group-addon "><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" id='txtFechaVencimiento' name="txtFechaVencimiento" value="">
+                                </div>
+                               
+                               </div>
+                             </div>
+<!--                           FIN MODULO PROXIMA EVALUACION-->
+
+<!--                           MODULO MEDICAMENTO -->
+                            <div class="col-sm-3 ">
+                                <h3 class="m-t-none m-b">Paso 3</h3>
+                                <p>Seleccione un medicamento</p>
+                               
                                     <select data-placeholder="Seleccione el medicamento" class="chosen-select" tabindex="2"  id="ddlMedicamentos"  name="ddlMedicamentos">
                                         <option value="0">Seleccione Medicamento</option>
                                         <%
@@ -142,77 +186,51 @@
                                                 out.println(e.getMessage());
                     } %>
                                     </select>
+                                    
+                               <div class="row">
+                                    <p style="margin-bottom: 40px; margin-top: 20px; margin-left: 10px">  Frecuencia prescripción</p>
+                                <div class="col-lg-8 col-lg-offset-1">
+                                    <div id="basic_slider"></div>
+                                    <span class="example-val" id="slider-padding-value-min"></span>
                                 </div>
                             </div>
-                                     <div class="clearfix"></div>
-                            <!--                                    FIN CB MEDICAMENTO-->
+                               </div>
                             
-                             <!--                            INICIO CB PARTIDA-->
-                            <div class="form-group">                               
-                                <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Partida</label>
-                                <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
-                                    <select data-placeholder="Seleccione el Partida" class="chosen-select" tabindex="2"  id="ddlPartida"  name="ddlPartida">
-                                        <option value="0">Seleccione Partida</option>
-                                        <%
-                                            try {
-                                                //LISTA DE MEDICAMENTOS    
-                                                List<cl.cesfam.ENTITY.Partida> partida = new cl.cesfam.DAO.PartidaDAO().getList();
+<!--                          FIN MODULO MEDICAMENTO-->
 
-                                                if (partida != null) {
-                                                    for (cl.cesfam.ENTITY.Partida item : partida) {%> <option value="<%=item.getIdPartida() %>"><%=item.getNombrePartida() %></option>               
-                                        <%}
-                                                }
-                                            } catch (Exception e) {
-
-                                                out.println(e.getMessage());
-                    } %>
-                                    </select>
-                                </div>
-                            </div>
-                            <!--                                    FIN CB PARTIDA-->
-                            <div class="clearfix"></div>
-                            
-                             <div class="form-group" style="margin-top: 23px;">
-                                 <label class="col-lg-3 col-lg-offset-1 control-label">Cantidad</label>
-                                 <div class="col-lg-3">
-                                     <input type="number"  placeholder="Unidades" name="txtCantidad"  id="txtCantidad" class="form-control">
-                                 </div>
+<!--                          MODULO  PROXIMA EVALUACION-->
+                            <div class="col-sm-4">
+                               <p>Duración del tratamiento</p>
+                                <input type="checkbox" id="prox_evaluacion" class="js-switch js-check-change" />
                              </div>
-                            <div class="clearfix"></div>
-                             <div class="form-group" style="margin-top: 23px;">
-                                 <label class="col-sm-3  col-lg-offset-1 control-label">Motivo de caducación </label>
-                                 <div class="col-md-5">
-                                     <select class="form-control m-b" id="ddlMotivo"  name="ddlMotivo">
-                                        <option value="" selected>Seleccione un Motivo</option>
-  <%
-                                            try {
-                                                //LISTA DE MEDICAMENTOS    
-                                                List<cl.cesfam.ENTITY.MotivoCaducar> motivos = cl.cesfam.DAO.MotivoCaducarDAO.getList();
+<!--                           FIN MODULO PROXIMA EVALUACION-->
 
-                                                if (motivos != null) {
-                                                    for (cl.cesfam.ENTITY.MotivoCaducar item : motivos) {%>
-                                                    <option value="<%=item.getIdMotivoCaducar()%>"><%=item.getNombreMotivoCaducar()%></option>               
-                                        <%}
-                                                }
-                                            } catch (Exception e) {
+ </div>
 
-                                                out.println(e.getMessage());
-                                   } %>
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary" id="btnCaducar">Caducar Medicamento</button>
-                            </form>
-                          </div>
+<!--frecuencia prescripcion
+* tipo prescripcion
+* duracion tratamiento
+* estado-->
+
+                           
                 </div>
-            </div><!--FINAL PANEL-->   
-            
+            </div>
+              </div>  
+           
+           </div>
+                
+                
+                
+                
+                
+                
+                
             
             <div class="row">
                 <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Medicamentos Caducados</h5>
+                        <h5>Medicamentos</h5>
                     </div>
            
              <div class="ibox-content">
@@ -229,7 +247,7 @@
                                     <th>Desechar</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="prescripciones">
 
                             </tbody>
                        </table>
@@ -265,9 +283,12 @@
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
                 <!-- Jquery Validate -->
     <script src="js/plugins/validate/jquery.validate.min.js"></script>
+    
+        <!-- Jquery Validate -->
+    <script src="js/plugins/validate/jquery.validate.min.js"></script>
+     <!-- Jquery Rut -->
+    <script src="js/jquery.Rut.js" type="text/javascript"></script>
  
-   <!-- Toastr -->
-    <script src="js/plugins/toastr/toastr.min.js"></script>
 <!-- chosen -->
     <script src="js/plugins/chosen/chosen.jquery.js"></script>
     <script src="js/plugins/dataTables/datatables.min.js"></script>
@@ -276,16 +297,142 @@
     <script src="js/plugins/pace/pace.min.js"></script>
     <script src="js/fnReloadAjax.js"></script>
   
+   <!-- Switchery -->
+   <script src="js/plugins/switchery/switchery.js"></script>
+       <!-- Data picker -->
+   <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
-
-
-  
+    <!-- NouSlider -->
+   <script src="js/plugins/nouslider/jquery.nouislider.min.js"></script>
+   <script src="js/plugins/wNumb.js" type="text/javascript"></script>
 </body>
 </html>
   <script>
         $(document).ready(function() {
+             $("#txtFechaVencimiento").attr('disabled', 'disabled');
+            $("#nombre").hide();
+                    $("#rut1").hide();
+                     $("#telefono").hide();
+                      $("#email").hide();
    
-    var config = {
+        
+        //funcion formatear rut
+            $("#rut").Rut({format_on: 'keyup'});
+
+
+           $("#btnLimpiar").click(function(){
+               $("#rut").val("");
+               $(".datos_paciente").empty();
+             }); 
+            
+   //Agregar validacion de rut a Jquery validate
+            jQuery.validator.addMethod("Rut", function(value, element){
+             if ($.Rut.validar(value)) {
+                 return true;
+             } else {
+                 return false;
+             };
+                }, "El RUT ingresado no es válido"); 
+ 
+            //funcion que valida campos
+            $("#form").validate({
+                rules: {
+                     txtRut: {
+                        required: true,
+                        number: false,
+                        Rut : true
+                    }
+                }, submitHandler: function(form) { 
+                
+                 //          INICIO AJAX PACIENTE		
+             var rut = $("#rut").val();
+             var accion = "ObtenerPaciente";
+             var parametros = {"txtRut" : rut, "accion" : accion};
+
+            $.ajax({
+                data:  parametros,
+                url:   'RequestHelper',
+                type:  'post',
+                 success: function(data) 
+                 {
+                    if(data != "false"){
+                        
+                       var obj = jQuery.parseJSON( data );
+                       var datos = "<div class=\"row\"><div class=\"col-sm-3\"><h4>Nombre</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.nombre+"</p></div>"
+                                 +"</div><div class=\"row\"><div class=\"col-sm-3\"><h4>Rut</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.rut+"</p>"
+                                 +"</div></div><div class=\"row\"><div class=\"col-sm-3\"><h4>Email</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.email+"</p>"
+                                 +"</div></div><div class=\"row\"><div class=\"col-sm-3\"><h4>Teléfono</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.telefono+"</p></div></div>";
+                       $(".datos_paciente").empty();
+                        $(".datos_paciente").append(datos);
+                }else{
+                    $(".datos_paciente").empty();
+                   toastr.options = {
+                              "closeButton" : true,
+                              "debug": false,
+                              "progressBar": true,
+                              "preventDuplicates": false,
+                              "positionClass": "toast-top-center",
+                              "onclick": null,
+                              "showDuration": "400",
+                              "hideDuration": "1000",
+                              "timeOut": "7000",
+                              "extendedTimeOut": "1000",
+                              "showEasing": "swing",
+                              "hideEasing": "linear",
+                              "showMethod": "fadeIn",
+                              "hideMethod": "fadeOut"
+                            };
+                          toastr.error("No existe Paciente", "Favor verificar!");
+
+                }
+                 }
+                });
+//            FIN //          INICIO AJAX PACIENTE
+                
+                }
+            });
+            
+     var elem = document.querySelector('.js-switch');
+     var switchery = new Switchery(elem, { color: '#1AB394' });
+        
+          var changeCheckbox = document.querySelector('.js-check-change');
+
+      changeCheckbox.onchange = function() {
+          
+       
+        if (changeCheckbox.checked) {
+            $("#txtFechaVencimiento").removeAttr("disabled");
+            
+        }else{
+         $("#txtFechaVencimiento").attr('disabled', 'disabled');
+    
+}
+      };
+               
+      $.fn.datepicker.dates['en'] = {
+    days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado"],
+    daysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+    daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    today: "Hoy",
+    clear: "Clear",
+    format: "dd/mm/yyyy",
+    titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+    weekStart: 0
+};
+                
+                
+                 $('#data_1 .input-group.date').datepicker({
+                startView: 0,
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true,
+                weekStart: 1
+            }); 
+             
+               var config = {
                 '.chosen-select'           : {},
                 '.chosen-select-deselect'  : {allow_single_deselect:true},
                 '.chosen-select-no-single' : {disable_search_threshold:10},
@@ -294,234 +441,38 @@
                 
             for (var selector in config) {
                 $(selector).chosen(config[selector]);
-               
-            }
-            
-            
-            
-            
-   
-        
-            
-            
-             
-            // datatable
-              $('#tabla_caducar').dataTable( {
- 
-        "language": {
- 
-    "sProcessing":     "Procesando...",
- 
-    "sLengthMenu":     "Mostrar _MENU_ registros",
- 
-    "sZeroRecords":    "No se encontraron resultados",
- 
-    "sEmptyTable":     "Ningún dato disponible en esta tabla",
- 
-    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
- 
-    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
- 
-    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
- 
-    "sInfoPostFix":    "",
- 
-    "sSearch":         "Buscar:",
- 
-    "sUrl":            "",
- 
-    "sInfoThousands":  ",",
- 
-    "sLoadingRecords": "Cargando...",
- 
-    "oPaginate": {
- 
-        "sFirst":    "Primero",
- 
-        "sLast":     "Último",
- 
-        "sNext":     "Siguiente",
- 
-        "sPrevious": "Anterior"
- 
-    
-    }}, "ajax" : "RequestHelper?accion=ObtenerCaducados",
-            "columns": [
-                        { "data": "medicamento"},
-                        { "data": "funcionario" },
-                        { "data": "cantidad" },
-                        { "data": "partida" },
-                        { "data": "fecha" },
-                        { "data": "motivo" },
-                        { "data": "id_caducar" }
-                    ],
-             "columnDefs": [
-                 {
-                      "targets": [0], 
-                      "data": "medicamento", 
-                      "render": function(data, type, full) { 
-                          return "<a><strong>" + data.toUpperCase() + "</strong></a>";
-                      }
-                  },
-                    {
-                      "targets": [1], 
-                      "data": "funcionario", 
-                      "render": function(data, type, full) {
-                           return  data.toUpperCase();
-                      }
-                  },{
-                      "targets": [5], 
-                      "data": "motivo",
-                      "render": function(data, type, full) { 
-                         if(data == "Envase roto"){
-                           return "<span class=\"label label-primary\">"+data+"</span>";
-                      }else if(data == "Fecha de vencimiento"){
-                          return "<span class=\"label label-warning\">"+data+"</span>";
-                      }else if(data == "Mal estado"){
-                          return "<span class=\"label label-success\">"+data+"</span>";
-                      }
-                      }
-                  },
-                    {
-                      "targets": [6], 
-                      "data": "id_caducar", 
-                      "render": function(data, type, full) { 
-                         return "<a onclick=\"DesecharMedicamento("+data+")\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash\">  </i>  Desechar</a>";
-                      }
-                  }]
-              
-               
- 
-    } );
-    
-    //            ELIMINAR COMPONENTE
-            window.DesecharMedicamento =  function(id){
-            
-                if(!confirm('¿Estás seguro que deseas Desechar Medicamento ?')){
-                    return false; 
-                }
-                var id_caducar = id;
-                var accion = "DesecharMedicamento";
-
-                var parametros = {"id" : id_caducar,"accion": accion};
-               
-                $.ajax({
-                data:  parametros,
-                url:   'RequestHelper',
-                type:  'post',
-                 success: function(result) 
-                 {
-                   
-                    if (result == "true") {
-                  //actualzar tabla
-                  var table = $('#tabla_caducar').dataTable();
-                  table.fnReloadAjax( 'RequestHelper?accion=ObtenerCaducados' );
-                  table.fnReloadAjax();
-                  
-                    toastr.options = {
-                      "closeButton": true,
-                      "debug": true,
-                      "progressBar": true,
-                      "preventDuplicates": false,
-                      "positionClass": "toast-top-center",
-                      "onclick": null,
-                      "showDuration": "400",
-                      "hideDuration": "600",
-                      "timeOut": "2500",
-                      "extendedTimeOut": "1000",
-                      "showEasing": "swing",
-                      "hideEasing": "linear",
-                      "showMethod": "fadeIn",
-                      "hideMethod": "fadeOut"
-                    };
-                   toastr.success("Medicamento desechado correctamente", "Éxito");
-                                       }   
-                   
-                 }
-                });
-             }   //            ELIMINAR COMPONENTE
-            
-            
-            
-            //          INICIO DE VALIDACION MEDICAMENTO
-             //funcion que valida campos
-            $("#caducar_form").validate
-            ({
-                rules: 
-                {
-                    txtCantidad: {
-                        required: true
-                    },
-                    ddlMotivo: {
-                        required: true
-                    }
-                },
-            submitHandler: function(form) {      
+                $("#ddlComponentes").chosen(config[selector]);
                 
-                
-                          
-          //          INICIO AJAX CADUCAR		
-             var cantidad = $("#txtCantidad").val();
-             var motivo = $("#ddlMotivo").val();
-             var partida = $("#ddlPartida").val();
-             var medicamento = $("#ddlMedicamentos").val();
-             var idFuncionario = "<%=userSession.getIdUsuario()%>";
-             var accion = "CaducarMedicamento";
-             
-             var parametros = {"txtCantidad" : cantidad,"ddlMotivo" : motivo,"ddlPartida" : partida,
-                 "ddlMedicamentos" : medicamento, "idFuncionario" : idFuncionario, "accion" : accion};
-
-            $.ajax({
-                data:  parametros,
-                url:   'RequestHelper',
-                type:  'post',
-                 success: function(responseText) 
-                 {
-                    toastr.options = {
-                      "closeButton": true,
-                      "debug": true,
-                      "progressBar": true,
-                      "preventDuplicates": false,
-                      "positionClass": "toast-top-center",
-                      "onclick": null,
-                      "showDuration": "400",
-                      "hideDuration": "600",
-                      "timeOut": "2500",
-                      "extendedTimeOut": "1000",
-                      "showEasing": "swing",
-                      "hideEasing": "linear",
-                      "showMethod": "fadeIn",
-                      "hideMethod": "fadeOut"
-                    };
-                     toastr.success("Medicamento caducado correctamente!", "Éxito");
-                   //actualzar tabla
-                   
-                    $("#ddlMedicamentos").val(0);
-                    $("#ddlPartida").val(0);
-                    $("#ddlMedicamentos").trigger("chosen:updated");
-                    $("#ddlPartida").trigger("chosen:updated");
-                    $("#txtCantidad").val("");
-                    $("#ddlMotivo").val("");
-                     $("#ddlMotivo").change();
-                    
-                            
-                  var table = $('#tabla_caducar').dataTable();
-                  table.fnReloadAjax( 'RequestHelper?accion=ObtenerCaducados' );
-                  table.fnReloadAjax();
-
-                    
-                 }
-                });
-//            FIN //          INICIO AJAX CADUCAR 
-                  
-
-
+            } 
             
+            
+            
+            var connectSlider = document.getElementById('basic_slider');
 
-            }
-//          FIN VALIDACION MEDICAMENTO
+            noUiSlider.create(connectSlider, {
+                    start: 3,
+                    connect: 'upper',
+                    tooltips: true ,
+                    range: {
+                        'min': 3,
+                        '30%': 6,
+                        '50%': 8,
+                        '70%': 12,
+                         'max': 24
+                        },snap: true,
+                        format: wNumb({
+                            decimals: 0,
+                            postfix: ' Hrs.',
+                            prefix:'Cada '
+                    })
+                        
             });
-            
+
+
+         
+                  
+
+
             
             
 
