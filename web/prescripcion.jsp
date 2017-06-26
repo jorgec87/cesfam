@@ -836,95 +836,95 @@
  <% } }%> 
 
 
-
-    // datatable
-              $('#tabla_prescripciones').dataTable( {
- 
-        "language": {
- 
-    "sProcessing":     "Procesando...",
- 
-    "sLengthMenu":     "Mostrar _MENU_ registros",
- 
-    "sZeroRecords":    "No se encontraron resultados",
- 
-    "sEmptyTable":     "Ningún dato disponible en esta tabla",
- 
-    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
- 
-    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
- 
-    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
- 
-    "sInfoPostFix":    "",
- 
-    "sSearch":         "Buscar:",
- 
-    "sUrl":            "",
- 
-    "sInfoThousands":  ",",
- 
-    "sLoadingRecords": "Cargando...",
- 
-    "oPaginate": {
- 
-        "sFirst":    "Primero",
- 
-        "sLast":     "Último",
- 
-        "sNext":     "Siguiente",
- 
-        "sPrevious": "Anterior"
- 
-    
-    }}, "ajax" : "RequestHelper?accion=ObtenerCaducados",
-            "columns": [
-                        { "data": "medicamento"},
-                        { "data": "funcionario" },
-                        { "data": "cantidad" },
-                        { "data": "partida" },
-                        { "data": "fecha" },
-                        { "data": "motivo" },
-                        { "data": "id_caducar" }
-                    ],
-             "columnDefs": [
-                 {
-                      "targets": [0], 
-                      "data": "medicamento", 
-                      "render": function(data, type, full) { 
-                          return "<a><strong>" + data.toUpperCase() + "</strong></a>";
-                      }
-                  },
-                    {
-                      "targets": [1], 
-                      "data": "funcionario", 
-                      "render": function(data, type, full) {
-                           return  data.toUpperCase();
-                      }
-                  },{
-                      "targets": [5], 
-                      "data": "motivo",
-                      "render": function(data, type, full) { 
-                         if(data == "Envase roto"){
-                           return "<span class=\"label label-primary\">"+data+"</span>";
-                      }else if(data == "Fecha de vencimiento"){
-                          return "<span class=\"label label-warning\">"+data+"</span>";
-                      }else if(data == "Mal estado"){
-                          return "<span class=\"label label-success\">"+data+"</span>";
-                      }
-                      }
-                  },
-                    {
-                      "targets": [6], 
-                      "data": "id_caducar", 
-                      "render": function(data, type, full) { 
-                         return "<a onclick=\"DesecharMedicamento("+data+")\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash\">  </i>  Desechar</a>";
-                      }
-                  }]
-              
-               
- 
-    } );
+//
+//    // datatable
+//              $('#tabla_prescripciones').dataTable( {
+// 
+//        "language": {
+// 
+//    "sProcessing":     "Procesando...",
+// 
+//    "sLengthMenu":     "Mostrar _MENU_ registros",
+// 
+//    "sZeroRecords":    "No se encontraron resultados",
+// 
+//    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+// 
+//    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+// 
+//    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+// 
+//    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+// 
+//    "sInfoPostFix":    "",
+// 
+//    "sSearch":         "Buscar:",
+// 
+//    "sUrl":            "",
+// 
+//    "sInfoThousands":  ",",
+// 
+//    "sLoadingRecords": "Cargando...",
+// 
+//    "oPaginate": {
+// 
+//        "sFirst":    "Primero",
+// 
+//        "sLast":     "Último",
+// 
+//        "sNext":     "Siguiente",
+// 
+//        "sPrevious": "Anterior"
+// 
+//    
+//    }}, "ajax" : "RequestHelper?accion=ObtenerCaducados",
+//            "columns": [
+//                        { "data": "medicamento"},
+//                        { "data": "funcionario" },
+//                        { "data": "cantidad" },
+//                        { "data": "partida" },
+//                        { "data": "fecha" },
+//                        { "data": "motivo" },
+//                        { "data": "id_caducar" }
+//                    ],
+//             "columnDefs": [
+//                 {
+//                      "targets": [0], 
+//                      "data": "medicamento", 
+//                      "render": function(data, type, full) { 
+//                          return "<a><strong>" + data.toUpperCase() + "</strong></a>";
+//                      }
+//                  },
+//                    {
+//                      "targets": [1], 
+//                      "data": "funcionario", 
+//                      "render": function(data, type, full) {
+//                           return  data.toUpperCase();
+//                      }
+//                  },{
+//                      "targets": [5], 
+//                      "data": "motivo",
+//                      "render": function(data, type, full) { 
+//                         if(data == "Envase roto"){
+//                           return "<span class=\"label label-primary\">"+data+"</span>";
+//                      }else if(data == "Fecha de vencimiento"){
+//                          return "<span class=\"label label-warning\">"+data+"</span>";
+//                      }else if(data == "Mal estado"){
+//                          return "<span class=\"label label-success\">"+data+"</span>";
+//                      }
+//                      }
+//                  },
+//                    {
+//                      "targets": [6], 
+//                      "data": "id_caducar", 
+//                      "render": function(data, type, full) { 
+//                         return "<a onclick=\"DesecharMedicamento("+data+")\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash\">  </i>  Desechar</a>";
+//                      }
+//                  }]
+//              
+//               
+// 
+//    } );
 
 
 //                                    <th>Medicamento</th>
