@@ -1,9 +1,10 @@
 <%-- 
-    Document   : agregarpartida
-    Created on : Jun 2, 2017, 1:22:06 PM
+    Document   : reservamedicamento
+    Created on : Jun 4, 2017, 5:31:09 PM
     Author     : Francisco
 --%>
 
+<%@page import="cl.cesfam.ENTITY.Paciente"%>
 <%@page import="cl.cesfam.ENTITY.Medicamento"%>
 <%@page import="java.util.List"%>
 <%@page import="cl.cesfam.DTO.SessionUsuario"%>
@@ -28,7 +29,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HOME | Agregar Partida De Partidas</title>
+    <title>HOME | Agregar Partidas</title>
      <link rel="shortcut icon" href="img/img_custom/LOGO-CESFAM-ORIGINAL-2.jpg">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
@@ -116,14 +117,12 @@
                     <a href="dashboard_F.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
                         <span></span></a>              
                 </li>
-                  <li  class="active">
+                  <li>
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
                         <li class="active"><a href="agregarpartida.jsp"><i class="fa fa-ambulance"></i>Agregar Partida</a></li> 
                         <li><a href="caducarmedicamentos.jsp"><i class="fa fa-trash"></i>Caducar Medicamento</a></li>   
-
-                        
                         
                         <li><a href="prescripcionespendientes.jsp"><i class="fa fa-archive"></i>Prescripciones Pendientes</a></li>
                     </ul>
@@ -132,7 +131,7 @@
                      <a href="revisarstock.jsp"><i class="fa fa-table"></i> <span class="nav-label">Revisar Stock Disponible</span> 
                         <span></span></a>              
                 </li>
-               <li>
+               <li class="active">
                      <a href="reservamedicamento.jsp"><i class="fa fa-table"></i> <span class="nav-label">Reserva Medicamento</span> 
                         <span></span></a>              
                 </li>
@@ -160,29 +159,29 @@
         </div>
 
             <div class="wrapper wrapper-content animated fadeIn">
-
+    
                      <!--INICIO PANEL-->
             <div class="col-lg-6 col-md-offset-3" style="margin-top: 10px;">
                 
                 <div class="panel panel-primary animated fadeIn">
                     <div class="panel-heading">
-                        AGREGAR PARTIDA
+                        GENERAR RESERVA
                     </div>
                     <div class="panel-body" style="height: auto;">
-                        <form id="detParForm" name="detParForm">
-                         <!--                            INICIO CB PARTIDA-->
+                        <form id="reservaForm" name="reservaForm">
+<!--INICIO CB PACIENTE-->
                             <div class="form-group">                               
-                                <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Partida</label>
+                                <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Nombre De Medicamento</label>
                                 <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
-                                    <select data-placeholder="Seleccione la partida" class="chosen-select" tabindex="2"  id="ddlPartida"  name="ddlPartida">
-                                        <option value="0">Seleccione una Partida</option>
+                                    <select data-placeholder="Seleccione el paciente" class="chosen-select" tabindex="2"  id="ddlPaciente"  name="ddlPaciente">
+                                        <option value="0">Seleccione Paciente</option>
                                         <%
                                             try {
-                                                //LISTA DE PARTIDAS    
-                                                List<cl.cesfam.ENTITY.Partida> partida = new cl.cesfam.DAO.PartidaDAO().getList();
+                                                //LISTA DE MEDICAMENTOS    
+                                                List<cl.cesfam.ENTITY.Paciente> paciente = new cl.cesfam.DAO.PacienteDAO().getList();
 
-                                                if (partida != null) {
-                                                    for (cl.cesfam.ENTITY.Partida item : partida) {%> <option value="<%=item.getIdPartida() %>"><%=item.getNombrePartida() %></option>               
+                                                if (paciente != null) {
+                                                    for (Paciente item : paciente) {%> <option value="<%=item.getIdPaciente()%>"><%=item.getRutPaciente()%></option>               
                                         <%}
                                                 }
                                             } catch (Exception e) {
@@ -191,14 +190,10 @@
                     } %>
                                     </select>
                                 </div>
-                                <div class="col-sm-1  col-md-1" style="margin-top: 20px; margin-left: 30px;">
-                                    <button class="btn btn-outline col-xs-offset-1 btn-primary dim" id="btnPartida" type="button"><i class="fa fa-plus"></i></button>
-                                </div>
                             </div>
-                           <div class="clearfix"></div>
-                            <!--                                    FIN CB PARTIDA-->
-                          
-                                                        <!--                            INICIO CB MEDICAMENTO-->
+                                     <div class="clearfix"></div>
+<!--FIN CB PACIENTE-->                          
+<!--INICIO CB MEDICAMENTO-->
                             <div class="form-group">                               
                                 <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Nombre De Medicamento</label>
                                 <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
@@ -221,30 +216,53 @@
                                 </div>
                             </div>
                                      <div class="clearfix"></div>
-                            <!--FIN CB MEDICAMENTO-->
-                                                         <div class="form-group" style="margin-top: 23px;">
+<!--FIN CB MEDICAMENTO-->
+                             <div class="form-group" style="margin-top: 23px;">
                                  <label class="col-lg-3 col-lg-offset-1 control-label">Cantidad</label>
                                  <div class="col-lg-3">
-                                     <input type="number"  placeholder="Unidades" name="txtCantidadPartida"  id="txtCantidadPartida" class="form-control">
+                                     <input type="number"  placeholder="Unidades" name="txtCantidadReserva"  id="txtCantidadReserva" class="form-control">
                                  </div>
                              </div>
                             <div class="clearfix"></div>
-                            <div class="form-group" id="data_1">                               
-                                <label class="col-sm-4 col-md-3 col-md-offset-1 control-label" style="margin-top: 23px;">Fecha de Vencimiento</label>
-                                <div class="col-sm-6 col-XS-10  col-md-5" style="margin-top: 23px;">
-                                <div class="input-group date">
-                                    <span class="input-group-addon "><i class="fa fa-calendar"></i></span>
-                                    <input type="text" class="form-control" id='txtFechaVencimiento' name="txtFechaVencimiento" value="">
-                                </div>
-                            </div>
-                            </div>
-                        
-                            <button type="submit" class="btn btn-primary" id="btnDetPartida">Crear Partida</button>
+   
+                            <div class="form-group" style="margin-top: 23px;">
+                                 <div class="col-lg-3">
+                                     <button type="submit" class="btn btn-primary" id="btnDetPartida" style="margin-left: 200px;">Generar Reserva</button>
+                                 </div>
+                             </div>
+                            <div class="clearfix"></div>
+                            
                             </form>
                           </div>
                 </div>
-            </div><!--FINAL PANEL-->   
+            </div><!--FINAL PANEL-->  
+            
+                    <!--FINAL PANEL-->   
+                    <!--
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                        <table id="tabla_reservas" class="table table-responsive table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                                <tr>
+                                    <th>Medicamento</th>
+                                    <th>Paciente</th>
+                                    <th>Funcionario</th>
+                                    <th>Cantidad Reservada</th>
+                                    <th>Fecha Reserva</th>
+                                    <th>Estado Reserva</th>
+                                    <th>Caducar Reserva</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                       </table>
+                      </div>
             </div>
+               -->       
+            </div>
+                                    
+            
             <div class="footer">
                 <!--            <div class="pull-right">
                                 10GB of <strong>250GB</strong> Free.
@@ -258,38 +276,6 @@
 
 
     </div>
-       
-    <!--    INICIO MODAL CREAR PARTIDA                  -->
-    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content animated bounceInRight">
-                <form id="ParForm" name="ParForm">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <i class="fa fa-medkit modal-icon"></i>
-                    <h4 class="modal-title">Ingreso de partidas</h4>
-                    <small class="font-bold">Ingrese todos los datos para la creacion de la partida.</small>
-                </div>
-                <div class="modal-body"> 
-<!--                    inicio M-body-->
-                             <div class="form-group" style="margin-top: 23px;">
-                                 <label class="col-lg-3  control-label">Nombre De Partida</label>
-                                 <div class="col-lg-6">
-                                     <input type="text"  placeholder="Ingrese nombre" name="txtNombrePartida"  id="txtNombrePartida" class="form-control">
-                                 </div>
-                             </div> 
-                        <div class="clearfix"></div>
-<!--                    final M-body-->    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" id="btnIngresarPar">Crear Partida</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-<!--FIN MODAL CREAR PARTIDA--> 
 
  <!-- Mainly scripts -->
     <script src="js/jquery-2.1.1.js"></script>
@@ -328,64 +314,57 @@
                 $('.i-checks').iCheck({
                     checkboxClass: 'icheckbox_square-green',
                     radioClass: 'iradio_square-green',
-                });
+                });  
                 
-                $.fn.datepicker.dates['en'] = {
-    days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado"],
-    daysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
-    daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
-    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-    monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-    today: "Hoy",
-    clear: "Clear",
-    format: "dd/mm/yyyy",
-    titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
-    weekStart: 0
-};
+               
                 
+            }
                 
-                 $('#data_1 .input-group.date').datepicker({
-                startView: 2,
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true,
-                weekStart: 1
-            });
+            }
             
                 var config = {
                 '.chosen-select'           : {},
                 '.chosen-select-deselect'  : {allow_single_deselect:true},
                 '.chosen-select-no-single' : {disable_search_threshold:10},
                 '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'}
-                }
-                
-            for (var selector in config) {
+                }                    
+
+                for (var selector in config) {
                 $(selector).chosen(config[selector]);
-                $("#ddlPartida").chosen(config[selector]);
+                $("#ddlMedicamentos").chosen(config[selector]);
                 
-            }
-
-            $("#btnPartida").click(function(){
-              $("#myModal").modal();    
-            });            
-
+                for (var selector in config) {
+                $(selector).chosen(config[selector]);
+                $("#ddlPaciente").chosen(config[selector]);
+                
 //          INICIO DE VALIDACION PARTIDA
              //funcion que valida campos
-            $("#ParForm").validate
+            $("#reservaForm").validate
             ({
                 rules: 
                 {
-                    txtNombrePartida: {
+                    txtCantidadReserva: {
                         required: true
+                    },
+                    ddlPaciente: 
+                    {
+                        required: true
+                    },
+                    ddlMedicamentos:
+                    {
+                        required: true        
                     }
                 },
+                
             submitHandler: function(form) {      
 //          INICIO RESPUESTA DE CREACION DE PARTIDA		
-             var nombre = $("#txtNombrePartida").val();
-             var accion = "registrarPartida";
+             var cantidadReserva = $("#txtCantidadReserva").val();
+             var paciente = $("#ddlPaciente").val();
+             var medicamento = $("#ddlMedicamentos").val();
+             var accion = "emitirReserva";
              
-             var parametros = {"txtNombrePartida" : nombre, "accion" : accion};
+             var parametros = {"txtCantidadReserva" : cantidadReserva,"ddlPaciente" : paciente, 
+                 "ddlMedicamentos" : medicamento,"accion" : accion};
 
             $.ajax({
                 data:  parametros,
@@ -420,67 +399,9 @@
 //          FIN VALIDACION PARTIDA
             });
             
-            //INICIO DE VALIDACION DETALLE PARTIDA
-             //funcion que valida campos
-            $("#detParForm").validate
-            ({
-                rules: 
-                {
-                    txtNombrePartida: {
-                        required: true
-                    },
-                    txtFechaVencimiento: {
-                        required: true
-                    },
-                    ddlMedicamentos: {
-                        required: true
-                    },
-                    ddlPartida: {
-                        required: true
-                    },
-                },
-            submitHandler: function(form) {      
-//          INICIO RESPUESTA DE CREACION DE PARTIDA		
-             var cantidadPartida = $("#txtCantidadPartida").val();
-             var fVencimiento = $("#txtFechaVencimiento").val();
-             var medicamento = $("#ddlMedicamentos").val();
-             var partida = $("#ddlPartida").val();
-             var accion = "registrarDetallePartida";
-             
-             var parametros = {"txtCantidadPartida" : cantidadPartida,"txtFechaVencimiento" : fVencimiento, 
-                 "ddlMedicamentos" : medicamento,"ddlPartida" : partida ,"accion" : accion};
-
-            $.ajax({
-                data:  parametros,
-                url:   'RequestHelper',
-                type:  'post',
-                 success: function(responseText) 
-                 {
-                    var res = responseText;
-                        if(res !== "false")
-                        {
-                            swal({
-                                title: "Éxito!",
-                                text: "Partida guardada correctamente!",
-                                type: "success"
-                            });                     
-                        }
-                        else
-                        {    
-                            alert("Partida no creada"); 
-                        }
-                 }
-                });
-//            FIN RESPUESTA AJAX CREACION DETALLE PARTIDA        
-
-            }
-//          FIN VALIDACION DETALLE PARTIDA
-            });      
             });//FIN DOCUMENT READY
            
               
-
-
-            
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+          
     </script>
-    

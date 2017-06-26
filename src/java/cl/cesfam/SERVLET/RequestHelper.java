@@ -7,18 +7,21 @@ package cl.cesfam.SERVLET;
 
 import cl.cesfam.DAO.PacienteDAO;
 import cl.cesfam.ENTITY.Composicion;
+import cl.cesfam.ENTITY.EstadoPrescripcion;
 import cl.cesfam.ENTITY.Medicamento;
 import cl.cesfam.ENTITY.Paciente;
+import cl.cesfam.ENTITY.Prescripcion;
 import cl.cesfam.UTIL.ParametersUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,12 +46,19 @@ public class RequestHelper extends HttpServlet {
     private static String ACTION_CADUCAR_MEDICAMENTO = "CaducarMedicamento";
     private static String ACTION_OBTENER_CADUCADOS = "ObtenerCaducados";
     private static String ACTION_DESECHAR_MEDICAMENTO = "DesecharMedicamento";
+    private static String ACTION_EMITIR_RESERVA = "emitirReserva";
+    private static String ACTION_OBTENER_RESERVAS = "ObtenerReservas";
+    private static String ACTION_OBTENER_PENDIENTES="ObtenerPendientes";
+    private static String ACTION_OBTENER_REMEDIOS_PENDIENTES="ObtenerRemediosPendientes";
     private static String ACTION_OBTENER_PACIENTE = "ObtenerPaciente";
+    private static String ACTION_CREAR_FORMULARIO_MEDICAMENTO = "formularioMedicamento";
+    private static String ACTION_CREAR_PRESCRIPCION = "crearPrescripcion";
+    private static String ACTION_ELIMINAR_PRESCRIPCION = "eliminarPrescripcion";
     
     //  http://localhost:8083/CESFAM/RequestHelper?accion=ObtenerCaducados
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -82,7 +92,21 @@ public class RequestHelper extends HttpServlet {
 		DesecharMedicamento(request, response); 
            }else if (action.equals(ACTION_OBTENER_PACIENTE)) {
 		ObtenerPaciente(request, response); 
-           }          
+           }else if (action.equals(ACTION_EMITIR_RESERVA)) {
+		EmitirReserva(request, response); 
+           }else if (action.equals(ACTION_OBTENER_RESERVAS)) {
+		ObtenerReservas(request, response);   
+           }else if (action.equals(ACTION_OBTENER_PENDIENTES)) {
+		ObtenerPendientes(request, response);   
+           }else if (action.equals(ACTION_OBTENER_REMEDIOS_PENDIENTES)) {
+		ObtenerRemediosPendientes(request, response);   
+           }else if (action.equals(ACTION_CREAR_FORMULARIO_MEDICAMENTO)) {
+		CrearFormularioMedicamento(request, response);   
+           }else if (action.equals(ACTION_CREAR_PRESCRIPCION)) {
+		CrearPrescripcion(request, response);   
+           }else if (action.equals(ACTION_ELIMINAR_PRESCRIPCION)) {
+		EliminarPrescripcion(request, response);   
+           }            
  
             
         }
@@ -100,7 +124,11 @@ public class RequestHelper extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -114,7 +142,11 @@ public class RequestHelper extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -673,6 +705,14 @@ try {
         
     }
 
+    
+    
+    
+    // Fin metodo que entrega remedios pendientes
+    
+
+
+
     private void ObtenerPaciente(HttpServletRequest request, HttpServletResponse response) {
        
           JSONObject salida = new JSONObject();
@@ -712,7 +752,414 @@ try {
         
     }
 
+
+    private void EmitirReserva(HttpServletRequest request, HttpServletResponse response) 
+    {
+        try
+        {
+            ParametersUtil.MostrarParametros(request);
+            
+                cl.cesfam.ENTITY.Reserva reserva = new cl.cesfam.ENTITY.Reserva();
+                cl.cesfam.ENTITY.EstadoReserva eReserva = new cl.cesfam.ENTITY.EstadoReserva();
+                cl.cesfam.ENTITY.Medicamento medicamento = new cl.cesfam.ENTITY.Medicamento();
+                cl.cesfam.ENTITY.Paciente paciente = new cl.cesfam.ENTITY.Paciente();
+               
+            //cantidad a reservar
+                if (request.getParameter("txtCantidadReserva") != null) {
+                    reserva.setCantidad(Integer.parseInt(request.getParameter("txtCantidadReserva")));
+                }
+            //fecha de reserva   
+               Date startDate= new Date();
+                       reserva.setFechaEventoReserva(startDate);
+
+            //Medicamento
+                if (request.getParameter("ddlMedicamentos") != null) {
+                    try {
+                        medicamento = cl.cesfam.DAO.MedicamentoDAO.getMedicamentoById(Integer.parseInt(request.getParameter("ddlMedicamentos")));
+                        reserva.setMedicamento(medicamento);
+                        
+                    } catch (Exception ex) {
+                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                //Paciente
+                if (request.getParameter("ddlPaciente") != null) {
+                    try {
+                        paciente = cl.cesfam.DAO.PacienteDAO.getPacienteById(Integer.parseInt(request.getParameter("ddlPaciente")));
+                        reserva.setPaciente(paciente);
+                        
+                    } catch (Exception ex) {
+                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                 try {
+                        eReserva = cl.cesfam.DAO.EstadoReservaDAO.getEstadoReservaById(1);
+                        System.out.println(eReserva.getIdEstadoReserva()+eReserva.getNombreEstado());
+                        
+                        reserva.setEstadoReserva(eReserva);
+                        reserva.setObservacion(" ");
+  
+                    } catch (Exception ex) {
+                        Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                    }  
+                if (cl.cesfam.DAO.ReservaDAO.add(reserva)) 
+                {
+                       response.setContentType("text/plain");
+                       String res = Integer.toString(reserva.getIdReserva());
+                       response.getWriter().write(res);
+                }
+                else
+                {
+                       response.setContentType("text/plain");
+                       String res = "false";
+                       response.getWriter().write(res);
+                }
+            } catch (Exception e) {
+                e.getMessage();            
+            }
+    }
+
+    private void ObtenerReservas(HttpServletRequest request, HttpServletResponse response) {
+         JSONArray caducados = new JSONArray();
+            JSONObject caducado = new JSONObject();
+            
+                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                    Query query = session.createQuery("");
+                    List<Object[]> lista = query.list();
+                    session.close();
+                    
+                   if(lista != null){
+                try {
+                    for (Object[] item : lista) {
+                        
+                        for (int i = 0; i < 1; i++) {
+                           
+                            try {
+                                JSONObject objeto = new JSONObject();
+                                objeto.put("medicamento", (String)item[0]);
+                                objeto.put("funcionario", (String)item[1]);
+                                objeto.put("partida", (String)item[2]);
+                                objeto.put("motivo", (String)item[3]);
+                                objeto.put("estado", (String)item[4]);
+                                objeto.put("cantidad", (int)item[5]);
+                                DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                String fecha = df.format((Date)item[6]);
+                                objeto.put("fecha",fecha );
+                                objeto.put("id_caducar", (int)item[7]);
+                                
+                                caducados.put(objeto);
+                                
+                            } catch (JSONException ex) {
+                                Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
+                    } // fin foercha
+                    
+                    caducado.put("data", caducados);
+                    PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+caducado);
+                    out.println(caducado);
+                    out.flush();
+                } catch (JSONException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                 }else{
+  
+                    }
+  
+    }
+    
+        //        METODO QUE OBTIENE PRESCRIPCIONES PENDIENTES
+    private static void ObtenerPendientes(HttpServletRequest request, HttpServletResponse response) {
+            JSONArray pendientes = new JSONArray();
+            JSONObject pendiente = new JSONObject();
+            
+                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                   Query query = session.createQuery(
+                    "select (select re.nombreMedicamento from Medicamento re where re.idMedicamento = pre.formularioMediamento),\n" +
+                    "(select pac.primerNombrePaciente||' '||pac.apellidoPaternoPaciente from Paciente pac where pac.idPaciente = pre.formularioMediamento),\n" +
+                    "(select pac.rutPaciente from Paciente pac where pac.idPaciente = pre.formularioMediamento),\n" +
+                    "pre.periodo,\n" +
+                    "pre.frecuencia,\n" +
+                    "pre.duracionTratamiento\n" +
+                    "from Prescripcion pre where pre.estadoPrescripcion = 0");
+                    List<Object[]> lista = query.list();
+                    session.close();
+                    
+                   if(lista != null){
+                try {
+                    for (Object[] item : lista) {
+                        
+                        for (int i = 0; i < 1; i++) {
+                           
+                            try {
+                                JSONObject objeto = new JSONObject();
+                                objeto.put("medicamento", (String)item[0]);
+                                objeto.put("paciente", (String)item[1]);
+                                objeto.put("rutPaciente", (String)item[2]);
+                                objeto.put("periodo", (int)item[3]);
+                                objeto.put("frecuencia", (int)item[4]);
+                                objeto.put("duracion", (int)item[5]);
+                                pendientes.put(objeto);
+                                
+                            } catch (JSONException ex) {
+                                Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } 
+                    } // fin foercha         
+                    pendiente.put("data", pendientes);
+                    PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+pendiente);
+                    out.println(pendiente);
+                    out.flush();
+                } catch (JSONException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                 }else{
+                    
+                    
+                    
+                    }
+     
+        
+        
+    }
+    // FIN METODO QUE ENTREGA PRESCRIPCIONES PENDIENTES
+    
+    // Inicio metodo que OBTIENE remedios pendientes.
+    
+     private static void ObtenerRemediosPendientes(HttpServletRequest request, HttpServletResponse response) {
+            JSONArray pendientes = new JSONArray();
+            JSONObject pendiente = new JSONObject();
+            
+                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                   Query query = session.createQuery(
+                    "select (select pac.primerNombrePaciente||' '||pac.apellidoPaternoPaciente from Paciente pac where pac.idPaciente = pre.formularioMediamento),\n" +
+                    "(select pac.rutPaciente from Paciente pac where pac.idPaciente = pre.formularioMediamento),\n" +
+                    "pre.periodo,\n" +
+                    "pre.frecuencia,\n" +
+                    "pre.duracionTratamiento\n" +
+                    "from Prescripcion pre where pre.estadoPrescripcion = 0");
+                    List<Object[]> lista = query.list();
+                    session.close();
+                    
+                   if(lista != null){
+                try {
+                    for (Object[] item : lista) {
+                        
+                        for (int i = 0; i < 1; i++) {
+                           
+                            try {
+                                JSONObject objeto = new JSONObject();
+                                objeto.put("paciente", (String)item[0]);
+                                objeto.put("rutPaciente", (String)item[1]);
+                                objeto.put("periodo", (int)item[2]);
+                                objeto.put("frecuencia", (int)item[3]);
+                                objeto.put("duracion", (int)item[4]);
+                                pendientes.put(objeto);
+                                
+                            } catch (JSONException ex) {
+                                Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
+                    } // fin foercha
+                    
+                    pendiente.put("data", pendientes);
+                    PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+pendiente);
+                    out.println(pendiente);
+                    out.flush();
+                } catch (JSONException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                 }else{
+                    
+                    
+                    
+                    }
+     
+        
+        
+    }
+ // INICIO METODO QUE CREA FORMULARIO DE MEDICAMENTOS
+    private static void CrearFormularioMedicamento(HttpServletRequest request, HttpServletResponse response) throws ParseException, Exception {
+       
+                 
+      
+                cl.cesfam.ENTITY.FormularioMediamento formulario = new cl.cesfam.ENTITY.FormularioMediamento();
+                 JSONObject salida = new JSONObject();
+             
+
+                //medicamento
+                if (request.getParameter("id_medico") != null) {
+                     formulario.setMedicoIdMedico(Integer.parseInt(request.getParameter("id_medico")));
+                }
+                //Cantidad de composicion
+                if (request.getParameter("rut_paciente") != null) {
+                    Paciente pa = cl.cesfam.DAO.PacienteDAO.getPacienteByRut(request.getParameter("rut_paciente"));
+                     formulario.setPacienteIdPaciente(pa.getIdPaciente());
+                }
+                //requiere evaluzacion
+                if (request.getParameter("requiere_evaluacion") != null &&  request.getParameter("requiere_evaluacion").equals("1")) {
+                   
+                         formulario.setRequiereProximaEvaluacion(1);
+                         //fecha proxima evaluacion
+                        if (request.getParameter("fecha_proxima_evaluacion") != null) {
+                             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+                             Date fecha = sdf.parse(request.getParameter("fecha_proxima_evaluacion"));
+                             formulario.setFechaProximaEvaluacion(fecha);
+                        }
+                    }else{
+                        formulario.setRequiereProximaEvaluacion(0);
+                     }
+               
+                if (cl.cesfam.DAO.FormularioMedicamentoDAO.add(formulario)) 
+                {
+                   
+                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                    Query query = session.createQuery("select max(cc.idFormularioMedicamento) from FormularioMediamento cc");
+                     List<Integer> lista = query.list();
+                    System.out.println(lista);
+                    session.close();  
+                    
+                    salida.put("id_formulario_medicamento", lista.get(0));
+                    PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+salida);
+                    out.println(salida);
+                    out.flush();
+                    
+                }
+                else
+                {
+                       response.setContentType("text/plain");
+                       String res2 = "false";
+                       response.getWriter().write(res2);
+                }
+        
+     }
+    
+
+    //INICIO METODO QUE CREA PRECRIPCION 
+    private static void CrearPrescripcion(HttpServletRequest request, HttpServletResponse response) {
+              ParametersUtil.MostrarParametros(request);
+              System.out.println();
+              Prescripcion pre = new Prescripcion();
+              JSONObject salida = new JSONObject();
+              
+        try {
+
+
+              //estado de prescripcion
+               EstadoPrescripcion estado = cl.cesfam.DAO.EstadoPrescripcionDAO.getEstadoPrescripcionyId(1);
+               pre.setEstadoPrescripcion(estado);
+                
+               //formuario de medicamento
+                if (request.getParameter("id_formulario") != null) {
+                    pre.setFormularioMediamento(cl.cesfam.DAO.FormularioMedicamentoDAO.getFormularioMedicamentoById(Integer.parseInt(request.getParameter("id_formulario"))));
+                }
+                //medicamento
+                if (request.getParameter("id_medicamento") != null) {
+                  pre.setMedicamento(cl.cesfam.DAO.MedicamentoDAO.getMedicamentoById(Integer.parseInt(request.getParameter("id_medicamento"))));
+                }
+                //periodo de prescripcio
+                if (request.getParameter("periodo") != null) {
+                  pre.setPeriodo(Integer.parseInt(request.getParameter("periodo").split(" ")[1]) );
+                }
+                
+                //private TipoPrescripcion tipoPrescripcion PENDIENTE
+                
+                //frecuencia de prescripcion
+                 if (request.getParameter("frecuencia") != null) {
+                     
+                   pre.setFrecuencia(Integer.parseInt(request.getParameter("frecuencia").split(" ")[1]) );
+                }
+                 
+                  //cantidad de medicamentos
+                 if (request.getParameter("cantidad") != null) {
+                   pre.setCantidad(Integer.parseInt(request.getParameter("cantidad")) );
+                }
+                 
+                  //duracion de tratamientoPENDIENTE
+                 if (cl.cesfam.DAO.PrescripcionDAO.add(pre)) 
+                {
+                   
+                   Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                    Query query = session.createQuery("select max(cc.idPrescripcion) from Prescripcion cc");
+                     List<Integer> lista = query.list();
+                    System.out.println(lista);
+                    session.close();  
+                    
+                    salida.put("id_prescripcion", lista.get(0));
+                     PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+salida);
+                    out.println(salida);
+                    out.flush();
+                    
+                }
+                else
+                {
+                       response.setContentType("text/plain");
+                       String res2 = "false";
+                       response.getWriter().write(res2);
+                }
+        
+          } catch (Exception ex) {
+            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+              //estado de prescripcion
+         }
+              
+       }
+
+    private void EliminarPrescripcion(HttpServletRequest request, HttpServletResponse response) {
+      try {
+                cl.cesfam.ENTITY.Prescripcion pre = new cl.cesfam.ENTITY.Prescripcion();
+                int id = 0;
+                //medicamento
+                if (request.getParameter("id") != null) {
+                    id = Integer.parseInt(request.getParameter("id"));
+                }
+                
+                pre = cl.cesfam.DAO.PrescripcionDAO.getPrescripcionById(id);
+                
+                 if (cl.cesfam.DAO.PrescripcionDAO.delete(pre)) 
+                {
+                       response.setContentType("text/plain");
+                       String res = "true";
+                       response.getWriter().write(res);
+
+                }
+                else
+                {
+                       response.setContentType("text/plain");
+                       String res = "false";
+                       response.getWriter().write(res);
+                }
+            } catch (Exception e) {
+                e.getMessage();            
+            }
+        
+        
+        
+        
+    }
     
     
     
-}// FIN SERVLET
+    
+    
+}

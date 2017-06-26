@@ -14,7 +14,7 @@ public class FormularioMediamento  implements java.io.Serializable {
 
      private int idFormularioMedicamento;
      private int cantidadEntregada;
-     private char requiereProximaEvaluacion;
+     private Integer requiereProximaEvaluacion;
      private Date fechaProximaEvaluacion;
      private Integer medicoIdMedico;
      private Integer pacienteIdPaciente;
@@ -24,12 +24,12 @@ public class FormularioMediamento  implements java.io.Serializable {
     }
 
 	
-    public FormularioMediamento(int idFormularioMedicamento, int cantidadEntregada, char requiereProximaEvaluacion) {
+    public FormularioMediamento(int idFormularioMedicamento, int cantidadEntregada, Integer requiereProximaEvaluacion) {
         this.idFormularioMedicamento = idFormularioMedicamento;
         this.cantidadEntregada = cantidadEntregada;
         this.requiereProximaEvaluacion = requiereProximaEvaluacion;
     }
-    public FormularioMediamento(int idFormularioMedicamento, int cantidadEntregada, char requiereProximaEvaluacion, Date fechaProximaEvaluacion, Integer medicoIdMedico, Integer pacienteIdPaciente, Set prescripcions) {
+    public FormularioMediamento(int idFormularioMedicamento, int cantidadEntregada, Integer requiereProximaEvaluacion, Date fechaProximaEvaluacion, Integer medicoIdMedico, Integer pacienteIdPaciente, Set prescripcions) {
        this.idFormularioMedicamento = idFormularioMedicamento;
        this.cantidadEntregada = cantidadEntregada;
        this.requiereProximaEvaluacion = requiereProximaEvaluacion;
@@ -53,11 +53,11 @@ public class FormularioMediamento  implements java.io.Serializable {
     public void setCantidadEntregada(int cantidadEntregada) {
         this.cantidadEntregada = cantidadEntregada;
     }
-    public char getRequiereProximaEvaluacion() {
+    public Integer getRequiereProximaEvaluacion() {
         return this.requiereProximaEvaluacion;
     }
     
-    public void setRequiereProximaEvaluacion(char requiereProximaEvaluacion) {
+    public void setRequiereProximaEvaluacion(Integer requiereProximaEvaluacion) {
         this.requiereProximaEvaluacion = requiereProximaEvaluacion;
     }
     public Date getFechaProximaEvaluacion() {

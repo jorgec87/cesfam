@@ -34,15 +34,20 @@
      <!-- Toastr style -->
     <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-   <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/plugins/chosen/chosen.css" rel="stylesheet">
- <link href="css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+    <link href="css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
     <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
    
   <link href="css/plugins/switchery/switchery.css" rel="stylesheet">
+  <style>
+.datepicker{
+    z-index:100000 !important;
+}
 
+  </style>
 
 </head>
 
@@ -83,6 +88,8 @@
                         <li><a href="agregarpartida.jsp"><i class="fa fa-ambulance"></i>Agregar Partida</a></li> 
                         <li class="active"><a href="caducarmedicamentos.jsp"><i class="fa fa-trash"></i>Caducar Medicamento</a></li>
                         
+                        
+                        <li><a href="prescripcionespendientes.jsp"><i class="fa fa-archive"></i>Prescripciones Pendientes</a></li>
                     </ul>
                 </li>
                  <li>
@@ -115,60 +122,113 @@
         </div>
 <!--  Fin menu-->
             <div class="wrapper wrapper-content animated fadeIn">
-                <div class="row">
-    
-                
-         <!--inicio panel buscar paciemte-->
-         <div class="col-lg-12">
-             <div class="ibox float-e-margins">
-                 <div class="ibox-title">
-                     <h5>Formulario de Farmacia</h5>
 
-                 </div>
-                 <div class="ibox-content">
-                     <div class="row">
- <!--                         MODULO BUSCAR PACIENTE-->       
-                         <div class="col-sm-3 b-r">
-                             <h3 class="m-t-none m-b">Paso 1</h3>
-                             <p>Ingrese rut del paciente</p>
+           
+                               
+               <!--    INICIO MODAL 1                  -->
+    <div class="modal inmodal" id="modal_1" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeInDown">
+              <div class="modal-header">
+                  <button type="button" id="close" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <i class="fa fa-medkit modal-icon"></i>
+                    <h4 class="modal-title">Paso 1</h4>
+                    <small class="font-bold">Ingrese rut del paciente.</small>
+                </div>
+                <div class="modal-body"> 
+<!--                    inicio M-body-->
+                    
+<!--                          MODULO BUSCAR PACIENTE       -->
+                         
                              <form id="form">
                                  <div class="form-group">
-                                     <input id="rut" type="text"   class="form-control valid" name="txtRut" aria-required="true" aria-invalid="false">
+                                     <input id="rut" type="text" placeholder="Rut Paciente"  class="form-control valid" name="txtRut" aria-required="true" aria-invalid="false">
                                      <label id="number-error" class="error" for="number" style="display: none;"></label>
                                  </div>
                                  <div>
-                                     <button style="margin-left: 10px" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Buscar</strong></button>
+                                     <button style="margin-left: 10px"  class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong><span class="fa fa-search"></span> Buscar</strong></button>
                                      <button class="btn btn-sm btn-primary pull-right m-t-n-xs" id="btnLimpiar" type="button"><strong>Limpiar</strong></button>
                                  </div>
                              </form>
                              <div class="row">
-                                 <div class="col-sm-12 datos_paciente">
-<!--                                        AQUI SE CARGAN LOS DATOS DEL PACIENTE-->
+                                <div class="col-sm-12 datos_paciente">
+<!--                     AQUI SE CARGAN LOS DATOS DEL PACIENTE-->
                                  </div>
                              </div>
-                         </div>
-<!--                       FIN MODULO BUSCAR PACIENTE--> 
-                                 
-<!--                          MODULO  PROXIMA EVALUACION-->
-                            <div class="col-sm-2 b-r">
-                                <h3 class="m-t-none m-b">Paso 2</h3>
-                                <p>Requiere proxima evaluacion?</p>
-                                <input type="checkbox" id="prox_evaluacion" class="js-switch js-check-change" />
-                                 <div class="form-group" id="data_1">                               
-                                <label class="control-label" style="margin-top: 23px;">Fecha prox. evaluación</label>
-                               <div class="input-group date">
-                                    <span class="input-group-addon "><i class="fa fa-calendar"></i></span>
-                                    <input type="text" class="form-control" id='txtFechaVencimiento' name="txtFechaVencimiento" value="">
-                                </div>
-                               
-                               </div>
-                             </div>
+                      
+<!--                       FIN MODULO BUSCAR PACIENTE -->
+
+
+
+<!--                    final M-body-->    
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" id="cancelar_1" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnSiguiente_1">Siguiente</button>
+                     </div>
+                
+            </div>
+        </div>
+    </div>
+<!--FIN MODAL 1-->     
+
+
+
+               <!--    INICIO MODAL 2                  -->
+    <div class="modal inmodal" id="modal_2" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeInDown">
+              <div class="modal-header">
+                  <button type="button" id="close" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <i class="fa fa-medkit modal-icon"></i>
+                    <h4 class="modal-title">Paso 2</h4>
+                    <small class="font-bold">Requiere proxima evaluacion?</small>
+                </div>
+                <div class="modal-body"> 
+<!--                    inicio M-body-->
+<!--                           MODULO  PROXIMA EVALUACION-->
+                          
+                    <input type="checkbox" id="prox_evaluacion" class="js-switch js-check-change" />
+                     <div class="form-group" id="data_1">                               
+                    <label class="control-label" style="margin-top: 20px;">Fecha prox. evaluación</label>
+                   <div class="input-group date">
+                        <span class="input-group-addon "><i class="fa fa-calendar"></i></span>
+                        <input type="text" class="form-control" id='txtFechaVencimiento' name="txtFechaVencimiento" value="">
+                    </div>
+                    </div>     
 <!--                           FIN MODULO PROXIMA EVALUACION-->
 
-<!--                           MODULO MEDICAMENTO -->
-                            <div class="col-sm-3 ">
-                                <h3 class="m-t-none m-b">Paso 3</h3>
-                                <p>Seleccione un medicamento</p>
+
+
+<!--                    final M-body-->    
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" id="cancelar_2"  class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnSiguiente_2">Siguiente</button>
+                     </div>
+                
+            </div>
+        </div>
+    </div>
+<!--FIN MODAL 2-->   
+
+
+
+               <!--    INICIO MODAL 3                 -->
+    <div class="modal inmodal " id="modal_3" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInDown">
+              <div class="modal-header">
+                  <button type="button" id="close" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <i class="fa fa-medkit modal-icon"></i>
+                    <h4 class="modal-title">Paso 3</h4>
+                    <small class="font-bold">Agragar medicamentos</small>
+                </div>
+                <div class="modal-body"> 
+<!--                    inicio M-body-->
+<!--            MODULO MEDICAMENTO -->
+                            <div class="col-sm-6 b-r">
+                              <p>Seleccione un medicamento</p>
                                
                                     <select data-placeholder="Seleccione el medicamento" class="chosen-select" tabindex="2"  id="ddlMedicamentos"  name="ddlMedicamentos">
                                         <option value="0">Seleccione Medicamento</option>
@@ -187,61 +247,98 @@
                     } %>
                                     </select>
                                     
-                               <div class="row">
-                                    <p style="margin-bottom: 40px; margin-top: 20px; margin-left: 10px">  Frecuencia prescripción</p>
-                                <div class="col-lg-8 col-lg-offset-1">
-                                    <div id="basic_slider"></div>
-                                    <span class="example-val" id="slider-padding-value-min"></span>
-                                </div>
+                            <div class="row">
+                                   <div class="form-group col-sm-9" style="margin-top: 60px;">
+                                 <label class="control-label">Cantidad</label>
+                                 <input type="number"  placeholder="Unidades" name="txtCantidad"  id="txtCantidad" class="form-control ">
+                              </div>
                             </div>
                                </div>
-                            
-<!--                          FIN MODULO MEDICAMENTO-->
+<!--                            
+                          FIN MODULO MEDICAMENTO
 
-<!--                          MODULO  PROXIMA EVALUACION-->
-                            <div class="col-sm-4">
-                               <p>Duración del tratamiento</p>
-                                <input type="checkbox" id="prox_evaluacion" class="js-switch js-check-change" />
-                             </div>
+                          MODULO  PROXIMA EVALUACION-->
+                                <div class="col-sm-6">
+                                 <div class="row">
+                                        <p style="margin-bottom: 40px;  margin-left: 10px">  Frecuencia prescripción</p>
+                                        <div class="col-lg-8 col-lg-offset-1">
+                                            <div id="basic_slider"></div>
+                                            <span class="example-val" id="slider-padding-value-min"></span>
+                                        </div>
+                                    </div>
+                                     <p style="margin-top: 40px;">Prescripción permanente?</p>
+                                <input type="checkbox" id="permanente" class="js-switch js-check-change" />
+                                <div id="duracion" class="row animated fadeInDown">
+                                        <p style="margin-bottom: 40px;  margin-left: 10px; margin-top: 17px;">  Duración de la prescripción</p>
+                                        <div class="col-lg-8 col-lg-offset-1">
+                                            <div id="basic_slider2"></div>
+                                            <span class="example-val" id="slider-padding-value-min"></span>
+                                        </div>
+                                    </div>
+                                <div class="row" style="margin-bottom: 40px;  margin-left: 10px; margin-top: 25px;">
+                                    <button  type="button" class="btn btn-primary " id="btnAgregar"> <span class="fa fa-plus"></span> Agregar Medicamento</button>
+
+                            </div>
+                               </div>
+                                <div class="clearfix"></div>
 <!--                           FIN MODULO PROXIMA EVALUACION-->
 
- </div>
+<!--                           TABLA MOSTRAR PRESCRIPCIONES-->
+                            <div class="table-responsive">
+                        <table  class="table table-responsive table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                                <tr>
+                                    <th>Medicamento</th>
+                                    <th>Cantidad</th>
+                                    <th>Frequencia</th>
+                                    <th>Duración tratamiento</th>
+                                    <th>Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla_prescripcion">
+                                
 
-<!--frecuencia prescripcion
-* tipo prescripcion
-* duracion tratamiento
-* estado-->
+                            </tbody>
+                       </table>
+                      </div>
 
-                           
+<!--                    final M-body-->    
                 </div>
+                    <div class="modal-footer">
+                        <button type="button" id="cancelar_3"  class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnFinalizar">Finalizar</button>
+                     </div>
+                
             </div>
-              </div>  
-           
-           </div>
+        </div>
+    </div>
+<!--FIN MODAL 3-->   
+
+<!--  input hidden que guarda el id del formulaio de medicamento-->
+<input type="hidden"  id="id_formulario">
+    
+ </div> <!--                fin de div principal-->
+
                 
-                
-                
-                
-                
-                
-                
-            
-            <div class="row">
+             <div class="row">
                 <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Medicamentos</h5>
+                        <h5>Prescripciones</h5>
+                        <div class="col-sm-3 col-sm-offset-3">
+                            <button type="button" id="btnPrescripcion" class="btn btn-block btn-primary">Generar Prescripción</button> 
+                        </div> 
                     </div>
            
              <div class="ibox-content">
                         <div class="table-responsive">
-                        <table id="tabla_caducar" class="table table-responsive table-striped table-bordered table-hover dataTables-example" >
+                        <table id="tabla_prescripciones" class="table table-responsive table-striped table-bordered table-hover dataTables-example" >
                             <thead>
                                 <tr>
+                                    <th>Paciente</th>
                                     <th>Medicamento</th>
-                                    <th>Funcionario</th>
-                                    <th>Cantidad Caducada</th>
-                                    <th>Partida</th>
+                                    <th>Cantidad</th>
+                                    <th>Duracion</th>
                                     <th>Fecha Caducación</th>
                                     <th>Motivo Caducación</th>
                                     <th>Desechar</th>
@@ -256,6 +353,10 @@
             </div>
          </div>
       </div>
+           
+           
+
+                    
 
 
 
@@ -272,7 +373,7 @@
         </div>
 
 
-    </div>
+
        
      
 
@@ -305,178 +406,535 @@
     <!-- NouSlider -->
    <script src="js/plugins/nouslider/jquery.nouislider.min.js"></script>
    <script src="js/plugins/wNumb.js" type="text/javascript"></script>
+        <!-- Toastr -->
+    <script src="js/plugins/toastr/toastr.min.js"></script>
+   
+   
+   
 </body>
 </html>
-  <script>
-        $(document).ready(function() {
-             $("#txtFechaVencimiento").attr('disabled', 'disabled');
-            $("#nombre").hide();
-                    $("#rut1").hide();
-                     $("#telefono").hide();
-                      $("#email").hide();
+<script>
+      $(document).ready(function() {
+            
+            
+        //INICIALIZACIO DE VARIABLES 
+          $("#txtFechaVencimiento").attr('disabled', 'disabled');
+          $("#nombre").hide();
+          $("#rut1").hide();
+          $("#telefono").hide();
+          $("#email").hide();
+          $("#btnSiguiente_1").hide();
+          $("#btnFinalizar").hide();
+          
    
         
-        //funcion formatear rut
-            $("#rut").Rut({format_on: 'keyup'});
+        //FUNCION FORMATEAR RUT
+          $("#rut").Rut({format_on: 'keyup'});
 
-
-           $("#btnLimpiar").click(function(){
-               $("#rut").val("");
-               $(".datos_paciente").empty();
-             }); 
+        //FUNCION LIMPIAR RUT
+         $("#btnLimpiar").click(function(){
+             $("#rut").val("");
+             $(".datos_paciente").empty();
+           }); 
             
-   //Agregar validacion de rut a Jquery validate
-            jQuery.validator.addMethod("Rut", function(value, element){
-             if ($.Rut.validar(value)) {
-                 return true;
-             } else {
-                 return false;
-             };
-                }, "El RUT ingresado no es válido"); 
+        //AGREGAR VALIDACION DE RUT A JQUERY VALIDATE
+          jQuery.validator.addMethod("Rut", function(value, element){
+           if ($.Rut.validar(value)) {
+               return true;
+           } else {
+               return false;
+           };
+              }, "El RUT ingresado no es válido"); 
  
-            //funcion que valida campos
-            $("#form").validate({
-                rules: {
-                     txtRut: {
-                        required: true,
-                        number: false,
-                        Rut : true
-                    }
-                }, submitHandler: function(form) { 
+ 
+ 
+          //FUNCIOON  DE JQUERY VALIDATE Y AJAX BUSCAR PACIENTE
+          $("#form").validate({
+              rules: {
+                   txtRut: {
+                      required: true,
+                      number: false,
+                      Rut : true
+                  }
+              }, submitHandler: function(form) { 
                 
-                 //          INICIO AJAX PACIENTE		
-             var rut = $("#rut").val();
-             var accion = "ObtenerPaciente";
-             var parametros = {"txtRut" : rut, "accion" : accion};
+         //    INICIO AJAX BUSCAR PACIENTE		
+           var rut = $("#rut").val();
+           var accion = "ObtenerPaciente";
+           var parametros = {"txtRut" : rut, "accion" : accion};
 
-            $.ajax({
+          $.ajax({
+              data:  parametros,
+              url:   'RequestHelper',
+              type:  'post',
+               success: function(data) 
+               {
+                  if(data != "false"){
+                        
+                     var obj = jQuery.parseJSON( data );
+                     var datos = "<div class=\"row\"><div class=\"hr-line-dashed\"></div><div class=\"col-sm-3\"><h4>Nombre</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.nombre+"</p></div>"
+                               +"</div><div class=\"row\"><div class=\"col-sm-3\"><h4>Rut</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.rut+"</p>"
+                               +"</div></div><div class=\"row\"><div class=\"col-sm-3\"><h4>Email</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.email+"</p>"
+                               +"</div></div><div class=\"row\"><div class=\"col-sm-3\"><h4>Teléfono</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.telefono+"</p></div></div>";
+                     $(".datos_paciente").empty();
+                      $(".datos_paciente").append(datos);
+                      $("#btnSiguiente_1").show();
+              }else{
+                  $(".datos_paciente").empty();
+                 toastr.options = {
+                            "closeButton" : true,
+                            "debug": false,
+                            "progressBar": true,
+                            "preventDuplicates": false,
+                            "positionClass": "toast-top-center",
+                            "onclick": null,
+                            "showDuration": "400",
+                            "hideDuration": "1000",
+                            "timeOut": "7000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                          };
+                        toastr.error("No existe Paciente", "Favor verificar!");
+
+              }
+               }
+              });
+//            FIN //          
+                
+              }
+          }); // FIN CONSULATA AJAX PACIENTE
+          
+          
+          
+          
+    //INICIALIZACION DE SWICHT FECHA 
+   var elem = document.querySelector('#prox_evaluacion');
+   var switchery = new Switchery(elem, { color: '#1AB394' });
+   var changeCheckbox = document.querySelector('#prox_evaluacion');
+
+    changeCheckbox.onchange = function() {
+       if (changeCheckbox.checked) {
+          $("#txtFechaVencimiento").removeAttr("disabled");
+      }else{
+      $("#txtFechaVencimiento").attr('disabled', 'disabled');
+    }};
+      
+      
+      
+      //INICIALIZACION DE SWICHT PERIODO
+   var elem = document.querySelector('#permanente');
+   var switchery = new Switchery(elem, { color: '#1AB394' });
+   var changeCheckbox2 = document.querySelector('#permanente');
+
+    changeCheckbox2.onchange = function() {
+     if (changeCheckbox2.checked) {
+         $('#duracion').hide();
+      }else{
+       $('#duracion').show();
+      } };
+      
+      
+      
+       //TRADUCCION DE DATEPICKER A ESPAÑOL     
+    $.fn.datepicker.dates['en'] = {
+  days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado"],
+  daysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+  daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+  months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+  today: "Hoy",
+  clear: "Clear",
+  format: "dd/mm/yyyy",
+  titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+  weekStart: 0
+};
+                
+                 //INICIALIZACION DE DATEPICKER   
+            $('#data_1 .input-group.date').datepicker({
+              startView: 0,
+              todayBtn: "linked",
+              keyboardNavigation: false,
+              forceParse: false,
+              autoclose: true,
+              weekStart: 1
+          }); 
+             
+             
+              //INICIALIZACION DE CHOSEN SELECT
+             var config = {
+              '.chosen-select'           : {},
+              '.chosen-select-deselect'  : {allow_single_deselect:true},
+              '.chosen-select-no-single' : {disable_search_threshold:10},
+              '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'}
+              }
+                
+          for (var selector in config) {
+              $(selector).chosen(config[selector]);
+              $("#ddlComponentes").chosen(config[selector]);
+                
+          } 
+            
+            
+            //INICIALIZACION Y CONFUGURACION DE  SLIDE
+          var connectSlider = document.getElementById('basic_slider');
+          var connectSlider2 = document.getElementById('basic_slider2');
+            
+          noUiSlider.create(connectSlider, {
+                  start: 3,
+                  connect: 'upper',
+                 tooltips: true ,
+                  connect: [true, false],
+                 range: {
+                      'min': 3,
+                      '30%': 6,
+                      '50%': 8,
+                      '70%': 12,
+                       'max': 24
+                      },snap: true,
+                      format: wNumb({
+                          decimals: 0,
+                          postfix: ' Hrs.',
+                          prefix:'Cada '
+                  })
+                        
+          });//            //INICIALIZACION Y CONFUGURACION DE  SLIDE
+          noUiSlider.create(connectSlider2, {
+                  start: 7,
+                  connect: 'upper',
+                  tooltips: true ,
+                  connect: [true, false],
+                  range: {
+                      'min': 7,
+                      '50%': 10,
+                       'max': 20
+                      },snap: true,
+                     format: wNumb({
+                          decimals: 0,
+                          postfix: ' días.',
+                          prefix:'por '
+                  })
+                        
+          });
+
+        //BOTON GENERAR PRESCRIPCION ABRIR MODAL
+          $("#btnPrescripcion").click(function(){
+              $("#modal_1").modal({ backdrop: 'static', keyboard: false }); 
+            });  
+            
+           //BOTON CERRAR Y LIMPIAR MODAL 1
+            $("#close").click(function(){
+             $("#rut").val("");
+             $(".datos_paciente").empty();
+             $("#rut-error").hide();
+             $("#rut").removeClass("error");
+       });  
+       
+          //BOTON CANCELAR Y LIMPIAR MODAL 1
+            $("#cancelar_1").click(function(){
+           location.reload();
+       });  
+       
+           //BOTON CANCELAR Y LIMPIAR MODAL 2
+            $("#cancelar_2").click(function(){
+            location.reload();
+       });  
+       
+           //BOTON CANCELAR Y LIMPIAR MODAL 3
+            $("#cancelar_3").click(function(){
+            location.reload();
+       });  
+       
+       
+      //BOTON SIGUIETE DEL PASO 1 AL PASO 2
+       $("#btnSiguiente_1").click(function(){
+             $("#modal_1").modal('hide');
+              $("#modal_2").modal({ backdrop: 'static', keyboard: false }); 
+            });  
+          
+        //BOTON SIGUIETE DEL PASO 2 AL PASO 3 GENERAR FORMULARIO MEDICAMENTO
+      $("#btnSiguiente_2").click(function(){
+             $("#modal_2").modal('hide');
+              $("#modal_3").modal({ backdrop: 'static', keyboard: false }); 
+              
+       //    INICIO LLAMADA AJAX FORMULARIO MEDICAMENTO
+           var proximaEvaluacion = document.querySelector('#prox_evaluacion');
+           var rutPaciente = $("#rut").val();
+           var accion = "formularioMedicamento";
+           var medico = <%=userSession.getIdUsuario() %>;
+           var evaluacion = 1;
+           if(proximaEvaluacion.checked){
+              evaluacion = 1;  
+           }else{
+              evaluacion = 0;  
+           }
+           fecha =  $("#txtFechaVencimiento").val();
+           
+           var parametros = {"rut_paciente" : rutPaciente, "accion" : accion, "id_medico" : medico, "requiere_evaluacion" : evaluacion
+           ,"fecha_proxima_evaluacion" :fecha};
+
+          $.ajax({
+              data:  parametros,
+              url:   'RequestHelper',
+              type:  'post',
+               success: function(data) 
+               {   var obj = jQuery.parseJSON( data );
+                
+                  $("#id_formulario").val(obj.id_formulario_medicamento);
+              }
+               
+              });
+            
+            });  
+            
+            
+            //BOTON AGREGAR MEDICAMNETO CON LLAMADA AJAX
+             $("#btnAgregar").click(function(){
+            
+           //    INICIO AJAX CREAR PRESCRIPCION
+            var connectSlider2 = document.getElementById('basic_slider2');
+             var connectSlider = document.getElementById('basic_slider');
+           var id_formulario = $("#id_formulario").val();
+           var accion = "crearPrescripcion";
+           var id_medicamento = $("#ddlMedicamentos").val();
+           var periodo = connectSlider2.noUiSlider.get();
+           var frecuencia = connectSlider.noUiSlider.get();
+           var cantidad = $("#txtCantidad").val();
+         
+            var parametros = {"id_formulario" : id_formulario, "accion" : accion, "id_medicamento" : id_medicamento, "periodo" : periodo
+           ,"frecuencia": frecuencia, "cantidad":cantidad};
+
+          $.ajax({
+              data:  parametros,
+              url:   'RequestHelper',
+              type:  'post',
+               success: function(data) 
+               {  var obj = jQuery.parseJSON( data );
+                   alert(data);
+                   alert(obj.id_prescripcion);
+                   
+                 if(obj.id_prescripcion != null){
+                      $("#btnFinalizar").show();
+                    // LLENADO DE TABLA CON MEDICAMENTOS
+                     var item = "<tr id=pre_"+obj.id_prescripcion+" >"+
+ 				"	<td><a href=\"#\">"+$("#ddlMedicamentos option:selected").text()+"</a></td>"+
+ 				"	<td>"+cantidad+"</td>"+
+ 				"	<td>"+frecuencia+"</td>"+
+ 				"	<td>"+periodo+"</td>"+
+ 				"	<td><a onclick=\"EliminarPrescripcion("+obj.id_prescripcion+")\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash\">  </i>  Eliminar</a></td>"+
+ 				"</tr>";
+                     $("#tabla_prescripcion").append(item);
+                     limpiarMedicamento();
+                     
+                 }
+              }
+               
+              });
+            
+            });  
+            
+            
+       //FUNCION LIMPIAR MODULO MEDICAMENTO
+       function limpiarMedicamento(){
+           var connectSlider2 = document.getElementById('basic_slider2');
+           var connectSlider = document.getElementById('basic_slider');
+           connectSlider2.noUiSlider.set(3);
+           connectSlider.noUiSlider.set(3);
+            $("#txtCantidad").val("");
+            $("#ddlMedicamentos").val(0);
+            $("#ddlMedicamentos").trigger("chosen:updated");
+          
+       }
+            
+           
+           
+           //  ELIMINAR PRESCRIPCION
+            window.EliminarPrescripcion =  function(id){
+            
+                if(!confirm('¿Estás seguro que deseas Desechar Prescripcion ?')){
+                    return false; 
+                }
+                var id_prescripcion = id;
+                var accion = "eliminarPrescripcion";
+
+                var parametros = {"id" : id_prescripcion,"accion": accion};
+               
+                $.ajax({
                 data:  parametros,
                 url:   'RequestHelper',
                 type:  'post',
-                 success: function(data) 
+                 success: function(result) 
                  {
-                    if(data != "false"){
-                        
-                       var obj = jQuery.parseJSON( data );
-                       var datos = "<div class=\"row\"><div class=\"col-sm-3\"><h4>Nombre</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.nombre+"</p></div>"
-                                 +"</div><div class=\"row\"><div class=\"col-sm-3\"><h4>Rut</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.rut+"</p>"
-                                 +"</div></div><div class=\"row\"><div class=\"col-sm-3\"><h4>Email</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.email+"</p>"
-                                 +"</div></div><div class=\"row\"><div class=\"col-sm-3\"><h4>Teléfono</h4></div><div class=\"col-sm-7 pull-left\"><p>"+obj.telefono+"</p></div></div>";
-                       $(".datos_paciente").empty();
-                        $(".datos_paciente").append(datos);
-                }else{
-                    $(".datos_paciente").empty();
-                   toastr.options = {
-                              "closeButton" : true,
-                              "debug": false,
-                              "progressBar": true,
-                              "preventDuplicates": false,
-                              "positionClass": "toast-top-center",
-                              "onclick": null,
-                              "showDuration": "400",
-                              "hideDuration": "1000",
-                              "timeOut": "7000",
-                              "extendedTimeOut": "1000",
-                              "showEasing": "swing",
-                              "hideEasing": "linear",
-                              "showMethod": "fadeIn",
-                              "hideMethod": "fadeOut"
-                            };
-                          toastr.error("No existe Paciente", "Favor verificar!");
-
-                }
+                   
+                    if (result == "true") {
+                  
+                 
+                  $("#pre_"+id_prescripcion+"").remove();
+                  
+                    toastr.options = {
+                      "closeButton": true,
+                      "debug": true,
+                      "progressBar": true,
+                      "preventDuplicates": false,
+                      "positionClass": "toast-top-center",
+                      "onclick": null,
+                      "showDuration": "400",
+                      "hideDuration": "600",
+                      "timeOut": "2500",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    };
+                   toastr.success("Prescripcion Eliminada correctamente", "Éxito");
+                                       }   
+                   
                  }
                 });
-//            FIN //          INICIO AJAX PACIENTE
-                
-                }
-            });
+             }   //ELIMINAR PRESCRIPCION
             
-     var elem = document.querySelector('.js-switch');
-     var switchery = new Switchery(elem, { color: '#1AB394' });
-        
-          var changeCheckbox = document.querySelector('.js-check-change');
-
-      changeCheckbox.onchange = function() {
-          
-       
-        if (changeCheckbox.checked) {
-            $("#txtFechaVencimiento").removeAttr("disabled");
+   
             
-        }else{
-         $("#txtFechaVencimiento").attr('disabled', 'disabled');
+            
+            
+     //BOTON FINALIZAR FUMCION REDIRIGIR
+     $("#btnFinalizar").click(function(){ 
+          window.location.href = "prescripcion.jsp?res=1";
+      });
     
-}
-      };
+    <%    
+        //mensaje de exito de prescripcion
+        if (request.getParameter("res") != null) 
+                {
+                   int res = Integer.parseInt(request.getParameter("res"));
+                    
+                   if (res == 1) {  
+                      %>   
+
+            toastr.options = {
+                      "closeButton": true,
+                      "debug": true,
+                      "progressBar": true,
+                      "preventDuplicates": false,
+                      "positionClass": "toast-top-center",
+                      "onclick": null,
+                      "showDuration": "400",
+                      "hideDuration": "600",
+                      "timeOut": "2500",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    };
+                   toastr.success("Prescripcion Generada correctamente", "Éxito");
+                                          
+
+ <% } }%> 
+
+
+
+    // datatable
+              $('#tabla_prescripciones').dataTable( {
+ 
+        "language": {
+ 
+    "sProcessing":     "Procesando...",
+ 
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+ 
+    "sZeroRecords":    "No se encontraron resultados",
+ 
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+ 
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+ 
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+ 
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+ 
+    "sInfoPostFix":    "",
+ 
+    "sSearch":         "Buscar:",
+ 
+    "sUrl":            "",
+ 
+    "sInfoThousands":  ",",
+ 
+    "sLoadingRecords": "Cargando...",
+ 
+    "oPaginate": {
+ 
+        "sFirst":    "Primero",
+ 
+        "sLast":     "Último",
+ 
+        "sNext":     "Siguiente",
+ 
+        "sPrevious": "Anterior"
+ 
+    
+    }}, "ajax" : "RequestHelper?accion=ObtenerCaducados",
+            "columns": [
+                        { "data": "medicamento"},
+                        { "data": "funcionario" },
+                        { "data": "cantidad" },
+                        { "data": "partida" },
+                        { "data": "fecha" },
+                        { "data": "motivo" },
+                        { "data": "id_caducar" }
+                    ],
+             "columnDefs": [
+                 {
+                      "targets": [0], 
+                      "data": "medicamento", 
+                      "render": function(data, type, full) { 
+                          return "<a><strong>" + data.toUpperCase() + "</strong></a>";
+                      }
+                  },
+                    {
+                      "targets": [1], 
+                      "data": "funcionario", 
+                      "render": function(data, type, full) {
+                           return  data.toUpperCase();
+                      }
+                  },{
+                      "targets": [5], 
+                      "data": "motivo",
+                      "render": function(data, type, full) { 
+                         if(data == "Envase roto"){
+                           return "<span class=\"label label-primary\">"+data+"</span>";
+                      }else if(data == "Fecha de vencimiento"){
+                          return "<span class=\"label label-warning\">"+data+"</span>";
+                      }else if(data == "Mal estado"){
+                          return "<span class=\"label label-success\">"+data+"</span>";
+                      }
+                      }
+                  },
+                    {
+                      "targets": [6], 
+                      "data": "id_caducar", 
+                      "render": function(data, type, full) { 
+                         return "<a onclick=\"DesecharMedicamento("+data+")\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash\">  </i>  Desechar</a>";
+                      }
+                  }]
+              
                
-      $.fn.datepicker.dates['en'] = {
-    days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado"],
-    daysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
-    daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
-    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-    monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-    today: "Hoy",
-    clear: "Clear",
-    format: "dd/mm/yyyy",
-    titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
-    weekStart: 0
-};
-                
-                
-                 $('#data_1 .input-group.date').datepicker({
-                startView: 0,
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                autoclose: true,
-                weekStart: 1
-            }); 
-             
-               var config = {
-                '.chosen-select'           : {},
-                '.chosen-select-deselect'  : {allow_single_deselect:true},
-                '.chosen-select-no-single' : {disable_search_threshold:10},
-                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'}
-                }
-                
-            for (var selector in config) {
-                $(selector).chosen(config[selector]);
-                $("#ddlComponentes").chosen(config[selector]);
-                
-            } 
-            
-            
-            
-            var connectSlider = document.getElementById('basic_slider');
-
-            noUiSlider.create(connectSlider, {
-                    start: 3,
-                    connect: 'upper',
-                    tooltips: true ,
-                    range: {
-                        'min': 3,
-                        '30%': 6,
-                        '50%': 8,
-                        '70%': 12,
-                         'max': 24
-                        },snap: true,
-                        format: wNumb({
-                            decimals: 0,
-                            postfix: ' Hrs.',
-                            prefix:'Cada '
-                    })
-                        
-            });
+ 
+    } );
 
 
-         
-                  
+//                                    <th>Medicamento</th>
+//                                    <th>Funcionario</th>
+//                                    <th>Cantidad Caducada</th>
+//                                    <th>Partida</th>
+//                                    <th>Fecha Caducación</th>
+//                                    <th>Motivo Caducación</th>
+//                                    <th>Desechar</th>
+//      
 
-
-            
-            
-
-
-        
-        });
-    </script>
+      });  //FIN DE DOCUMENT READY
+</script>

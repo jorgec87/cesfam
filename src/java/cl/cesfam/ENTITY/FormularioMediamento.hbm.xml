@@ -9,10 +9,10 @@
             <generator class="increment" />
         </id>
         <property name="cantidadEntregada" type="int">
-            <column name="CANTIDAD_ENTREGADA" precision="8" scale="0" not-null="true" />
+            <column name="CANTIDAD_ENTREGADA" precision="8" scale="0" not-null="false" />
         </property>
-        <property name="requiereProximaEvaluacion" type="char">
-            <column name="REQUIERE_PROXIMA_EVALUACION" length="1" not-null="true" />
+        <property name="requiereProximaEvaluacion" type="int">
+            <column name="REQUIERE_PROXIMA_EVALUACION"  not-null="false" />
         </property>
         <property name="fechaProximaEvaluacion" type="date">
             <column name="FECHA_PROXIMA_EVALUACION" length="7" />

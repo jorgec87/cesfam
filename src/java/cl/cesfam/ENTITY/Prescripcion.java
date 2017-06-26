@@ -16,8 +16,10 @@ public class Prescripcion  implements java.io.Serializable {
      private TipoPrescripcion tipoPrescripcion;
      private Integer periodo;
      private Integer frecuencia;
+     private Integer cantidad;
      private Integer duracionTratamiento;
 
+     
     public Prescripcion() {
     }
 
@@ -91,6 +93,13 @@ public class Prescripcion  implements java.io.Serializable {
     
     public void setDuracionTratamiento(Integer duracionTratamiento) {
         this.duracionTratamiento = duracionTratamiento;
+    }
+    
+    public Integer getCantidad() {
+        return cantidad;
+    }
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
 

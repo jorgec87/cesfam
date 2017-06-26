@@ -7,7 +7,7 @@
       <column name="ID_RESERVA" precision="8" scale="0"/>
       <generator class="increment"/>
     </id>
-    <many-to-one class="cl.cesfam.ENTITY.Reserva" fetch="select" name="estadoReserva">
+    <many-to-one class="cl.cesfam.ENTITY.EstadoReserva" fetch="select" name="estadoReserva">
       <column name="ID_ESTADO_RESERVA" precision="8" scale="0"/>
     </many-to-one>
     <many-to-one class="cl.cesfam.ENTITY.Medicamento" fetch="select" name="medicamento">
@@ -19,8 +19,8 @@
     <property name="fechaEventoReserva" type="date">
       <column name="FECHA_EVENTO_RESERVA" not-null="true"/>
     </property>
-    <property name="reserva" type="char">
-      <column length="1" name="RESERVA" not-null="true"/>
+    <property name="cantidad" type="int">
+      <column name="CANTIDAD" precision="8" scale="0"/>
     </property>
     <property name="observacion" type="string">
       <column name="OBSERVACION"/>

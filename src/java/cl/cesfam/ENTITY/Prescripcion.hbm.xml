@@ -23,6 +23,9 @@
         <property name="periodo" type="java.lang.Integer">
             <column name="PERIODO" precision="8" scale="0" />
         </property>
+        <property name="cantidad" type="int">
+             <column name="CANTIDAD" not-null="false" precision="8" scale="0"/>
+        </property>
         <property name="frecuencia" type="java.lang.Integer">
             <column name="FRECUENCIA" precision="8" scale="0" />
         </property>

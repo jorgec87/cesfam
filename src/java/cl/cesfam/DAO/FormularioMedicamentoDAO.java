@@ -14,9 +14,9 @@ import org.hibernate.criterion.Restrictions;
  * 
  * @author **Jorge Carrenca**
  */
-public class PacienteDAO {
+public class FormularioMedicamentoDAO {
 
-      public static boolean add(cl.cesfam.ENTITY.Paciente a) throws Exception 
+       public static boolean add(cl.cesfam.ENTITY.FormularioMediamento a) throws Exception 
         {
             Session sessionA = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             sessionA.beginTransaction();
@@ -33,11 +33,11 @@ public class PacienteDAO {
             }
         }
     
-     public static  List<cl.cesfam.ENTITY.Paciente> getList() throws Exception {
+     public static  List<cl.cesfam.ENTITY.FormularioMediamento> getList() throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             try {
-                List<cl.cesfam.ENTITY.Paciente> lista = (List<cl.cesfam.ENTITY.Paciente>) session.createCriteria(cl.cesfam.ENTITY.Paciente.class).list();
+                List<cl.cesfam.ENTITY.FormularioMediamento> lista = (List<cl.cesfam.ENTITY.FormularioMediamento>) session.createCriteria(cl.cesfam.ENTITY.FormularioMediamento.class).list();
                 session.getTransaction().commit();
                 return lista;
             } catch (Exception e) {
@@ -51,7 +51,7 @@ public class PacienteDAO {
         }
     
     
-       public static  boolean delete(cl.cesfam.ENTITY.Paciente a) throws Exception {
+       public static  boolean delete(cl.cesfam.ENTITY.FormularioMediamento a) throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             try {
@@ -67,7 +67,7 @@ public class PacienteDAO {
             }
         }
      
-      public static  boolean update(cl.cesfam.ENTITY.Paciente a) throws Exception {
+      public static  boolean update(cl.cesfam.ENTITY.FormularioMediamento a) throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             try {
@@ -83,14 +83,14 @@ public class PacienteDAO {
             }
         }
       
-     
+ 
       
-      public static  cl.cesfam.ENTITY.Paciente getPacienteByRut(String rut) throws Exception {
+      public static  cl.cesfam.ENTITY.FormularioMediamento getFormularioMedicamentoById(int id) throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             try {
                 session.beginTransaction();
-                cl.cesfam.ENTITY.Paciente tmp = (cl.cesfam.ENTITY.Paciente) 
-                        session.createCriteria(cl.cesfam.ENTITY.Paciente.class).add(Restrictions.eq("rutPaciente", rut)).uniqueResult();
+                cl.cesfam.ENTITY.FormularioMediamento tmp = (cl.cesfam.ENTITY.FormularioMediamento) 
+                        session.createCriteria(cl.cesfam.ENTITY.FormularioMediamento.class).add(Restrictions.eq("idFormularioMedicamento", id)).uniqueResult();
                 session.getTransaction().commit();
                 session.close();
                 return tmp;
@@ -99,22 +99,12 @@ public class PacienteDAO {
                 session.close();
                 throw e;
             }
-        } 
-      
-           public static  cl.cesfam.ENTITY.Paciente getPacienteById(int id) throws Exception {
-            Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
-            try {
-                session.beginTransaction();
-                cl.cesfam.ENTITY.Paciente tmp = (cl.cesfam.ENTITY.Paciente) 
-                        session.createCriteria(cl.cesfam.ENTITY.Paciente.class).add(Restrictions.eq("idPaciente", id)).uniqueResult();
-                session.getTransaction().commit();
-                session.close();
-                return tmp;
-            } catch (Exception e) {
-                System.err.print(e.getMessage());
-                session.close();
-                throw e;
-            }
-        } 
+        }        
+    
+    
+ 
+    
+    
+    
     
 }

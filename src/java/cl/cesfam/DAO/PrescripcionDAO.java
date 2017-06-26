@@ -14,9 +14,9 @@ import org.hibernate.criterion.Restrictions;
  * 
  * @author **Jorge Carrenca**
  */
-public class PacienteDAO {
-
-      public static boolean add(cl.cesfam.ENTITY.Paciente a) throws Exception 
+public class PrescripcionDAO {
+    
+     public static boolean add(cl.cesfam.ENTITY.Prescripcion a) throws Exception 
         {
             Session sessionA = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             sessionA.beginTransaction();
@@ -33,11 +33,11 @@ public class PacienteDAO {
             }
         }
     
-     public static  List<cl.cesfam.ENTITY.Paciente> getList() throws Exception {
+     public static  List<cl.cesfam.ENTITY.Prescripcion> getList() throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             try {
-                List<cl.cesfam.ENTITY.Paciente> lista = (List<cl.cesfam.ENTITY.Paciente>) session.createCriteria(cl.cesfam.ENTITY.Paciente.class).list();
+                List<cl.cesfam.ENTITY.Prescripcion> lista = (List<cl.cesfam.ENTITY.Prescripcion>) session.createCriteria(cl.cesfam.ENTITY.Prescripcion.class).list();
                 session.getTransaction().commit();
                 return lista;
             } catch (Exception e) {
@@ -51,7 +51,7 @@ public class PacienteDAO {
         }
     
     
-       public static  boolean delete(cl.cesfam.ENTITY.Paciente a) throws Exception {
+       public static  boolean delete(cl.cesfam.ENTITY.Prescripcion a) throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             try {
@@ -67,7 +67,7 @@ public class PacienteDAO {
             }
         }
      
-      public static  boolean update(cl.cesfam.ENTITY.Paciente a) throws Exception {
+      public static  boolean update(cl.cesfam.ENTITY.Prescripcion a) throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             try {
@@ -83,38 +83,25 @@ public class PacienteDAO {
             }
         }
       
+
+      
+      public static  cl.cesfam.ENTITY.Prescripcion getPrescripcionById(int id) throws Exception {
+            Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+            try {
+                session.beginTransaction();
+                cl.cesfam.ENTITY.Prescripcion tmp = (cl.cesfam.ENTITY.Prescripcion) 
+                        session.createCriteria(cl.cesfam.ENTITY.Prescripcion.class).add(Restrictions.eq("idPrescripcion", id)).uniqueResult();
+                session.getTransaction().commit();
+                session.close();
+                return tmp;
+            } catch (Exception e) {
+                System.err.print(e.getMessage());
+                session.close();
+                throw e;
+            }
+        }        
      
-      
-      public static  cl.cesfam.ENTITY.Paciente getPacienteByRut(String rut) throws Exception {
-            Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
-            try {
-                session.beginTransaction();
-                cl.cesfam.ENTITY.Paciente tmp = (cl.cesfam.ENTITY.Paciente) 
-                        session.createCriteria(cl.cesfam.ENTITY.Paciente.class).add(Restrictions.eq("rutPaciente", rut)).uniqueResult();
-                session.getTransaction().commit();
-                session.close();
-                return tmp;
-            } catch (Exception e) {
-                System.err.print(e.getMessage());
-                session.close();
-                throw e;
-            }
-        } 
-      
-           public static  cl.cesfam.ENTITY.Paciente getPacienteById(int id) throws Exception {
-            Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
-            try {
-                session.beginTransaction();
-                cl.cesfam.ENTITY.Paciente tmp = (cl.cesfam.ENTITY.Paciente) 
-                        session.createCriteria(cl.cesfam.ENTITY.Paciente.class).add(Restrictions.eq("idPaciente", id)).uniqueResult();
-                session.getTransaction().commit();
-                session.close();
-                return tmp;
-            } catch (Exception e) {
-                System.err.print(e.getMessage());
-                session.close();
-                throw e;
-            }
-        } 
     
+    
+
 }
