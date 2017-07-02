@@ -335,17 +335,16 @@
                         <table id="tabla_prescripciones" class="table table-responsive table-striped table-bordered table-hover dataTables-example" >
                             <thead>
                                 <tr>
+                                    <th>Folio</th>
                                     <th>Paciente</th>
-                                    <th>Medicamento</th>
-                                    <th>Cantidad</th>
-                                    <th>Duracion</th>
-                                    <th>Fecha Caducación</th>
-                                    <th>Motivo Caducación</th>
-                                    <th>Desechar</th>
+                                    <th>Rut Paciente</th>
+                                    <th>Req. Prox. Eval.</th>
+                                    <th>Fecha Prox. Eval.</th>
+                                    <th>Fecha Emisión</th>
                                 </tr>
                             </thead>
                             <tbody id="prescripciones">
-
+                                
                             </tbody>
                        </table>
                       </div>
@@ -712,8 +711,7 @@
               type:  'post',
                success: function(data) 
                {  var obj = jQuery.parseJSON( data );
-                   alert(data);
-                   alert(obj.id_prescripcion);
+                  
                    
                  if(obj.id_prescripcion != null){
                       $("#btnFinalizar").show();
@@ -836,105 +834,102 @@
  <% } }%> 
 
 
-//
-//    // datatable
-//              $('#tabla_prescripciones').dataTable( {
-// 
-//        "language": {
-// 
-//    "sProcessing":     "Procesando...",
-// 
-//    "sLengthMenu":     "Mostrar _MENU_ registros",
-// 
-//    "sZeroRecords":    "No se encontraron resultados",
-// 
-//    "sEmptyTable":     "Ningún dato disponible en esta tabla",
-// 
-//    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-// 
-//    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-// 
-//    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-// 
-//    "sInfoPostFix":    "",
-// 
-//    "sSearch":         "Buscar:",
-// 
-//    "sUrl":            "",
-// 
-//    "sInfoThousands":  ",",
-// 
-//    "sLoadingRecords": "Cargando...",
-// 
-//    "oPaginate": {
-// 
-//        "sFirst":    "Primero",
-// 
-//        "sLast":     "Último",
-// 
-//        "sNext":     "Siguiente",
-// 
-//        "sPrevious": "Anterior"
-// 
-//    
-//    }}, "ajax" : "RequestHelper?accion=ObtenerCaducados",
-//            "columns": [
-//                        { "data": "medicamento"},
-//                        { "data": "funcionario" },
-//                        { "data": "cantidad" },
-//                        { "data": "partida" },
-//                        { "data": "fecha" },
-//                        { "data": "motivo" },
-//                        { "data": "id_caducar" }
-//                    ],
-//             "columnDefs": [
-//                 {
-//                      "targets": [0], 
-//                      "data": "medicamento", 
-//                      "render": function(data, type, full) { 
-//                          return "<a><strong>" + data.toUpperCase() + "</strong></a>";
-//                      }
-//                  },
-//                    {
-//                      "targets": [1], 
-//                      "data": "funcionario", 
-//                      "render": function(data, type, full) {
-//                           return  data.toUpperCase();
-//                      }
-//                  },{
-//                      "targets": [5], 
-//                      "data": "motivo",
-//                      "render": function(data, type, full) { 
-//                         if(data == "Envase roto"){
-//                           return "<span class=\"label label-primary\">"+data+"</span>";
-//                      }else if(data == "Fecha de vencimiento"){
-//                          return "<span class=\"label label-warning\">"+data+"</span>";
-//                      }else if(data == "Mal estado"){
-//                          return "<span class=\"label label-success\">"+data+"</span>";
-//                      }
-//                      }
-//                  },
-//                    {
-//                      "targets": [6], 
-//                      "data": "id_caducar", 
-//                      "render": function(data, type, full) { 
-//                         return "<a onclick=\"DesecharMedicamento("+data+")\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash\">  </i>  Desechar</a>";
-//                      }
-//                  }]
-//              
-//               
-// 
-//    } );
+
+    // datatable
+              $('#tabla_prescripciones').dataTable( {
+ 
+        "language": {
+ 
+    "sProcessing":     "Procesando...",
+ 
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+ 
+    "sZeroRecords":    "No se encontraron resultados",
+ 
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+ 
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+ 
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+ 
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+ 
+    "sInfoPostFix":    "",
+ 
+    "sSearch":         "Buscar:",
+ 
+    "sUrl":            "",
+ 
+    "sInfoThousands":  ",",
+ 
+    "sLoadingRecords": "Cargando...",
+ 
+    "oPaginate": {
+ 
+        "sFirst":    "Primero",
+ 
+        "sLast":     "Último",
+ 
+        "sNext":     "Siguiente",
+ 
+        "sPrevious": "Anterior"
+        
+      
+    }}, "ajax" : "RequestHelper?accion=obtenerPrescripciones",
+            "columns": [
+                        { "data": "folio"},
+                        { "data": "nombre_paciente" },
+                        { "data": "rut" },
+                        { "data": "proxima_evaluacion" },
+                        { "data": "fecha_proxima_evaluacion" },
+                        { "data": "fecha" },
+                    ],
+             "columnDefs": [
+                 {
+                      "targets": [0], 
+                      "data": "folio", 
+                      "render": function(data, type, full) { 
+                          return "<a><strong>" + data+ "</strong></a>";
+                      }
+                  },
+                    {
+                      "targets": [1], 
+                      "data": "nombre_paciente", 
+                      "render": function(data, type, full) {
+                           return  data.toUpperCase();
+                      }
+                  },{
+                      "targets": [3], 
+                      "data": "proxima_evaluacion",
+                      "render": function(data, type, full) { 
+                       if(data == 1){
+                           return "<span class=\"label label-primary\">SI</span>";
+                      }else if(data == 0){
+                          return "<span class=\"label label-warning\">NO</span>";
+                      }
+                      }
+                  },
+                    {
+                      "targets": [4], 
+                      "data": "fecha", 
+                      "render": function(data, type, full) { 
+                        var prox = full.proxima_evaluacion;
+                       if(prox == 1){
+                           return data;
+                      }else if(prox == 0){
+                          return "N/A";
+                      }
+                        
+                      }
+                  }],
+              "order": [[ 5, "desc" ]]
+              
+               
+ 
+    } );
 
 
-//                                    <th>Medicamento</th>
-//                                    <th>Funcionario</th>
-//                                    <th>Cantidad Caducada</th>
-//                                    <th>Partida</th>
-//                                    <th>Fecha Caducación</th>
-//                                    <th>Motivo Caducación</th>
-//                                    <th>Desechar</th>
-//      
+
 
       });  //FIN DE DOCUMENT READY
 </script>

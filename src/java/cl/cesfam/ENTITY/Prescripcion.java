@@ -11,7 +11,7 @@ public class Prescripcion  implements java.io.Serializable {
 
      private int idPrescripcion;
      private EstadoPrescripcion estadoPrescripcion;
-     private FormularioMediamento formularioMediamento;
+     private FormularioMedicamento formularioMediamento;
      private Medicamento medicamento;
      private TipoPrescripcion tipoPrescripcion;
      private Integer periodo;
@@ -27,7 +27,7 @@ public class Prescripcion  implements java.io.Serializable {
     public Prescripcion(int idPrescripcion) {
         this.idPrescripcion = idPrescripcion;
     }
-    public Prescripcion(int idPrescripcion, EstadoPrescripcion estadoPrescripcion, FormularioMediamento formularioMediamento, Medicamento medicamento, TipoPrescripcion tipoPrescripcion, Integer periodo, Integer frecuencia, Integer duracionTratamiento) {
+    public Prescripcion(int idPrescripcion, EstadoPrescripcion estadoPrescripcion, FormularioMedicamento formularioMediamento, Medicamento medicamento, TipoPrescripcion tipoPrescripcion, Integer periodo, Integer frecuencia, Integer duracionTratamiento) {
        this.idPrescripcion = idPrescripcion;
        this.estadoPrescripcion = estadoPrescripcion;
        this.formularioMediamento = formularioMediamento;
@@ -52,11 +52,11 @@ public class Prescripcion  implements java.io.Serializable {
     public void setEstadoPrescripcion(EstadoPrescripcion estadoPrescripcion) {
         this.estadoPrescripcion = estadoPrescripcion;
     }
-    public FormularioMediamento getFormularioMediamento() {
+    public FormularioMedicamento getFormularioMediamento() {
         return this.formularioMediamento;
     }
     
-    public void setFormularioMediamento(FormularioMediamento formularioMediamento) {
+    public void setFormularioMediamento(FormularioMedicamento formularioMediamento) {
         this.formularioMediamento = formularioMediamento;
     }
     public Medicamento getMedicamento() {

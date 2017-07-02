@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22-05-2017 20:45:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class name="cl.cesfam.ENTITY.FormularioMedicamento" optimistic-lock="version" schema="CESFAM_DBA" table="FORMULARIO_MEDICAMENTO">
+    <id name="idFormularioMedicamento" type="int">
+      <column name="ID_FORMULARIO_MEDICAMENTO" precision="8" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <property name="cantidadEntregada" type="int">
+      <column name="CANTIDAD_ENTREGADA" not-null="false" precision="8" scale="0"/>
+    </property>
+    <property name="requiereProximaEvaluacion" type="int">
+      <column name="REQUIERE_PROXIMA_EVALUACION" not-null="false"/>
+    </property>
+    <property name="fechaProximaEvaluacion" type="date">
+      <column length="7" name="FECHA_PROXIMA_EVALUACION"/>
+    </property>
+    <property name="medicoIdMedico" type="java.lang.Integer">
+      <column name="MEDICO_ID_MEDICO" precision="8" scale="0"/>
+    </property>
+    <property name="pacienteIdPaciente" type="java.lang.Integer">
+      <column name="PACIENTE_ID_PACIENTE" precision="8" scale="0"/>
+    </property>
+    <property name="fechaFormularioMedicamento" type="date">
+      <column name="FECHA_FORMULARIO_MEDICAMENTO"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="prescripcions" table="PRESCRIPCION">
+      <key>
+        <column name="ID_FORMULARIO_MEDICAMENTO" precision="8" scale="0"/>
+      </key>
+      <one-to-many class="cl.cesfam.ENTITY.Prescripcion"/>
+    </set>
+  </class>
+</hibernate-mapping>

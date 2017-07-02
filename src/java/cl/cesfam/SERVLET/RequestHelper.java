@@ -54,8 +54,9 @@ public class RequestHelper extends HttpServlet {
     private static String ACTION_CREAR_FORMULARIO_MEDICAMENTO = "formularioMedicamento";
     private static String ACTION_CREAR_PRESCRIPCION = "crearPrescripcion";
     private static String ACTION_ELIMINAR_PRESCRIPCION = "eliminarPrescripcion";
+    private static String ACTION_OBTENER_PRESCRIPCIONES = "obtenerPrescripciones";
     
-    //  http://localhost:8083/CESFAM/RequestHelper?accion=ObtenerCaducados
+    //  http://localhost:8083/CESFAM/RequestHelper?accion=obtenerPrescripciones
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
@@ -106,7 +107,9 @@ public class RequestHelper extends HttpServlet {
 		CrearPrescripcion(request, response);   
            }else if (action.equals(ACTION_ELIMINAR_PRESCRIPCION)) {
 		EliminarPrescripcion(request, response);   
-           }            
+           }else if (action.equals(ACTION_OBTENER_PRESCRIPCIONES)) {
+		ObtenerPrescripciones(request, response);   
+           }             
  
             
         }
@@ -1002,7 +1005,7 @@ try {
        
                  
       
-                cl.cesfam.ENTITY.FormularioMediamento formulario = new cl.cesfam.ENTITY.FormularioMediamento();
+                cl.cesfam.ENTITY.FormularioMedicamento formulario = new cl.cesfam.ENTITY.FormularioMedicamento();
                  JSONObject salida = new JSONObject();
              
 
@@ -1015,6 +1018,10 @@ try {
                     Paciente pa = cl.cesfam.DAO.PacienteDAO.getPacienteByRut(request.getParameter("rut_paciente"));
                      formulario.setPacienteIdPaciente(pa.getIdPaciente());
                 }
+                 //Fecha caducacion
+                java.util.Date fecha_actual = new Date();
+                formulario.setFechaFormularioMedicamento(fecha_actual);
+                 //Motivo caducacion
                 //requiere evaluzacion
                 if (request.getParameter("requiere_evaluacion") != null &&  request.getParameter("requiere_evaluacion").equals("1")) {
                    
@@ -1034,7 +1041,7 @@ try {
                    
                     Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
                     session.beginTransaction();
-                    Query query = session.createQuery("select max(cc.idFormularioMedicamento) from FormularioMediamento cc");
+                    Query query = session.createQuery("select max(cc.idFormularioMedicamento) from FormularioMedicamento cc");
                      List<Integer> lista = query.list();
                     System.out.println(lista);
                     session.close();  
@@ -1144,8 +1151,7 @@ try {
                        response.setContentType("text/plain");
                        String res = "true";
                        response.getWriter().write(res);
-
-                }
+ }
                 else
                 {
                        response.setContentType("text/plain");
@@ -1155,6 +1161,77 @@ try {
             } catch (Exception e) {
                 e.getMessage();            
             }
+    }
+
+    private void ObtenerPrescripciones(HttpServletRequest request, HttpServletResponse response) {
+            JSONArray formularios = new JSONArray();
+            JSONObject salida = new JSONObject();
+            DateFormat df_fecha_hora = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            DateFormat df_fecha = new SimpleDateFormat("dd/MM/yyyy");
+            
+                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                   Query query = session.createQuery("select  \n" +
+                    "fo.idFormularioMedicamento ,\n" +
+                    "(select pa.primerNombrePaciente||' '||pa.apellidoPaternoPaciente from Paciente pa where pa.idPaciente = fo.pacienteIdPaciente ),\n" +
+                    "(select pa.rutPaciente from Paciente pa where pa.idPaciente = fo.pacienteIdPaciente ),\n" +
+                    "fo.requiereProximaEvaluacion ,\n" +
+                    "fo.fechaProximaEvaluacion ,\n" +
+                    "fo.fechaFormularioMedicamento \n" +
+                    "from FormularioMedicamento fo\n" +
+                    "WhERE rownum<=5\n" +
+                    "order by fo.fechaFormularioMedicamento  asc ");
+                    List<Object[]> lista = query.list();
+                    session.close();
+                    
+                   if(lista != null){
+                try {
+                    for (Object[] item : lista) {
+                        
+                        for (int i = 0; i < 1; i++) {
+                           
+                            try {
+                                JSONObject objeto = new JSONObject();
+                                String fecha_prox = null;
+                                objeto.put("folio", (int)item[0]);
+                                objeto.put("nombre_paciente", (String)item[1]);
+                                objeto.put("rut", (String)item[2]);
+                                objeto.put("proxima_evaluacion", (int)item[3]);
+                                if((Date)item[4] != null){
+                                 fecha_prox = df_fecha.format((Date)item[4]);
+                                 }
+                                objeto.put("fecha_proxima_evaluacion",fecha_prox );
+                                objeto.put("fecha", df_fecha_hora.format((Date)item[5]));
+                                formularios.put(objeto);
+                               
+                            } catch (JSONException ex) {
+                                Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
+                    } // fin foercha
+                    
+                    salida.put("data", formularios);
+                    PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+salida);
+                    out.println(salida);
+                    out.flush();
+                } catch (JSONException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                 }else{
+                    
+                    
+                    
+                    }
+     
+        
+        
+        
+        
+        
         
         
         

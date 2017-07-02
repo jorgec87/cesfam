@@ -393,7 +393,8 @@
                       "render": function(data, type, full) { 
                          return "<a onclick=\"DesecharMedicamento("+data+")\" class=\"btn btn-xs btn-danger\"><i class=\"fa fa-trash\">  </i>  Desechar</a>";
                       }
-                  }]
+                  }],
+              "order": [[ 4, "asc" ]]
               
                
  

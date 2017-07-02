@@ -16,7 +16,7 @@ import org.hibernate.criterion.Restrictions;
  */
 public class FormularioMedicamentoDAO {
 
-       public static boolean add(cl.cesfam.ENTITY.FormularioMediamento a) throws Exception 
+       public static boolean add(cl.cesfam.ENTITY.FormularioMedicamento a) throws Exception 
         {
             Session sessionA = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             sessionA.beginTransaction();
@@ -33,11 +33,11 @@ public class FormularioMedicamentoDAO {
             }
         }
     
-     public static  List<cl.cesfam.ENTITY.FormularioMediamento> getList() throws Exception {
+     public static  List<cl.cesfam.ENTITY.FormularioMedicamento> getList() throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             try {
-                List<cl.cesfam.ENTITY.FormularioMediamento> lista = (List<cl.cesfam.ENTITY.FormularioMediamento>) session.createCriteria(cl.cesfam.ENTITY.FormularioMediamento.class).list();
+                List<cl.cesfam.ENTITY.FormularioMedicamento> lista = (List<cl.cesfam.ENTITY.FormularioMedicamento>) session.createCriteria(cl.cesfam.ENTITY.FormularioMedicamento.class).list();
                 session.getTransaction().commit();
                 return lista;
             } catch (Exception e) {
@@ -51,7 +51,7 @@ public class FormularioMedicamentoDAO {
         }
     
     
-       public static  boolean delete(cl.cesfam.ENTITY.FormularioMediamento a) throws Exception {
+       public static  boolean delete(cl.cesfam.ENTITY.FormularioMedicamento a) throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             try {
@@ -67,7 +67,7 @@ public class FormularioMedicamentoDAO {
             }
         }
      
-      public static  boolean update(cl.cesfam.ENTITY.FormularioMediamento a) throws Exception {
+      public static  boolean update(cl.cesfam.ENTITY.FormularioMedicamento a) throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             try {
@@ -85,12 +85,12 @@ public class FormularioMedicamentoDAO {
       
  
       
-      public static  cl.cesfam.ENTITY.FormularioMediamento getFormularioMedicamentoById(int id) throws Exception {
+      public static  cl.cesfam.ENTITY.FormularioMedicamento getFormularioMedicamentoById(int id) throws Exception {
             Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
             try {
                 session.beginTransaction();
-                cl.cesfam.ENTITY.FormularioMediamento tmp = (cl.cesfam.ENTITY.FormularioMediamento) 
-                        session.createCriteria(cl.cesfam.ENTITY.FormularioMediamento.class).add(Restrictions.eq("idFormularioMedicamento", id)).uniqueResult();
+                cl.cesfam.ENTITY.FormularioMedicamento tmp = (cl.cesfam.ENTITY.FormularioMedicamento) 
+                        session.createCriteria(cl.cesfam.ENTITY.FormularioMedicamento.class).add(Restrictions.eq("idFormularioMedicamento", id)).uniqueResult();
                 session.getTransaction().commit();
                 session.close();
                 return tmp;
