@@ -14,7 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 /**
  *
@@ -62,6 +62,7 @@ public class LoginServlet extends HttpServlet {
                     userSession.setIdUsuario(funcionario.getIdFuncionario());
                     userSession.setRutUsuario(funcionario.getRutFuncionario());
                     userSession.setNombreUsuario(funcionario.getPrimerNombreFuncionario()+" "+funcionario.getApellidoPaternoFuncionario());
+                    userSession.setTipoUsuario("F");
                     request.getSession().setAttribute("usuario", userSession); 
                     System.out.println("armo la sessión");
                     request.getRequestDispatcher("dashboard_F.jsp").forward(request, response);
@@ -83,6 +84,7 @@ public class LoginServlet extends HttpServlet {
                     userSession.setIdUsuario(medico.getIdMedico());
                     userSession.setRutUsuario(medico.getRutMedico());
                     userSession.setNombreUsuario(medico.getPrimerNombreMedico()+" "+medico.getApellidoPaternoMedico());
+                    userSession.setTipoUsuario("M");
                     request.getSession().setAttribute("usuario", userSession);
                     System.out.println("armo la sessión");
                     request.getRequestDispatcher("dashboard_M.jsp").forward(request, response);

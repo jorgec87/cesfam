@@ -1069,6 +1069,7 @@ try {
               System.out.println();
               Prescripcion pre = new Prescripcion();
               JSONObject salida = new JSONObject();
+              Integer permanete = null;
               
         try {
 
@@ -1085,12 +1086,19 @@ try {
                 if (request.getParameter("id_medicamento") != null) {
                   pre.setMedicamento(cl.cesfam.DAO.MedicamentoDAO.getMedicamentoById(Integer.parseInt(request.getParameter("id_medicamento"))));
                 }
+                
+                //private TipoPrescripcion tipoPrescripcion PENDIENTE
+                if (request.getParameter("permanente") != null) {
+                  permanete = Integer.parseInt(request.getParameter("permanente"));
+                  pre.setTipoPrescripcion(cl.cesfam.DAO.TipoPrescripcionDAO.getTipoPrescripcionById(permanete));
+                 }
+                
+                if(permanete == 2){
                 //periodo de prescripcio
                 if (request.getParameter("periodo") != null) {
                   pre.setPeriodo(Integer.parseInt(request.getParameter("periodo").split(" ")[1]) );
                 }
-                
-                //private TipoPrescripcion tipoPrescripcion PENDIENTE
+                }
                 
                 //frecuencia de prescripcion
                  if (request.getParameter("frecuencia") != null) {

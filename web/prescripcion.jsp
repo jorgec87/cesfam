@@ -63,9 +63,15 @@
                             <i style="color: white" class="fa fa-user-md fa-5x"></i>
 <!--                                <img alt="image" class="img-circle" width="100" height="100" src="img/img_custom/LOGO-CESFAM.png">-->
                              </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%=userSession.getNombreUsuario() %></strong>
-                             </span> <span class="text-muted text-xs block">Farmaceutico <b class="caret"></b></span> </span> </a>
+                        <%if(userSession.getTipoUsuario().equals("F")){%>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%=userSession.getNombreUsuario() %></strong></span> 
+                         <span class="text-muted text-xs block">Farmaceutico <b class="caret"></b></span> </span> </a>
+                         <% }else{%>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%=userSession.getNombreUsuario() %></strong></span> 
+                         <span class="text-muted text-xs block">Médico <b class="caret"></b></span> </span> </a>
+                          <%  } %>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="profile.html">Profile</a></li>
 
@@ -77,27 +83,45 @@
                         MENU
                     </div>
                 </li>
-                <li>
+                   <%if(userSession.getTipoUsuario().equals("F")){%>
+                 <li>
                     <a href="dashboard_F.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
                         <span></span></a>              
-                </li>
-                  <li  class="active">
+                 </li>
+               <% }else{%>
+                    <li>
+                    <a href="dashboard_M.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
+                        <span></span></a>              
+                 </li>
+  
+               <%  } %>
+               
+                <%if(userSession.getTipoUsuario().equals("F")){%>
+               <li >
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
                         <li><a href="agregarpartida.jsp"><i class="fa fa-ambulance"></i>Agregar Partida</a></li> 
                         <li class="active"><a href="caducarmedicamentos.jsp"><i class="fa fa-trash"></i>Caducar Medicamento</a></li>
-                        
-                        
                         <li><a href="prescripcionespendientes.jsp"><i class="fa fa-archive"></i>Prescripciones Pendientes</a></li>
                     </ul>
                 </li>
+               <% } %>
+                  
                  <li>
                      <a href="revisarstock.jsp"><i class="fa fa-table"></i> <span class="nav-label">Revisar Stock Disponible</span></a>              
-                </li>
-                  <li>
+                </li >
+                <%if(userSession.getTipoUsuario().equals("M")){%>
+                <li class="active">
+
                      <a href="prescripcion.jsp"><i class="fa fa-stethoscope"></i>Generar Prescripción</a>
                 </li>
+               <% } %>
+                <li>
+                     <a href="reservamedicamento.jsp"><i class="fa fa-table"></i> <span class="nav-label">Reserva Medicamento</span> 
+                        <span></span></a>              
+                </li> 
+                  
             </ul>
 
         </div>
@@ -320,7 +344,7 @@
  </div> <!--                fin de div principal-->
 
                 
-             <div class="row">
+             <div class="row animated fadeInRight">
                 <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -352,13 +376,7 @@
             </div>
          </div>
       </div>
-           
-           
-
-                    
-
-
-
+          
             </div>
             <div class="footer">
                 <!--            <div class="pull-right">
@@ -693,17 +711,22 @@
              $("#btnAgregar").click(function(){
             
            //    INICIO AJAX CREAR PRESCRIPCION
-            var connectSlider2 = document.getElementById('basic_slider2');
-             var connectSlider = document.getElementById('basic_slider');
+           var connectSlider2 = document.getElementById('basic_slider2');
+           var connectSlider = document.getElementById('basic_slider');
+           var prescripcionPermanente = document.querySelector('#permanente');
            var id_formulario = $("#id_formulario").val();
            var accion = "crearPrescripcion";
            var id_medicamento = $("#ddlMedicamentos").val();
            var periodo = connectSlider2.noUiSlider.get();
            var frecuencia = connectSlider.noUiSlider.get();
            var cantidad = $("#txtCantidad").val();
+           var permanente = 2;
+           if(prescripcionPermanente.checked){
+               permanente = 1;
+           }
          
             var parametros = {"id_formulario" : id_formulario, "accion" : accion, "id_medicamento" : id_medicamento, "periodo" : periodo
-           ,"frecuencia": frecuencia, "cantidad":cantidad};
+           ,"frecuencia": frecuencia, "cantidad":cantidad, "permanente":permanente};
 
           $.ajax({
               data:  parametros,
@@ -716,6 +739,9 @@
                  if(obj.id_prescripcion != null){
                       $("#btnFinalizar").show();
                     // LLENADO DE TABLA CON MEDICAMENTOS
+                    if(permanente == 1){
+                       periodo = "Permanente" 
+                    }
                      var item = "<tr id=pre_"+obj.id_prescripcion+" >"+
  				"	<td><a href=\"#\">"+$("#ddlMedicamentos option:selected").text()+"</a></td>"+
  				"	<td>"+cantidad+"</td>"+

@@ -16,6 +16,9 @@ public class SessionUsuario {
 	public String rutUsuario = null;
 	public String nombreUsuario = null;
 	public Long idSession = 0L;
+        public String tipoUsuario = null;
+
+    
         
         public SessionUsuario(){
 		
@@ -54,6 +57,14 @@ public class SessionUsuario {
 	public void setRutUsuario(String codigoUsuario) {
 		this.rutUsuario = codigoUsuario;
 	}
+        
+        public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
 	
 	
 	

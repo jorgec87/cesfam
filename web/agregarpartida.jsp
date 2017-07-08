@@ -159,7 +159,7 @@
         </nav>
         </div>
 
-            <div class="wrapper wrapper-content animated fadeIn">
+            <div class="wrapper wrapper-content ">
 
                      <!--INICIO PANEL-->
             <div class="col-lg-6 col-md-offset-3" style="margin-top: 10px;">

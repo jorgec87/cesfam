@@ -55,9 +55,7 @@
                        </div>
                         <button type="submit" id="btnLogin" class="btn btn-outline btn-success block full-width m-b">Ingresar</button>
 
-                        <a href="#">
-                            <small>Olvidaste tu contraseña?</small>
-                        </a>
+                       
 
                     </form>
                     <p class="m-t">

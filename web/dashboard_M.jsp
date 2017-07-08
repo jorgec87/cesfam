@@ -72,19 +72,24 @@
                     <a href="dashboard_M.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
                         <span></span></a>              
                 </li>
-                <li class="">
+                
+<!--                <li class="">
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li class=""><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
                         <li class=""><a href="caducarmedicamentos.jsp"><i class="fa fa-trash"></i> <span class="nav-label">Caducar Medicamento</span><span></span></a></li>
                         
                     </ul>
-                </li>
+                </li>-->
                 <li>
                     <a href="revisarstock.jsp"><i class="fa fa-table"></i>Revisar Stock Disponible</a>
                 </li>
                  <li>
                      <a href="prescripcion.jsp"><i class="fa fa-stethoscope"></i>Generar Prescripción</a>
+                </li>
+                <li>
+                     <a href="reservamedicamento.jsp"><i class="fa fa-table"></i> <span class="nav-label">Reserva Medicamento</span> 
+                        <span></span></a>              
                 </li>
             </ul>
 
