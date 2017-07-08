@@ -333,16 +333,18 @@
 </html>
   <script>
          $(document).ready(function () {
-                $('.i-checks').iCheck({
+              
+        
+        $('.i-checks').iCheck({
                     checkboxClass: 'icheckbox_square-green',
                     radioClass: 'iradio_square-green',
                 });  
                 
                
                 
-            }
+            
                 
-            }
+            
             
                 var config = {
                 '.chosen-select'           : {},
@@ -354,11 +356,11 @@
                 for (var selector in config) {
                 $(selector).chosen(config[selector]);
                 $("#ddlMedicamentos").chosen(config[selector]);
-                
+            }
                 for (var selector in config) {
                 $(selector).chosen(config[selector]);
                 $("#ddlPaciente").chosen(config[selector]);
-                
+            }
 //          INICIO DE VALIDACION PARTIDA
              //funcion que valida campos
             $("#reservaForm").validate
