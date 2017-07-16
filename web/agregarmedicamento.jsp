@@ -130,6 +130,10 @@
                      <a href="reservamedicamento.jsp"><i class="fa fa-table"></i> <span class="nav-label">Reserva Medicamento</span> 
                         <span></span></a>              
                 </li>
+                                                <li>
+                     <a href="emitirInformeStock.jsp"><i class="fa fa-table"></i> <span class="nav-label">Emitir Informe De Stock</span> 
+                        <span></span></a>              
+                </li>
             </ul>
 
         </div>

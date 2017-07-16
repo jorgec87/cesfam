@@ -33,6 +33,7 @@
             border-radius: 5px;
             background-color: white;
             padding: 15px;
+            min-height: 850px;
         }
         .divSeparador
         {
@@ -55,6 +56,16 @@
             margin-top: 10px;
             text-align: center;
         }
+        #datosAdicionales
+        {
+            text-align: right;
+            margin-top: 60px;
+            position: absolute;
+            width: 100%;
+            bottom: 10px;
+            padding-right: 60px;
+            padding-bottom: 20px;
+        }
         
     </style>  
 
@@ -63,82 +74,13 @@
 </head>
 
 <body class="skin-1">
-    <div id="wrapper">
-    
-      <!-- MENU  -->  
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu">
-                <li class="nav-header">
-                    <div class="dropdown profile-element"> <span>
-                            <i style="color: white" class="fa fa-user-md fa-5x"></i>
-<!--                                <img alt="image" class="img-circle" width="100" height="100" src="img/img_custom/LOGO-CESFAM.png">-->
-                             </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">INSERTAR USUARIO</strong>
-                             </span> <span class="text-muted text-xs block">Farmaceutico <b class="caret"></b></span> </span> </a>
-                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="profile.html">Profile</a></li>
 
-                            <li class="divider"></li>
-                            <li><a href="LogoutServlet">Logout</a></li>
-                        </ul>
-                    </div>
-                    <div class="logo-element">
-                        MENU
-                    </div>
-                </li>
-                <li>
-                    <a href="dashboard_F.jsp"><i class="fa fa-th-large"></i> <span class="nav-label">Home</span> 
-                        <span></span></a>              
-                </li>
-                  <li  class="active">
-                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administrar</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="agregarmedicamento.jsp"><i class="fa fa-medkit"></i>Agregar Medicamento</a></li>
-                        <li><a href="agregarpartida.jsp"><i class="fa fa-ambulance"></i>Agregar Partida</a></li> 
-                        <li class="active"><a href="caducarmedicamentos.jsp"><i class="fa fa-trash"></i>Caducar Medicamento</a></li>
-                        
-                        
-                        
-                        <li><a href="prescripcionespendientes.jsp"><i class="fa fa-archive"></i>Prescripciones Pendientes</a></li>
-                        
-                    </ul>
-                </li>
-                 <li>
-                     <a href="revisarstock.jsp"><i class="fa fa-table"></i> <span class="nav-label">Revisar Stock Disponible</span> 
-                        <span></span></a>              
-                </li>
-                 
-            </ul>
-
-        </div>
-    </nav>
-    <!-- FIN  MENU  -->  
-    
-        <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-        </div>
-            <ul class="nav navbar-top-links navbar-right">              
-                <li>
-                    <a href="LogoutServlet">
-                        <i class="fa fa-sign-out"></i> Cerrar sesión
-                    </a>
-                </li>
-            </ul>
-
-        </nav>
-        </div>
-
-            <div class="wrapper wrapper-content animated fadeIn">
+            <div id="recetaFinal">
 
                      <!--INICIO PANEL-->
             <div class="col-lg-6 col-md-offset-3" style="margin-top: 10px;">
                 <div class="col-md-12" id="contenedorReceta">
-                <div class="row divSeparador">
+                    <div class="row divSeparador">
                         <div class="col-md-4">
                             <img src="img/logoCesfamReceta.png" class="img-responsive" id="imgCesfam" alt=""/>          
                         </div>
@@ -168,36 +110,21 @@
                             <label>--------------------------------------------------------------------------</label>
                             <br>
                         </div>
-                </div>
-                    
-                <div class="row">
-                        <div class="col-md-4 col-md-offset-8">
+                </div>           
+                <div class="col-md-12" id="datosAdicionales">
                             <label>_________________________________</label><br>
                             <label>Doctor:&nbsp</label><label>Nombre Doctor</label><br>
                             <br>
                             <label>Direccion:&nbsp</label><label>Calle Falsa #123</label><br>
                             <label>Telefono:&nbsp</label><label>+56952382986</label><br>
                             <label>Email:&nbsp</label><label>cesfamuc@gmail.com</label><br>
-                        </div>
                 </div>
-                </div>  
-                
+                </div>                
                     <div class="col-md-5 col-md-offset-5" style="margin-top:20px;">
-                        <a style="text-align: center;"><img onclick="printDiv('contenedorReceta')"  src="img/iconoImprimir.png" width="100" height="100"></a>
-                        </div>
-
-                
-            </div><!--FINAL PANEL-->   
-            
+                        <a style="text-align: center; color:white;" onclick="printDiv('contenedorReceta')" width="100" height="100">IMPRIMIR RECETA</a>                      
+                    </div>
+            </div><!--FINAL PANEL-->            
             </div>
-            <div class="footer">
-                <div>
-                    <strong>Copyright</strong> Duoc-UC &copy; 2017
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Mainly scripts -->
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -256,7 +183,6 @@ $("#LabelID").append("some Text");
 $("#LabelID").append("some Text");
 $("#LabelID").append("some Text");
 $("#LabelID").append("some Text");
-            }
        });
     });
 

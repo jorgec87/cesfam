@@ -4,6 +4,8 @@
     Author     : **Jorge Carrenca**
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="cl.cesfam.ENTITY.Medicamento"%>
 <%@page import="java.util.List"%>
 <%@page import="cl.cesfam.DTO.SessionUsuario"%>
@@ -42,13 +44,51 @@
     <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
    
   <link href="css/plugins/switchery/switchery.css" rel="stylesheet">
-  <style>
-.datepicker{
+   <style>
+       .datepicker{
     z-index:100000 !important;
-}
+        } 
+       #contenedorReceta
+        {
+            border: 3px solid black;
+            border-radius: 5px;
+            background-color: white;
+            padding: 15px;
+            min-height: 850px;
+        }
+        .divSeparador
+        {
+            border-bottom: 2px solid black;
+        }
+        #imgCesfam
+        {
+            height: 98px;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+        #imgMedic
+        {
+            height: 98px;
+            width: 100px;
+            margin-left: 25px;
+        }
+        #space
+        {
+            margin-top: 10px;
+            text-align: center;
+        }
+        #datosAdicionales
+        {
+            text-align: right;
+            margin-top: 60px;
+            position: absolute;
+            width: 100%;
+            bottom: 10px;
+            padding-right: 60px;
+            padding-bottom: 20px;
+        }
 
-  </style>
-
+    </style>  
 </head>
 
 <body class="skin-1">
@@ -216,7 +256,7 @@
                      <div class="form-group" id="data_1">                               
                     <label class="control-label" style="margin-top: 20px;">Fecha prox. evaluación</label>
                    <div class="input-group date">
-                        <span class="input-group-addon "><i class="fa fa-calendar"></i></span>
+                       <span class="input-group-addon "><i class="fa fa-calendar"></i></span>
                         <input type="text" class="form-control" id='txtFechaVencimiento' name="txtFechaVencimiento" value="">
                     </div>
                     </div>     
@@ -336,7 +376,73 @@
             </div>
         </div>
     </div>
-<!--FIN MODAL 3-->   
+<!--FIN MODAL 3-->
+
+<!--    INICIO MODAL 4                 -->
+    <div class="modal inmodal " id="modal_4" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInDown">
+              <div class="modal-header">
+                  <button type="button" id="close" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <i class="fa fa-medkit modal-icon"></i>
+                    <h4 class="modal-title">Receta Medica</h4>
+                </div>
+                <div class="modal-body"> 
+<!--                    inicio M-body-->
+                <div class="col-lg-10 col-md-offset-1" style="margin-top: 10px;">
+                <div class="col-md-12" id="contenedorReceta">
+                    <div class="row divSeparador">
+                        <div class="col-md-4">
+                            <img src="img/logoCesfamReceta.png" class="img-responsive" id="imgCesfam" alt=""/>          
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-md-12" id="space">
+                        <label>Nombre:&nbsp</label><span id="nombrePaciente">Francisco Armijo</span><label>&nbsp&nbsp|&nbsp&nbsp</label>
+                        <label>Rut:&nbsp</label><span id="rutPaciente">16.368.450-0</span><label>&nbsp&nbsp|&nbsp&nbsp</label>
+                        <label>Cesfam:&nbsp</label><span>Quilicura</span><label>&nbsp&nbsp|&nbsp&nbsp</label>
+                        <label>Fecha:&nbsp</label><span>07/16/2017<%%></span>
+                    </div>
+                </div>
+                <div class="row">
+                        <div class="col-md-11 col-md-offset-1">
+                            <br>
+                            <label>Medicamento:</label><br><span>Nombre Prueba</span>
+                            <p></p>
+                            <label>Periodo:</label><br><span>Tomar cada 8 horas</span>
+                            <p></p>
+                            <label>Frecuencia:</label><br><span>3 veces al dia</span>
+                            <p></p>
+                            <label>Duracion de tratamiento:</label><br><span>1 semana.</span>
+                            <p></p>
+                            <label>--------------------------------------------------------------------------</label>
+                            <br>
+                        </div>
+                </div>           
+                <div class="col-md-12" id="datosAdicionales">
+                            <label>_________________________________</label><br>
+                            <label>Doctor:&nbsp</label><label>Nombre Doctor</label><br>
+                            <br>
+                            <label>Direccion:&nbsp</label><label>Calle Falsa #123</label><br>
+                            <label>Telefono:&nbsp</label><label>+56952382986</label><br>
+                            <label>Email:&nbsp</label><label>cesfamuc@gmail.com</label><br>
+                </div>
+                </div>                
+                    <div class="col-md-5 col-md-offset-5" style="margin-top:20px;">
+                        <a style="text-align: center; color:white;" onclick="printDiv('contenedorReceta')" width="100" height="100">IMPRIMIR RECETA</a>                      
+                    </div>
+            </div>              
+<!--  final M-body -->    
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="printDiv('contenedorReceta')" class="btn btn-primary col-md-4 col-md-offset-2" id="btnImprimir">Imprimir</button>
+                        <button type="button" id="cancelar_4"  class="btn btn-white col-md-4 col-md-offset-1" data-dismiss="modal">Cancelar</button> 
+                     </div>
+                
+            </div>
+        </div>
+    </div>
+<!--FIN MODAL 4-->   
 
 <!--  input hidden que guarda el id del formulaio de medicamento-->
 <input type="hidden"  id="id_formulario">
@@ -365,6 +471,7 @@
                                     <th>Req. Prox. Eval.</th>
                                     <th>Fecha Prox. Eval.</th>
                                     <th>Fecha Emisión</th>
+                                    <th>Receta</th>
                                 </tr>
                             </thead>
                             <tbody id="prescripciones">
@@ -432,8 +539,7 @@
 </html>
 <script>
       $(document).ready(function() {
-            
-            
+       
         //INICIALIZACIO DE VARIABLES 
           $("#txtFechaVencimiento").attr('disabled', 'disabled');
           $("#nombre").hide();
@@ -442,9 +548,7 @@
           $("#email").hide();
           $("#btnSiguiente_1").hide();
           $("#btnFinalizar").hide();
-          
-   
-        
+              
         //FUNCION FORMATEAR RUT
           $("#rut").Rut({format_on: 'keyup'});
 
@@ -462,8 +566,6 @@
                return false;
            };
               }, "El RUT ingresado no es válido"); 
- 
- 
  
           //FUNCIOON  DE JQUERY VALIDATE Y AJAX BUSCAR PACIENTE
           $("#form").validate({
@@ -639,7 +741,7 @@
         //BOTON GENERAR PRESCRIPCION ABRIR MODAL
           $("#btnPrescripcion").click(function(){
               $("#modal_1").modal({ backdrop: 'static', keyboard: false }); 
-            });  
+            });           
             
            //BOTON CERRAR Y LIMPIAR MODAL 1
             $("#close").click(function(){
@@ -647,7 +749,7 @@
              $(".datos_paciente").empty();
              $("#rut-error").hide();
              $("#rut").removeClass("error");
-       });  
+       });   
        
           //BOTON CANCELAR Y LIMPIAR MODAL 1
             $("#cancelar_1").click(function(){
@@ -663,6 +765,11 @@
             $("#cancelar_3").click(function(){
             location.reload();
        });  
+       
+           //BOTON CANCELAR Y LIMPIAR MODAL 4
+            $("#cancelar_4").click(function(){
+            location.reload();
+       }); 
        
        
       //BOTON SIGUIETE DEL PASO 1 AL PASO 2
@@ -733,8 +840,7 @@
               url:   'RequestHelper',
               type:  'post',
                success: function(data) 
-               {  var obj = jQuery.parseJSON( data );
-                  
+               {  var obj = jQuery.parseJSON( data );                  
                    
                  if(obj.id_prescripcion != null){
                       $("#btnFinalizar").show();
@@ -909,7 +1015,7 @@
                         { "data": "proxima_evaluacion" },
                         { "data": "fecha_proxima_evaluacion" },
                         { "data": "fecha" },
-                    ],
+                        { "data": "receta" }],
              "columnDefs": [
                  {
                       "targets": [0], 
@@ -938,15 +1044,16 @@
                     {
                       "targets": [4], 
                       "data": "fecha", 
-                      "render": function(data, type, full) { 
+                      "render": function(data, type, full) 
+                     { 
                         var prox = full.proxima_evaluacion;
                        if(prox == 1){
                            return data;
-                      }else if(prox == 0){
+                      }else if(prox == 0)
+                      {
                           return "N/A";
-                      }
-                        
-                      }
+                      }  
+                     }
                   }],
               "order": [[ 5, "desc" ]]
               
@@ -958,4 +1065,19 @@
 
 
       });  //FIN DE DOCUMENT READY
+                function open(){
+              $("#modal_4").modal('show'); 
+            };
+
+      
+      function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
 </script>
