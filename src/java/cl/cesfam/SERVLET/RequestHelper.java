@@ -59,6 +59,7 @@ public class RequestHelper extends HttpServlet {
     private static String ACTION_CREAR_PRESCRIPCION = "crearPrescripcion";
     private static String ACTION_ELIMINAR_PRESCRIPCION = "eliminarPrescripcion";
     private static String ACTION_OBTENER_PRESCRIPCIONES = "obtenerPrescripciones";
+    private static String ACTION_GENERAR_RECETA = "generarReceta";
     private static String ACTION_AUTENTICAR = "autenticar_android";
      private static String ACTION_OBTENER_MEDICAMENTOS_RESERVADOS = "obtenerReservados";
      private static String ACTION_ACTIVAR_EMAIL = "ActivarEmail";
@@ -123,18 +124,9 @@ public class RequestHelper extends HttpServlet {
 		EliminarPrescripcion(request, response);   
            }else if (action.equals(ACTION_OBTENER_PRESCRIPCIONES)) {
 		ObtenerPrescripciones(request, response);   
-           }else if (action.equals(ACTION_AUTENTICAR)) {
-		AutenticarAndroid(request, response);   
-           }else if (action.equals(ACTION_OBTENER_MEDICAMENTOS_RESERVADOS)) {
-		obtenerMedicametosReservados(request, response);   
-           }else if (action.equals(ACTION_ACTIVAR_EMAIL)) {
-		   ActivarEmail(request, response);   
-           }else if (action.equals(ACTION_DETENER_EMAIL)) {
-		  DetenerEmail(request, response);   
-           }             
-                           
-                           
-              
+           }else if (action.equals(ACTION_GENERAR_RECETA)) {
+		generarReceta(request, response);}
+           
  
             
         }
@@ -878,7 +870,6 @@ try {
                     for (Object[] item : lista) {
                         
                         for (int i = 0; i < 1; i++) {
-                           
                             try {
                                 JSONObject objeto = new JSONObject();
                                 objeto.put("medicamento", (String)item[0]);
@@ -1222,7 +1213,7 @@ try {
                     for (Object[] item : lista) {
                         
                         for (int i = 0; i < 1; i++) {
-                           
+
                             try {
                                 JSONObject objeto = new JSONObject();
                                 String fecha_prox = null;
@@ -1235,6 +1226,7 @@ try {
                                  }
                                 objeto.put("fecha_proxima_evaluacion",fecha_prox );
                                 objeto.put("fecha", df_fecha_hora.format((Date)item[5]));
+                                objeto.put("receta", "<button onclick=\"open();\" class=\"fa fa-print fa-2x\"></button>");
                                 formularios.put(objeto);
                                
                             } catch (JSONException ex) {
@@ -1255,113 +1247,29 @@ try {
                     Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
                 }
                  }else{
-                    
-                    
-                    
+                 
                     }
-     
-        
-        
-        
-        
-        
-        
-        
-        
-        
+ 
     }
-
-    private void AutenticarAndroid(HttpServletRequest request, HttpServletResponse response) {
-        ParametersUtil.MostrarParametros(request);
-        cl.cesfam.ENTITY.FuncionarioFarmacia funcionario = new FuncionarioFarmacia();
-        JSONObject salida = new JSONObject();
-            String rut = "";
-	    String contraseña = "";
-            
-            //http://192.168.0.14:8083/CESFAM/RequestHelper?accion=autenticar_android&txtRut=9.856.288-5&txtPass=862065 
-            if (request.getParameter("rut") != null) 
-            {
-                rut = request.getParameter("rut");
-            }
-            
-            
-            if (request.getParameter("pass") != null) 
-            {
-                contraseña = request.getParameter("pass");
-            }
-        
-        System.out.println("Autenticando usuario ANDROID ["+rut+","+contraseña+"]...");
-        
-        try {
-            if (cl.cesfam.DAO.FuncionarioFarmaciaDAO.getFuncionarioByRut(rut) != null)
-            {
-                 funcionario = cl.cesfam.DAO.FuncionarioFarmaciaDAO.getFuncionarioByRut(rut);
-                
-                if (funcionario.getPassword().equals(contraseña))
-                {
-                    System.out.println("Autenticando usuario ["+rut+":OK]");
-                     JSONObject user = new JSONObject();
-                    
-                    
-                     user.put("nombre", funcionario.getPrimerNombreFuncionario()+" "+funcionario.getApellidoPaternoFuncionario());
-                     
-                     salida.put("data",user);
-                    PrintWriter out = response.getWriter();
-                    System.out.println("el objeto es :"+salida);
-                    out.println(salida);
-                    out.flush();
-                    
-                }
-                else
-                {     
-                    System.out.println("Autenticando usuario ["+rut+":PASSWORD NO OK]");
-//                    salida.put("data",false);
-//                    PrintWriter out = response.getWriter();
-//                    System.out.println("el objeto es :"+salida);
-//                    out.println(salida);
-//                    out.flush();
-                    
-                }
-                
-                              
-            }else{
-            System.out.println("Autenticando usuario ["+rut+":USER NO OK]");
-//                    salida.put("data",false);
-//                    PrintWriter out = response.getWriter();
-//                    System.out.println("el objeto es :"+salida);
-//                    out.println(salida);
-//                    out.flush();
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
-
-    private void obtenerMedicametosReservados(HttpServletRequest request, HttpServletResponse response) {
-    
-        
-          JSONArray reservas = new JSONArray();
+    private void generarReceta(HttpServletRequest request, HttpServletResponse response)
+    {
+            String id = request.getAttribute("id").toString();
+            JSONArray recetas = new JSONArray();
             JSONObject salida = new JSONObject();
-            DateFormat df_fecha_hora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            DateFormat df_fecha = new SimpleDateFormat("dd/MM/yyyy");
             
                     Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
                     session.beginTransaction();
-                   Query query = session.createQuery("select (select pa.primerNombrePaciente||' '||pa.apellidoPaternoPaciente from Paciente pa where pa.idPaciente = re.paciente),\n" +
-                        "(select me.nombreMedicamento from Medicamento me where me.idMedicamento = re.medicamento) ,\n" +
-                        "re.cantidad ,\n" +
-                        "re.fechaEventoReserva\n" +
-                        "from Reserva re");
+                   Query query = session.createQuery("select\n" +
+                   "(select pa.PRIMER_NOMBRE_PACIENTE||' '||pa.APELLIDO_PATERNO_PACIENTE from Paciente pa where pa.ID_PACIENTE = fo.PACIENTE_ID_PACIENTE ),\n" +
+                   "(select pa.RUT_PACIENTE from Paciente pa where pa.ID_PACIENTE = fo.PACIENTE_ID_PACIENTE ),\n" +
+                   "(select medi.NOMBRE_MEDICAMENTO from MEDICAMENTO medi where medi.ID_MEDICAMENTO = (select pre.ID_MEDICAMENTO from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO)),\n" +
+                   "(select pre.PERIODO from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO),\n" +
+                   "(select pre.FRECUENCIA from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO),\n" +
+                   "(select pre.DURACION_TRATAMIENTO from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO),\n" +
+                   "(select med.PRIMER_NOMBRE_MEDICO||' '||med.APELLIDO_PATERNO_MEDICO from MEDICO med where med.ID_MEDICO = fo.MEDICO_ID_MEDICO)\n" +
+                   " from FORMULARIO_MEDICAMENTO fo\n" +
+                   " WhERE fo.ID_FORMULARIO_MEDICAMENTO="+id+" order by fo.FECHA_FORMULARIO_MEDICAMENTO;");
                     List<Object[]> lista = query.list();
                     session.close();
                     
@@ -1370,89 +1278,54 @@ try {
                     for (Object[] item : lista) {
                         
                         for (int i = 0; i < 1; i++) {
-                           
+
                             try {
                                 JSONObject objeto = new JSONObject();
-                               
                                 objeto.put("paciente", (String)item[0]);
-                                objeto.put("medicamento", (String)item[1]);
-                                objeto.put("cantidad", (int)item[2]);
-                                objeto.put("fecha", df_fecha_hora.format((Date)item[3]));
-                               
-                                reservas.put(objeto);
+                                objeto.put("rut_paciente", (String)item[1]);
+                                objeto.put("medicamento", (String)item[2]);
+                                if (item[3] == null) {
+                                objeto.put("periodo", "-");                                     
+                                }
+                                else
+                                {
+                                objeto.put("periodo", (int)item[3]);
+                                }
+                                
+                                objeto.put("frecuencia", (int)item[4]);    
+  
+                                if (item[5] == null) 
+                                {
+                                objeto.put("duracion", "Permanente");    
+                                }
+                                else
+                                {
+                                objeto.put("duracion", (int)item[5]);
+                                }
+                                objeto.put("medico", (String)item[6]);
+                                objeto.put("fecha", df_fecha);
+                                recetas.put(objeto);
+                                
                                
                             } catch (JSONException ex) {
                                 Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        }
-                        
-                    } // fin foercha
-                    
-                    salida.put("data", reservas);
+                        }                      
+                    }               
+                    salida.put("data", recetas);
                     PrintWriter out = response.getWriter();
                     System.out.println("el objeto es :"+salida);
                     out.println(salida);
                     out.flush();
-                } catch (JSONException ex) {
-                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
+                } catch (JSONException | IOException ex) {
                     Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
                 }
                  }else{
-                    
-                    
-                    
+                 
                     }
-     
-        
-        
-        
-        
-        
-        
-        
-        
-    }
-
-    private void ActivarEmail(HttpServletRequest request, HttpServletResponse response) {
-       
-        int tiempo = 60*5;
-            
-            //http://localhost:8083/CESFAM/RequestHelper?accion=ActivarEmail&tiempo=10
-            if (request.getParameter("tiempo") != null) 
-            {
-                tiempo = Integer.parseInt(request.getParameter("tiempo"));
-            }
-        try {
-            if (scheduler != null) {
-                 scheduler.shutdown(false);
-            }
-             
-        } catch (SchedulerException ex) {
-            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-               scheduler = makeDairlyJob(tiempo);
-        
-    }
-
-    private void DetenerEmail(HttpServletRequest request, HttpServletResponse response) {
-        
-          //http://localhost:8083/CESFAM/RequestHelper?accion=DetenerEmail
-        try {
-            scheduler.shutdown(false);
-        } catch (SchedulerException ex) {
-            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        
-        
-        
+ 
     }
     
     
     
     
-    
-    
-}
