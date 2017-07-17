@@ -186,28 +186,25 @@
                     </div>
            
              <div class="ibox-content">
-                        <div class="table-responsive">
-                        <table id="tabla_prescripciones" class="table table-responsive table-striped table-bordered table-hover dataTables-example" >
+                    <div class="table-responsive">
+                        <table id="tabla_informeStock" class="table table-responsive table-striped table-bordered table-hover dataTables-example" >
                             <thead>
                                 <tr>
-                                    <th>Folio</th>
-                                    <th>Paciente</th>
-                                    <th>Rut Paciente</th>
-                                    <th>Req. Prox. Eval.</th>
-                                    <th>Fecha Prox. Eval.</th>
-                                    <th>Fecha Emisión</th>
-                                    <th>Receta</th>
+                                    <th>Medicamento</th>
+                                    <th>Stock Actual</th>
+                                    <th>Reservados</th>
+                                    <th>Estado</th>
                                 </tr>
                             </thead>
-                            <tbody id="prescripciones">
+                            <tbody id="informeStock">
                                 
                             </tbody>
-                       </table>
-                      </div>
+                        </table>
+                    </div>
             </div>
-            </div>
-         </div>
-      </div>
+        </div>
+     </div>
+  </div>
                          <div class="clearfix"></div>
                         </div>
                     </div>
@@ -231,31 +228,100 @@
         </div>
 
 
-    <!-- Mainly scripts -->
+  <!-- Mainly scripts -->
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-    <!-- Jquery Validate -->
+                <!-- Jquery Validate -->
     <script src="js/plugins/validate/jquery.validate.min.js"></script>
     
-       <!-- Toastr -->
-    <script src="js/plugins/toastr/toastr.min.js"></script>
-    
+        <!-- Jquery Validate -->
+    <script src="js/plugins/validate/jquery.validate.min.js"></script>
+     <!-- Jquery Rut -->
+    <script src="js/jquery.Rut.js" type="text/javascript"></script>
+ 
+<!-- chosen -->
+    <script src="js/plugins/chosen/chosen.jquery.js"></script>
+    <script src="js/plugins/dataTables/datatables.min.js"></script>
     <!-- Custom and plugin javascript -->
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
+    <script src="js/fnReloadAjax.js"></script>
+  
+   <!-- Switchery -->
+   <script src="js/plugins/switchery/switchery.js"></script>
+       <!-- Data picker -->
+   <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
-    <!-- iCheck -->
-    <script src="js/plugins/iCheck/icheck.min.js"></script>
-    <!-- chosen -->
-    <script src="js/plugins/chosen/chosen.jquery.js"></script>
-    <!-- Sweet alert -->
-    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- NouSlider -->
+   <script src="js/plugins/nouslider/jquery.nouislider.min.js"></script>
+   <script src="js/plugins/wNumb.js" type="text/javascript"></script>
+        <!-- Toastr -->
+    <script src="js/plugins/toastr/toastr.min.js"></script>
 
 </body>
 
 </html>
-  
+<script>
+    $(document).ready(function() {
+    
+    // datatable
+              $('#tabla_informeStock').dataTable( {
+ 
+        "language": {
+ 
+    "sProcessing":     "Procesando...",
+ 
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+ 
+    "sZeroRecords":    "No se encontraron resultados",
+ 
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+ 
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+ 
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+ 
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+ 
+    "sInfoPostFix":    "",
+ 
+    "sSearch":         "Buscar:",
+ 
+    "sUrl":            "",
+ 
+    "sInfoThousands":  ",",
+ 
+    "sLoadingRecords": "Cargando...",
+ 
+    "oPaginate": {
+ 
+        "sFirst":    "Primero",
+ 
+        "sLast":     "Último",
+ 
+        "sNext":     "Siguiente",
+ 
+        "sPrevious": "Anterior"
+        
+      
+    }}, "ajax" : "RequestHelper?accion=informeStock",
+            "columns": [
+                        { "data": "medicamento"},
+                        { "data": "stock" },
+                        { "data": "reservados" },
+                        { "data": "estado" }],
+             "columnDefs": [
+                 {
+                      "targets": [0], 
+                      "data": "medicamento", 
+                      "render": function(data, type, full) { 
+                          return "<a><strong>" + data.toUpperCase()+ "</strong></a>";
+                      }
+                  }],
+    } );
+    
+    });//fin document rdy
+</script>
 
