@@ -120,6 +120,7 @@
             <div class="wrapper wrapper-content animated fadeIn">
 
                      <!--INICIO PANEL-->
+                     <div class="row animated fadeIn">
             <div class="col-lg-6 col-md-offset-3" style="margin-top: 10px;">
                 
                 <div class="panel panel-primary animated fadeIn">
@@ -213,7 +214,7 @@
                 </div>
             </div><!--FINAL PANEL-->   
             
-            
+            </div>
             <div class="row animated fadeIn">
                 <div class="col-lg-12">
                 <div class="ibox float-e-margins">

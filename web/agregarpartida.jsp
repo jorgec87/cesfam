@@ -348,13 +348,12 @@
 };
                 
                 
-                 $('#data_1 .input-group.date').datepicker({
+                 $('#txtFechaVencimiento').datepicker({
                 startView: 2,
                 todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
                 autoclose: true,
-                weekStart: 1
+                weekStart: 1,
+                startDate: new Date()
             });
             
                 var config = {
