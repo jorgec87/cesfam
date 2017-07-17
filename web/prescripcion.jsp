@@ -1068,8 +1068,8 @@
                 function open(){
               $("#modal_4").modal('show'); 
             };
+                
 
-      
       function printDiv(divName) {
      var printContents = document.getElementById(divName).innerHTML;
      var originalContents = document.body.innerHTML;

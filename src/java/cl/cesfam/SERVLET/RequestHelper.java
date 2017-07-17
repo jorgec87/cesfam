@@ -64,6 +64,7 @@ public class RequestHelper extends HttpServlet {
      private static String ACTION_ACTIVAR_EMAIL = "ActivarEmail";
      private static String ACTION_DETENER_EMAIL = "DetenerEmail";
      private static String ACTION_INFORME_STOCK = "informeStock";
+     private static String ACTION_OBTENER_INFORME = "ObtenerInforme";
     
      
      private static Scheduler scheduler = null;
@@ -135,7 +136,9 @@ public class RequestHelper extends HttpServlet {
            }else if (action.equals(ACTION_DETENER_EMAIL)) {
 		  DetenerEmail(request, response);   
            }else if (action.equals(ACTION_INFORME_STOCK)) {
-                  informeStock(request, response);}        
+                  informeStock(request, response);
+           }else if (action.equals(ACTION_OBTENER_INFORME)) {
+                  ObtenerInforme(request, response);}        
         }
     }
 
@@ -1543,6 +1546,73 @@ try {
                  }
  
     }
+    
+    //        METODO QUE OBTIENE  MEDICAMENTOS
+    private static void ObtenerInforme(HttpServletRequest request, HttpServletResponse response) {
+         JSONArray medicamentos = new JSONArray();
+            JSONObject salida = new JSONObject();
+        
+        
+        
+        try {
+            if (cl.cesfam.DAO.MedicamentoDAO.getList() != null) {
+            for(cl.cesfam.ENTITY.Medicamento tmp: cl.cesfam.DAO.MedicamentoDAO.getList()){
+              JSONObject item = new JSONObject();
+               
+            String cantidadReservada;
+            Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("select sum(cantidad) from Reserva where medicamento="+tmp.getIdMedicamento());
+                if (query.uniqueResult() == null) 
+                {
+                    cantidadReservada = "0";
+                }
+                else
+                {
+                    cantidadReservada = query.uniqueResult().toString();
+                }
+
+            session.close();
+                       
+               item.put("nombre", tmp.getNombreMedicamento());
+               item.put("fabricante", tmp.getFabricante());
+               item.put("presentacion", tmp.getPresentacion());
+               item.put("contenido", tmp.getContenidoEnvase());
+               item.put("stock", tmp.getStock());
+               item.put("stockCritico", tmp.getStockCritico());
+               item.put("cantidadReservada", (String)cantidadReservada);
+               
+
+               
+               
+               medicamentos.put(item);
+            
+            }
+                
+                salida.put("data", medicamentos); 
+                PrintWriter out = response.getWriter();
+                System.out.println("el objeto es :"+salida);
+                out.println(salida);
+                out.flush();
+                
+            }else{
+                
+                salida.put("data", medicamentos); 
+                PrintWriter out = response.getWriter();
+                System.out.println("el objeto es :"+salida);
+                out.println(salida);
+                out.flush();
+            
+            }
+            
+         
+        } catch (Exception ex) {
+            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       
+    }
+    
     
 }
 

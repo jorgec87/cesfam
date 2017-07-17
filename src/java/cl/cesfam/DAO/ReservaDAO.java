@@ -7,6 +7,7 @@ package cl.cesfam.DAO;
 
 import cl.cesfam.ENTITY.Medicamento;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -108,7 +109,7 @@ public class ReservaDAO
                 session.getTransaction().commit();
                 session.close();
                 return tmp;
-            } catch (Exception e) {
+            } catch (HibernateException e) {
                 System.err.print(e.getMessage());
                 session.close();
                 throw e;
