@@ -5,6 +5,7 @@
  */
 package cl.cesfam.DAO;
 
+import cl.cesfam.ENTITY.Medicamento;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -96,5 +97,21 @@ public class ReservaDAO
                 session.close();
                 throw e;
             }
-        }      
+        } 
+      
+            public cl.cesfam.ENTITY.Reserva getReservaByidMed(Medicamento med) throws Exception {
+            Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+            try {
+                session.beginTransaction();
+                cl.cesfam.ENTITY.Reserva tmp = (cl.cesfam.ENTITY.Reserva) 
+                        session.createCriteria(cl.cesfam.ENTITY.Reserva.class).add(Restrictions.eq("medicamento", med)).uniqueResult();
+                session.getTransaction().commit();
+                session.close();
+                return tmp;
+            } catch (Exception e) {
+                System.err.print(e.getMessage());
+                session.close();
+                throw e;
+            }
+        } 
 }
