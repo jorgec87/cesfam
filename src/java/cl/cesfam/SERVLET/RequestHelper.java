@@ -37,8 +37,7 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
 public class RequestHelper extends HttpServlet {
-
-    
+  
     private static String ACTION_REGISTRAR_REMEDIO = "registrarRemedio";
     private static String ACTION_REGISTRAR_PARTIDA = "registrarPartida";
     private static String ACTION_REGISTRAR_DETALLE_PARTIDA = "registrarDetallePartida";
@@ -137,11 +136,9 @@ public class RequestHelper extends HttpServlet {
 		  DetenerEmail(request, response);   
            }else if (action.equals(ACTION_INFORME_STOCK)) {
                   informeStock(request, response);}        
-           
- 
-            
         }
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -975,14 +972,8 @@ try {
      
         
         
-    }
-    
-    
-    
+    } 
     // Fin metodo que entrega remedios pendientes
-    
-
-
 
     private void ObtenerPaciente(HttpServletRequest request, HttpServletResponse response) {
        
@@ -1023,10 +1014,6 @@ try {
         
     }
 
-
-  
-    
-   
  // INICIO METODO QUE CREA FORMULARIO DE MEDICAMENTOS
     private static void CrearFormularioMedicamento(HttpServletRequest request, HttpServletResponse response) throws ParseException, Exception {
        
@@ -1337,9 +1324,7 @@ try {
                     }
  
     }
-    
-             
-                   
+           
     private void AutenticarAndroid(HttpServletRequest request, HttpServletResponse response) {
         ParametersUtil.MostrarParametros(request);
         cl.cesfam.ENTITY.FuncionarioFarmacia funcionario = new FuncionarioFarmacia();
@@ -1544,7 +1529,6 @@ try {
                     } // fin foercha
                     
                     salida.put("data", informe);
-                    console.log(salida);
                     PrintWriter out = response.getWriter();
                     System.out.println("el objeto es :"+salida);
                     out.println(salida);
@@ -1554,13 +1538,10 @@ try {
                 } catch (IOException ex) {
                     Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                 }else{
-                 
-                    }
+                 }
  
     }
+    
+}
 
 
-    }
-    
-    
