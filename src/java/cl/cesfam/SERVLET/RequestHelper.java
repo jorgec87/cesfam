@@ -1227,7 +1227,7 @@ try {
                                  }
                                 objeto.put("fecha_proxima_evaluacion",fecha_prox );
                                 objeto.put("fecha", df_fecha_hora.format((Date)item[5]));
-                                objeto.put("receta", "<button onclick=\"open();\" class=\"fa fa-print fa-2x\"></button>");
+                                objeto.put("receta", "<button href=\"RequestHelper?accion=\"generarReceta\"&id="+(int)item[0]+"\" onclick=\"openVentana()\" class=\"fa fa-print fa-2x\" ></button>");
                                 formularios.put(objeto);
                                
                             } catch (JSONException ex) {
@@ -1256,6 +1256,7 @@ try {
     private void generarReceta(HttpServletRequest request, HttpServletResponse response)
     {
             String id = request.getAttribute("id").toString();
+            int idFinal = Integer.parseInt(id);
             JSONArray recetas = new JSONArray();
             JSONObject salida = new JSONObject();
             DateFormat df_fecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -1271,7 +1272,7 @@ try {
                    "(select pre.duracionTratamiento from Prescripcion pre where pre.formularioMediamento = fo.idFormularioMedicamento),\n" +
                    "(select med.primerNombreMedico||' '||med.apellidoPaternoMedico from Medico med where med.idMedico = fo.medicoIdMedico)\n" +
                    " from FormularioMedicamento fo\n" +
-                   " WhERE fo.idFormularioMedicamento="+id+" order by fo.fechaFormularioMedicamento");
+                   " WhERE fo.idFormularioMedicamento="+idFinal);
                     List<Object[]> lista = query.list();
                     session.close();
                     
@@ -1306,6 +1307,7 @@ try {
                                 }
                                 objeto.put("medico", (String)item[6]);
                                 objeto.put("fecha", df_fecha);
+                                
                                 recetas.put(objeto);
                                 
                                

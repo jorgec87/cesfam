@@ -379,18 +379,18 @@
 <!--FIN MODAL 3-->
 
 <!--    INICIO MODAL 4                 -->
-    <div class="modal inmodal " id="modal_4" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal inmodal " id="modal_receta" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content animated fadeInDown">
               <div class="modal-header">
-                  <button type="button" id="close" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <i class="fa fa-medkit modal-icon"></i>
+                     <i class="fa fa-medkit modal-icon"></i>
                     <h4 class="modal-title">Receta Medica</h4>
                 </div>
                 <div class="modal-body"> 
 <!--                    inicio M-body-->
                 <div class="col-lg-10 col-md-offset-1" style="margin-top: 10px;">
-                <div class="col-md-12" id="contenedorReceta">
+                <div class="col-md-12" id="contenedorReceta" name="contenedorReceta">
+                    
                     <div class="row divSeparador">
                         <div class="col-md-4">
                             <img src="img/logoCesfamReceta.png" class="img-responsive" id="imgCesfam" alt=""/>          
@@ -401,7 +401,7 @@
                         <label>Nombre:&nbsp</label><span id="nombrePaciente">Francisco Armijo</span><label>&nbsp&nbsp|&nbsp&nbsp</label>
                         <label>Rut:&nbsp</label><span id="rutPaciente">16.368.450-0</span><label>&nbsp&nbsp|&nbsp&nbsp</label>
                         <label>Cesfam:&nbsp</label><span>Quilicura</span><label>&nbsp&nbsp|&nbsp&nbsp</label>
-                        <label>Fecha:&nbsp</label><span>07/16/2017<%%></span>
+                        <label>Fecha:&nbsp</label><span>17/07/2017<%%></span>
                     </div>
                 </div>
                 <div class="row">
@@ -421,22 +421,21 @@
                 </div>           
                 <div class="col-md-12" id="datosAdicionales">
                             <label>_________________________________</label><br>
-                            <label>Doctor:&nbsp</label><label>Nombre Doctor</label><br>
+                            <label>Doctor:&nbsp</label><label>Alexis Almonacid Pitt</label><br>
                             <br>
-                            <label>Direccion:&nbsp</label><label>Calle Falsa #123</label><br>
+                            <label>Direccion:&nbsp</label><label>Av.Manuel Antonio Matta #1005</label><br>
                             <label>Telefono:&nbsp</label><label>+56952382986</label><br>
                             <label>Email:&nbsp</label><label>cesfamuc@gmail.com</label><br>
                 </div>
-                </div>                
-                    <div class="col-md-5 col-md-offset-5" style="margin-top:20px;">
-                        <a style="text-align: center; color:white;" onclick="printDiv('contenedorReceta')" width="100" height="100">IMPRIMIR RECETA</a>                      
-                    </div>
+                </div>
+                 <div class="col-md-5 col-md-offset-5" style="margin-top:20px;">                     
+                 </div>
             </div>              
 <!--  final M-body -->    
                 </div>
                     <div class="modal-footer">
                         <button type="button" onclick="printDiv('contenedorReceta')" class="btn btn-primary col-md-4 col-md-offset-2" id="btnImprimir">Imprimir</button>
-                        <button type="button" id="cancelar_4"  class="btn btn-white col-md-4 col-md-offset-1" data-dismiss="modal">Cancelar</button> 
+                        <a  id="cancelar_4" href="prescripcion.jsp"   class="btn btn-white col-md-4 col-md-offset-1" data-dismiss="modal">Volver</a> 
                      </div>
                 
             </div>
@@ -456,7 +455,8 @@
                     <div class="ibox-title">
                         <h5>Prescripciones</h5>
                         <div class="col-sm-3 col-sm-offset-3">
-                            <button type="button" id="btnPrescripcion" class="btn btn-block btn-primary">Generar Prescripción</button> 
+                            <button type="button" id="btnPrescripcion"  class="btn btn-block btn-primary">Generar Prescripción</button> 
+                         
                         </div> 
                     </div>
            
@@ -539,6 +539,10 @@
 </html>
 <script>
       $(document).ready(function() {
+          
+          window.openVentana = function(){
+              $("#modal_receta").modal(); 
+             }
        
         //INICIALIZACIO DE VARIABLES 
           $("#txtFechaVencimiento").attr('disabled', 'disabled');
@@ -1061,23 +1065,34 @@
  
     } );
 
+/*
+          $.ajax({
+              data:   parametros,
+              url:   'RequestHelper',
+              type:  'post',
+               success: function(data) 
+               {
+                  if(data != null){
+                        
+                     var obj = jQuery.parseJSON( data );
+                     alert(obj.paciente.toString()+" "+obj.rut_paciente.toString()+" "+obj.medicamento.toString()+" ".obj.periodo.toString()+" "+obj.frecuencia.toString()+" "+obj.duracion.toString()+" "+obj.medico.toString()+" "+obj.fecha.toString());
+              }else{
+                      alert("No existe Recera", "Favor verificar!");
+
+              }
+               }
+              });
+//            FIN // */
 
 
 
-      });  //FIN DE DOCUMENT READY
-                function open(){
-              $("#modal_4").modal('show'); 
-            };
-                
+      });  //FIN DE DOCUMENT READY             
 
       function printDiv(divName) {
      var printContents = document.getElementById(divName).innerHTML;
      var originalContents = document.body.innerHTML;
-
      document.body.innerHTML = printContents;
-
      window.print();
-
      document.body.innerHTML = originalContents;
-}
+       }
 </script>
