@@ -38,7 +38,6 @@ import org.quartz.SchedulerException;
 
 public class RequestHelper extends HttpServlet {
   
-    
     private static String ACTION_REGISTRAR_REMEDIO = "registrarRemedio";
     private static String ACTION_REGISTRAR_PARTIDA = "registrarPartida";
     private static String ACTION_REGISTRAR_DETALLE_PARTIDA = "registrarDetallePartida";
