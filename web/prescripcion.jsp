@@ -379,7 +379,7 @@
 <!--FIN MODAL 3-->
 
 <!--    INICIO MODAL 4                 -->
-    <div class="modal inmodal " id="modal_4" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal inmodal " id="modal_receta" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content animated fadeInDown">
               <div class="modal-header">
@@ -428,15 +428,14 @@
                             <label>Email:&nbsp</label><label>cesfamuc@gmail.com</label><br>
                 </div>
                 </div>                
-                    <div class="col-md-5 col-md-offset-5" style="margin-top:20px;">
-                        <a style="text-align: center; color:white;" onclick="printDiv('contenedorReceta')" width="100" height="100">IMPRIMIR RECETA</a>                      
+                    <div class="col-md-5 col-md-offset-5" style="margin-top:20px;">                     
                     </div>
             </div>              
 <!--  final M-body -->    
                 </div>
                     <div class="modal-footer">
                         <button type="button" onclick="printDiv('contenedorReceta')" class="btn btn-primary col-md-4 col-md-offset-2" id="btnImprimir">Imprimir</button>
-                        <button type="button" id="cancelar_4"  class="btn btn-white col-md-4 col-md-offset-1" data-dismiss="modal">Cancelar</button> 
+                        <a  id="cancelar_4" href="prescripcion.jsp"   class="btn btn-white col-md-4 col-md-offset-1" data-dismiss="modal">Cancelar</a> 
                      </div>
                 
             </div>
@@ -456,7 +455,7 @@
                     <div class="ibox-title">
                         <h5>Prescripciones</h5>
                         <div class="col-sm-3 col-sm-offset-3">
-                            <button type="button" id="btnPrescripcion" class="btn btn-block btn-primary">Generar Prescripción</button> 
+                            <button type="button" id="btnPrescripcion"  class="btn btn-block btn-primary">Generar Prescripción</button> 
                         </div> 
                     </div>
            
@@ -509,8 +508,7 @@
                 <!-- Jquery Validate -->
     <script src="js/plugins/validate/jquery.validate.min.js"></script>
     
-        <!-- Jquery Validate -->
-    <script src="js/plugins/validate/jquery.validate.min.js"></script>
+      
      <!-- Jquery Rut -->
     <script src="js/jquery.Rut.js" type="text/javascript"></script>
  
@@ -539,6 +537,11 @@
 </html>
 <script>
       $(document).ready(function() {
+          
+          
+           window.openVentana = function(){
+              $("#modal_receta").modal(); 
+            }
        
         //INICIALIZACIO DE VARIABLES 
           $("#txtFechaVencimiento").attr('disabled', 'disabled');
@@ -866,6 +869,8 @@
             });  
             
             
+           
+            
        //FUNCION LIMPIAR MODULO MEDICAMENTO
        function limpiarMedicamento(){
            var connectSlider2 = document.getElementById('basic_slider2');
@@ -1065,9 +1070,7 @@
 
 
       });  //FIN DE DOCUMENT READY
-                function open(){
-              $("#modal_4").modal('show'); 
-            };
+              
 
       
       function printDiv(divName) {

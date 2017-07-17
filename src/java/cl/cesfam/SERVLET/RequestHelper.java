@@ -1224,7 +1224,7 @@ try {
                                  }
                                 objeto.put("fecha_proxima_evaluacion",fecha_prox );
                                 objeto.put("fecha", df_fecha_hora.format((Date)item[5]));
-                                objeto.put("receta", "<button onclick=\"open();\" class=\"fa fa-print fa-2x\"></button>");
+                                objeto.put("receta", "<button type=\"button\" onclick=\"openVentana()\" class=\"fa fa-print fa-2x\"></button>");
                                 formularios.put(objeto);
                                
                             } catch (JSONException ex) {
