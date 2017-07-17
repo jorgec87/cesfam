@@ -40,6 +40,8 @@
     <link href="css/plugins/chosen/chosen.css" rel="stylesheet">
     <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <!-- this page specific styles -->
+	<link rel="stylesheet" type="text/css" href="css/libs/nifty-component.css"/>
       
 
     <style>
