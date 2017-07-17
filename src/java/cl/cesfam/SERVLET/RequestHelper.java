@@ -6,12 +6,15 @@
 package cl.cesfam.SERVLET;
 
 import cl.cesfam.DAO.PacienteDAO;
+
 import cl.cesfam.ENTITY.Composicion;
 import cl.cesfam.ENTITY.EstadoPrescripcion;
+import cl.cesfam.ENTITY.FuncionarioFarmacia;
 import cl.cesfam.ENTITY.Medicamento;
 import cl.cesfam.ENTITY.Paciente;
 import cl.cesfam.ENTITY.Prescripcion;
 import cl.cesfam.UTIL.ParametersUtil;
+import static cl.cesfam.automa.AutomatizadoEmail.makeDairlyJob;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -21,7 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +33,8 @@ import org.hibernate.Session;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 
 public class RequestHelper extends HttpServlet {
 
@@ -55,8 +59,18 @@ public class RequestHelper extends HttpServlet {
     private static String ACTION_CREAR_PRESCRIPCION = "crearPrescripcion";
     private static String ACTION_ELIMINAR_PRESCRIPCION = "eliminarPrescripcion";
     private static String ACTION_OBTENER_PRESCRIPCIONES = "obtenerPrescripciones";
+    private static String ACTION_AUTENTICAR = "autenticar_android";
+     private static String ACTION_OBTENER_MEDICAMENTOS_RESERVADOS = "obtenerReservados";
+     private static String ACTION_ACTIVAR_EMAIL = "ActivarEmail";
+     private static String ACTION_DETENER_EMAIL = "DetenerEmail";
+    
+     
+     private static Scheduler scheduler = null;
+    
     
     //  http://localhost:8083/CESFAM/RequestHelper?accion=obtenerPrescripciones
+   // http://localhost:8083/CESFAM/RequestHelper?accion=autenticar_android&txtRut=16.797.436.8&txtPass=1234
+  // http://localhost:8083/CESFAM/RequestHelper?accion=obtenerReservados
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
@@ -109,7 +123,18 @@ public class RequestHelper extends HttpServlet {
 		EliminarPrescripcion(request, response);   
            }else if (action.equals(ACTION_OBTENER_PRESCRIPCIONES)) {
 		ObtenerPrescripciones(request, response);   
+           }else if (action.equals(ACTION_AUTENTICAR)) {
+		AutenticarAndroid(request, response);   
+           }else if (action.equals(ACTION_OBTENER_MEDICAMENTOS_RESERVADOS)) {
+		obtenerMedicametosReservados(request, response);   
+           }else if (action.equals(ACTION_ACTIVAR_EMAIL)) {
+		   ActivarEmail(request, response);   
+           }else if (action.equals(ACTION_DETENER_EMAIL)) {
+		  DetenerEmail(request, response);   
            }             
+                           
+                           
+              
  
             
         }
@@ -1245,6 +1270,186 @@ try {
         
         
     }
+
+    private void AutenticarAndroid(HttpServletRequest request, HttpServletResponse response) {
+        ParametersUtil.MostrarParametros(request);
+        cl.cesfam.ENTITY.FuncionarioFarmacia funcionario = new FuncionarioFarmacia();
+        JSONObject salida = new JSONObject();
+            String rut = "";
+	    String contraseña = "";
+            
+            //http://192.168.0.14:8083/CESFAM/RequestHelper?accion=autenticar_android&txtRut=9.856.288-5&txtPass=862065 
+            if (request.getParameter("rut") != null) 
+            {
+                rut = request.getParameter("rut");
+            }
+            
+            
+            if (request.getParameter("pass") != null) 
+            {
+                contraseña = request.getParameter("pass");
+            }
+        
+        System.out.println("Autenticando usuario ANDROID ["+rut+","+contraseña+"]...");
+        
+        try {
+            if (cl.cesfam.DAO.FuncionarioFarmaciaDAO.getFuncionarioByRut(rut) != null)
+            {
+                 funcionario = cl.cesfam.DAO.FuncionarioFarmaciaDAO.getFuncionarioByRut(rut);
+                
+                if (funcionario.getPassword().equals(contraseña))
+                {
+                    System.out.println("Autenticando usuario ["+rut+":OK]");
+                     JSONObject user = new JSONObject();
+                    
+                    
+                     user.put("nombre", funcionario.getPrimerNombreFuncionario()+" "+funcionario.getApellidoPaternoFuncionario());
+                     
+                     salida.put("data",user);
+                    PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+salida);
+                    out.println(salida);
+                    out.flush();
+                    
+                }
+                else
+                {     
+                    System.out.println("Autenticando usuario ["+rut+":PASSWORD NO OK]");
+//                    salida.put("data",false);
+//                    PrintWriter out = response.getWriter();
+//                    System.out.println("el objeto es :"+salida);
+//                    out.println(salida);
+//                    out.flush();
+                    
+                }
+                
+                              
+            }else{
+            System.out.println("Autenticando usuario ["+rut+":USER NO OK]");
+//                    salida.put("data",false);
+//                    PrintWriter out = response.getWriter();
+//                    System.out.println("el objeto es :"+salida);
+//                    out.println(salida);
+//                    out.flush();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+
+    private void obtenerMedicametosReservados(HttpServletRequest request, HttpServletResponse response) {
+    
+        
+          JSONArray reservas = new JSONArray();
+            JSONObject salida = new JSONObject();
+            DateFormat df_fecha_hora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            
+                    Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
+                    session.beginTransaction();
+                   Query query = session.createQuery("select (select pa.primerNombrePaciente||' '||pa.apellidoPaternoPaciente from Paciente pa where pa.idPaciente = re.paciente),\n" +
+                        "(select me.nombreMedicamento from Medicamento me where me.idMedicamento = re.medicamento) ,\n" +
+                        "re.cantidad ,\n" +
+                        "re.fechaEventoReserva\n" +
+                        "from Reserva re");
+                    List<Object[]> lista = query.list();
+                    session.close();
+                    
+                   if(lista != null){
+                try {
+                    for (Object[] item : lista) {
+                        
+                        for (int i = 0; i < 1; i++) {
+                           
+                            try {
+                                JSONObject objeto = new JSONObject();
+                               
+                                objeto.put("paciente", (String)item[0]);
+                                objeto.put("medicamento", (String)item[1]);
+                                objeto.put("cantidad", (int)item[2]);
+                                objeto.put("fecha", df_fecha_hora.format((Date)item[3]));
+                               
+                                reservas.put(objeto);
+                               
+                            } catch (JSONException ex) {
+                                Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        
+                    } // fin foercha
+                    
+                    salida.put("data", reservas);
+                    PrintWriter out = response.getWriter();
+                    System.out.println("el objeto es :"+salida);
+                    out.println(salida);
+                    out.flush();
+                } catch (JSONException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                 }else{
+                    
+                    
+                    
+                    }
+     
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+
+    private void ActivarEmail(HttpServletRequest request, HttpServletResponse response) {
+       
+        int tiempo = 60*5;
+            
+            //http://localhost:8083/CESFAM/RequestHelper?accion=ActivarEmail&tiempo=10
+            if (request.getParameter("tiempo") != null) 
+            {
+                tiempo = Integer.parseInt(request.getParameter("tiempo"));
+            }
+        try {
+            if (scheduler != null) {
+                 scheduler.shutdown(false);
+            }
+             
+        } catch (SchedulerException ex) {
+            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+               scheduler = makeDairlyJob(tiempo);
+        
+    }
+
+    private void DetenerEmail(HttpServletRequest request, HttpServletResponse response) {
+        
+          //http://localhost:8083/CESFAM/RequestHelper?accion=DetenerEmail
+        try {
+            scheduler.shutdown(false);
+        } catch (SchedulerException ex) {
+            Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        
+    }
+    
     
     
     
