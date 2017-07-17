@@ -166,6 +166,7 @@
                                     <th>Presentación</th>
                                     <th>Contenido Envase</th>
                                     <th>Contenido en Stock</th>
+                                   <!-- <th>Estado de Medicamento</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -262,6 +263,7 @@
                         { "data": "presentacion" },
                         { "data": "contenido" },
                         { "data": "stock" }
+                        //,{ "data": "estado" }
                     ],
              "columnDefs": [
                  {

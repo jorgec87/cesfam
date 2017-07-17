@@ -64,6 +64,7 @@ public class RequestHelper extends HttpServlet {
      private static String ACTION_OBTENER_MEDICAMENTOS_RESERVADOS = "obtenerReservados";
      private static String ACTION_ACTIVAR_EMAIL = "ActivarEmail";
      private static String ACTION_DETENER_EMAIL = "DetenerEmail";
+     private static String ACTION_INFORME_STOCK = "informeStock";
     
      
      private static Scheduler scheduler = null;
@@ -134,7 +135,8 @@ public class RequestHelper extends HttpServlet {
 		   ActivarEmail(request, response);   
            }else if (action.equals(ACTION_DETENER_EMAIL)) {
 		  DetenerEmail(request, response);   
-           }        
+           }else if (action.equals(ACTION_INFORME_STOCK)) {
+                  informeStock(request, response);}        
            
  
             
@@ -1260,6 +1262,7 @@ try {
                     }
  
     }
+    
     private void generarReceta(HttpServletRequest request, HttpServletResponse response)
     {
             String id = request.getAttribute("id").toString();
@@ -1270,15 +1273,15 @@ try {
                     Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
                     session.beginTransaction();
                    Query query = session.createQuery("select\n" +
-                   "(select pa.PRIMER_NOMBRE_PACIENTE||' '||pa.APELLIDO_PATERNO_PACIENTE from Paciente pa where pa.ID_PACIENTE = fo.PACIENTE_ID_PACIENTE ),\n" +
-                   "(select pa.RUT_PACIENTE from Paciente pa where pa.ID_PACIENTE = fo.PACIENTE_ID_PACIENTE ),\n" +
-                   "(select medi.NOMBRE_MEDICAMENTO from MEDICAMENTO medi where medi.ID_MEDICAMENTO = (select pre.ID_MEDICAMENTO from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO)),\n" +
-                   "(select pre.PERIODO from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO),\n" +
-                   "(select pre.FRECUENCIA from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO),\n" +
-                   "(select pre.DURACION_TRATAMIENTO from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO),\n" +
-                   "(select med.PRIMER_NOMBRE_MEDICO||' '||med.APELLIDO_PATERNO_MEDICO from MEDICO med where med.ID_MEDICO = fo.MEDICO_ID_MEDICO)\n" +
-                   " from FORMULARIO_MEDICAMENTO fo\n" +
-                   " WhERE fo.ID_FORMULARIO_MEDICAMENTO="+id+" order by fo.FECHA_FORMULARIO_MEDICAMENTO;");
+                   "(select pa.primerNombrePaciente||' '||pa.apellidoPaternoPaciente from Paciente pa where pa.idPaciente = fo.pacienteIdPaciente ),\n" +
+                   "(select pa.rutPaciente from Paciente pa where pa.idPaciente = fo.pacienteIdPaciente ),\n" +
+                   "(select medi.nombreMedicamento from Medicamento medi where medi.idMedicamento = (select pre.medicamento from Prescripcion pre where pre.formularioMediamento = fo.idFormularioMedicamento)),\n" +
+                   "(select pre.periodo from Prescripcion pre where pre.formularioMediamento = fo.idFormularioMedicamento),\n" +
+                   "(select pre.frecuencia from Prescripcion pre where pre.formularioMediamento = fo.idFormularioMedicamento),\n" +
+                   "(select pre.duracionTratamiento from Prescripcion pre where pre.formularioMediamento = fo.idFormularioMedicamento),\n" +
+                   "(select med.primerNombreMedico||' '||med.apellidoPaternoMedico from Medico med where med.idMedico = fo.medicoIdMedico)\n" +
+                   " from FormularioMedicamento fo\n" +
+                   " WhERE fo.idFormularioMedicamento="+id+" order by fo.fechaFormularioMedicamento");
                     List<Object[]> lista = query.list();
                     session.close();
                     
@@ -1400,18 +1403,7 @@ try {
             }
         } catch (Exception ex) {
             Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        } 
     }
 
     private void obtenerMedicametosReservados(HttpServletRequest request, HttpServletResponse response) {
@@ -1469,13 +1461,6 @@ try {
                     }
      
         
-        
-        
-        
-        
-        
-        
-        
     }
 
     private void ActivarEmail(HttpServletRequest request, HttpServletResponse response) {
@@ -1506,43 +1491,26 @@ try {
             scheduler.shutdown(false);
         } catch (SchedulerException ex) {
             Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        
-        
-        
+        }     
     }
     
-                   
-                   
-                   
-                   
-                   
- 
-    }
-    private void generarReceta(HttpServletRequest request, HttpServletResponse response)
+    private void informeStock(HttpServletRequest request, HttpServletResponse response) 
     {
-            String id = request.getAttribute("id").toString();
-            JSONArray recetas = new JSONArray();
+        JSONArray informe = new JSONArray();
             JSONObject salida = new JSONObject();
-            DateFormat df_fecha = new SimpleDateFormat("dd/MM/yyyy");
             
                     Session session = cl.cesfam.DAL.NewHibernateUtil.getSessionFactory().openSession();
                     session.beginTransaction();
-                   Query query = session.createQuery("select\n" +
-                   "(select pa.PRIMER_NOMBRE_PACIENTE||' '||pa.APELLIDO_PATERNO_PACIENTE from Paciente pa where pa.ID_PACIENTE = fo.PACIENTE_ID_PACIENTE ),\n" +
-                   "(select pa.RUT_PACIENTE from Paciente pa where pa.ID_PACIENTE = fo.PACIENTE_ID_PACIENTE ),\n" +
-                   "(select medi.NOMBRE_MEDICAMENTO from MEDICAMENTO medi where medi.ID_MEDICAMENTO = (select pre.ID_MEDICAMENTO from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO)),\n" +
-                   "(select pre.PERIODO from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO),\n" +
-                   "(select pre.FRECUENCIA from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO),\n" +
-                   "(select pre.DURACION_TRATAMIENTO from PRESCRIPCION pre where pre.ID_FORMULARIO_MEDICAMENTO = fo.ID_FORMULARIO_MEDICAMENTO),\n" +
-                   "(select med.PRIMER_NOMBRE_MEDICO||' '||med.APELLIDO_PATERNO_MEDICO from MEDICO med where med.ID_MEDICO = fo.MEDICO_ID_MEDICO)\n" +
-                   " from FORMULARIO_MEDICAMENTO fo\n" +
-                   " WhERE fo.ID_FORMULARIO_MEDICAMENTO="+id+" order by fo.FECHA_FORMULARIO_MEDICAMENTO;");
+                   Query query = session.createQuery("select \n" +
+                                "(select med.nombreMedicamento from Medicamento med where med.idMedicamento = res.medicamento),\n" +
+                                "(select med.stock from Medicamento med where med.idMedicamento = res.medicamento),\n" +
+                                "res.cantidad,\n" +
+                                "res.estadoReserva \n" +
+                                "from Reserva res \n" +
+                                "join Medicamento med on med.medicamento = res.medicamento");
                     List<Object[]> lista = query.list();
                     session.close();
-                    
+                                                                                                    
                    if(lista != null){
                 try {
                     for (Object[] item : lista) {
@@ -1551,49 +1519,48 @@ try {
 
                             try {
                                 JSONObject objeto = new JSONObject();
-                                objeto.put("paciente", (String)item[0]);
-                                objeto.put("rut_paciente", (String)item[1]);
-                                objeto.put("medicamento", (String)item[2]);
-                                if (item[3] == null) {
-                                objeto.put("periodo", "-");                                     
-                                }
-                                else
+                                String estado = null;
+                                objeto.put("medicamento", (int)item[0]);
+                                objeto.put("stock", (String)item[1]);
+                                objeto.put("reservados", (String)item[2]);
+                                if((int)item[3] == 1){
+                                 estado = "Pendiente";
+                                 }
+                                else if((int)item[3] == 2)
                                 {
-                                objeto.put("periodo", (int)item[3]);
+                                 estado = "Entregado";
                                 }
-                                
-                                objeto.put("frecuencia", (int)item[4]);    
-  
-                                if (item[5] == null) 
+                                else if((int)item[3] == 3)
                                 {
-                                objeto.put("duracion", "Permanente");    
+                                 estado = "Disponible";
                                 }
-                                else
-                                {
-                                objeto.put("duracion", (int)item[5]);
-                                }
-                                objeto.put("medico", (String)item[6]);
-                                objeto.put("fecha", df_fecha);
-                                recetas.put(objeto);
-                                
+                                objeto.put("estado",estado );
+                                informe.put(objeto);
                                
                             } catch (JSONException ex) {
                                 Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        }                      
-                    }               
-                    salida.put("data", recetas);
+                        }                     
+                    } // fin foercha
+                    
+                    salida.put("data", informe);
+                    console.log(salida);
                     PrintWriter out = response.getWriter();
                     System.out.println("el objeto es :"+salida);
                     out.println(salida);
                     out.flush();
-                } catch (JSONException | IOException ex) {
+                } catch (JSONException ex) {
+                    Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
                     Logger.getLogger(RequestHelper.class.getName()).log(Level.SEVERE, null, ex);
                 }
                  }else{
                  
                     }
  
+    }
+
+
     }
     
     
