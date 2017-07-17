@@ -509,8 +509,7 @@
                 <!-- Jquery Validate -->
     <script src="js/plugins/validate/jquery.validate.min.js"></script>
     
-        <!-- Jquery Validate -->
-    <script src="js/plugins/validate/jquery.validate.min.js"></script>
+      
      <!-- Jquery Rut -->
     <script src="js/jquery.Rut.js" type="text/javascript"></script>
  
@@ -869,6 +868,8 @@
             
             });  
             
+            
+           
             
        //FUNCION LIMPIAR MODULO MEDICAMENTO
        function limpiarMedicamento(){
